@@ -118,3 +118,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
