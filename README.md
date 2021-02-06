@@ -3,6 +3,7 @@
 ## Game : blablabla NoName
 
 ### Team : Mathys Rituper, Mael Veyrat, Jonathan Charlassier, Lucas Arsicaud 
-###
+### To play the game, run main.py
+####
 #### Required packages
 - pygame
