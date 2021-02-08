@@ -7,3 +7,4 @@
 ####
 #### Required packages
 - pygame
+- pygame-menu
