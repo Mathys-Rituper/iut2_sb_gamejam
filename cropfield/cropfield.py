@@ -10,9 +10,6 @@ class Cropfield():
         self.nb_spots = nb_spots
         self.spots = [cropspot.Cropspot() for x in range(nb_spots)]
 
-    def recolter_spot(self,nb_spot):
-        return self.spots[nb_spot].recolte()
-
     def field_interaction_menu(self):
         menu = pygame_menu.Menu("Crop field", 200, 300, pygame_menu.themes.THEME_DARK)
         menu.add_label("Use the cropfield to multiply your vegetables ! Growth time : 2 nights.")
@@ -27,7 +24,7 @@ class Cropfield():
             #Si rien n'est planté dessus pour le moment
             if spot.is_empty():
 
-                plant_interaction_menu = pygame_menu.Menu("Plant a crop", 200,300, pygame_menu.themes.THEME_DARK)
+                plant_interaction_menu = pygame_menu.Menu(200,300,"Plant a crop", pygame_menu.themes.THEME_DARK)
                 #Si le joueur n'a rien à planter
                 if game.player.has_no_vegs():
                     plant_interaction_menu.add_label("You don't have anything to plant.")
