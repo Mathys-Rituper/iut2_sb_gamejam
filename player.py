@@ -28,3 +28,6 @@ class Player(pygame.sprite.Sprite):
             if self.veg_inv[key]["amount"] != 0:
                 isempty = False
         return isempty
+
+    def dec_veg(self,crop):
+        self.veg_inv[crop]["amount"]-=1
