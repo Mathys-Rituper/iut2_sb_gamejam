@@ -1,8 +1,12 @@
 import pygame
 import player
+from field import cropfield
 
-pygame.init()
+class Game():
+    def __init__(self, screen):
+        self.screen = screen
+        self.player = player.Player()
+        self.field = cropfield.Cropfield(3,self)
 
-screen = pygame.display.set_mode((1064, 768))
-
-player = player.Player()
+    def show_menu_cropfield(self):
+        self.field.field_interaction_menu().draw(self.screen)

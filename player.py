@@ -1,9 +1,9 @@
 import pygame
-from cropfield import cropspot
+from field import cropspot
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
-        super.__init__()
+        super().__init__()
 
         ### STATISTIQUES INGAME
         self.velocity = 5
@@ -14,12 +14,16 @@ class Player(pygame.sprite.Sprite):
         self.resistance = 0         #pourcentage de degats reduits
 
         ###INVENTORY
-        self.veg_inv = {x : {"name" :cropspot.crop_types[x]["name"], "amount" : 0} for x in cropspot.crop_types.keys}
+        self.veg_inv = {"P": {"name": "Potato", "amount": 0},
+              "W": {"name": "Watermelon", "amount": 0},
+              "C": {"name": "carrot", "amount": 0},
+              "S": {"name": "Strawberry", "amount": 0},
+              "N": {"name": "No Crop", "amount": 0}}
         ###SPRITE
-        self.image = pygame.image.load("") #TODO ajouter le sprite par defaut
+        self.image = pygame.image.load("assets/crop-carrot-3.png") #TODO ajouter le sprite par defaut
         self.rect = self.image.get_rect()
-        self.x = self.rect.x
-        self.y = self.rect.y
+        self.rect.x = 0
+        self.rect.y = 0
 
 
     def has_no_vegs(self):
