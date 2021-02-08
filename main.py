@@ -9,7 +9,7 @@ screen = pygame.display.set_mode((1024, 768))
 pygame.display.set_caption("Game Jam 2021")
 background = pygame.image.load("assets/default.jpg")
 
-game = Game()
+game = Game(screen)
 pygame.display.flip()
 
 ouvert = True
@@ -19,6 +19,8 @@ while ouvert:
     screen.blit(background, (0, 0))
 
     screen.blit(game.player.image, game.player.rect)
+
+
 
     if game.pressed.get(pygame.K_RIGHT):
         game.player.move_right()
