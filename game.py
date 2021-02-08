@@ -1,3 +1,10 @@
+from player import Player
+
+class Game:
+    def __init__(self):
+        self.player = Player()
+        self.pressed = {}
+
 import pygame
 import player
 from field import cropfield
