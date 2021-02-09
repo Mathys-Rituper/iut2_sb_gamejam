@@ -1,11 +1,11 @@
 import pygame
 import random
 
-crop_types = {"P": {"name": "Potato", "sprite_path": "assets/potato"},
+crop_types = {"P": {"name": "Potato", "sprite_path": "assets/potato/"},
               "W": {"name": "Watermelon", "sprite_path": "assets/watermelon/"},
               "C": {"name": "carrot", "sprite_path": "assets/carrot/"},
-              "S": {"name": "Strawberry", "sprite_path": "assets/strawberry"},
-              "N": {"name": "No Crop", "sprite_path": "assets/no_crop"}}
+              "S": {"name": "Strawberry", "sprite_path": "assets/strawberry/"},
+              "N": {"name": "No Crop", "sprite_path": "assets/no_crop/"}}
 
 
 class Cropspot(pygame.sprite.Sprite):

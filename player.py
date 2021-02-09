@@ -15,9 +15,9 @@ class Player(animation.AnimateSprite):
         self.elapse = 0
         self.game = game
         ###INVENTORY
-        self.veg_inv = {"P": {"name": "Potato", "amount": 0},
+        self.veg_inv = {"P": {"name": "Potato", "amount": 1},
                         "W": {"name": "Watermelon", "amount": 0},
-                        "C": {"name": "carrot", "amount": 0},
+                        "C": {"name": "carrot", "amount": 5},
                         "S": {"name": "Strawberry", "amount": 0},
                         "N": {"name": "No Crop", "amount": 0}}
 
