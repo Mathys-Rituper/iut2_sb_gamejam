@@ -2,6 +2,7 @@ from game import Game
 from tile_map import Tile_map
 from setting import *
 from sprite import *
+import copy
 import pytmx
 # Initialisation de pygame
 pygame.init()
@@ -46,6 +47,7 @@ game.getWall(wall)
 
 while main_running:
 
+    world_image = pygame.Surface( (WIDTH_TILE*NB_TILE_X, HEIGHT_TILE*NB_TILE_Y) )
     events = pygame.event.get()
     for event in events:
         if event.type == pygame.QUIT:
@@ -59,15 +61,18 @@ while main_running:
 
     if not is_a_menu_open:
 
-        screen.blit(map_image, (0, 0), game.camera)
         render_field()
-        screen.blit(game.player.image, ( (1080-game.player.rect.w)/2 , (768-game.player.rect.h)/2) )
+        world_image.blit(map_image, (0,0))
+
         for projectile in game.player.all_projectiles:
             projectile.move()
+            world_image.blit(projectile.image, (projectile.rect.x, projectile.rect.y))
+            pygame.display.flip()
 
-        #  map_image.blit(projectile.image, (projectile.rect.x, projectile.rect.y))
 
+        screen.blit(world_image, (0, 0), game.camera)
 
+        screen.blit(game.player.image, ( (1080-game.player.rect.w)/2 , (768-game.player.rect.h)/2) )
       #  game.player.all_projectiles.draw(map_image)
 
         if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x <= WIDTH_TILE*NB_TILE_X - game.player.rect.w:

@@ -30,7 +30,7 @@ class Player(animation.AnimateSprite):
 
     def launch_projectile(self):
         proj = Projectile(self)
-        self.game.screen.blit(proj.image, (proj.rect.x, proj.rect.y))
+      #  self.game.screen.blit(proj.image, (proj.rect.x, proj.rect.y))
         self.all_projectiles.add(proj)
 
 
