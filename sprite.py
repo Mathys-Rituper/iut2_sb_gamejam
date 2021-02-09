@@ -1,0 +1,13 @@
+import pygame
+from setting import *
+from tile_map import Tile_map
+class Obstacle(pygame.sprite.Sprite):
+    def __init__(self,till, x, y,w,h):
+        self.groups = till.wall
+        pygame.sprite.Sprite.__init__(self,self.groups)
+
+        self.rect = pygame.Rect(x,y,w,h)
+        self.x = x
+        self.y = y
+        self.rect.x = x
+        self.rect.y = y
