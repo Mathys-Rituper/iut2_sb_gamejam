@@ -16,6 +16,7 @@ class Cropspot(pygame.sprite.Sprite):
         self.maturation = 0  # Niveaux de maturation possible : 0 (vient d'être planté), 1 (une nuit est déjà
         # passée), 2 (2 nuits sont passées depuis la plantation et on peut récolter le résultat)
 
+
     def new_culture(self, crop):
         self.crop_type = crop_types[crop]
         self.maturation = 0
@@ -30,3 +31,6 @@ class Cropspot(pygame.sprite.Sprite):
 
     def is_empty(self):
         return self.crop_type==crop_types["N"]
+
+    def get_crop_name(self):
+        return crop_types[self.crop_type]["name"]

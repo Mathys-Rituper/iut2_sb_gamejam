@@ -63,7 +63,9 @@ class Player(animation.AnimateSprite):
         return isempty
 
     def dec_veg(self,crop):
+        print("player had",self.veg_inv[crop]["amount"])
         self.veg_inv[crop]["amount"]-=1
+        print("now has",self.veg_inv[crop]["amount"])
 
     def update(self):
 

@@ -68,7 +68,7 @@ while main_running:
                 game.player.move_down()
         if game.pressed.get(pygame.K_SPACE):
             game.player.launch_projectile()
-        elif game.pressed.get(pygame.K_SPACE):
+        elif game.pressed.get(pygame.K_a):
             menu_cropfield.enable()
             is_a_menu_open = True
 
