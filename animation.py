@@ -17,7 +17,8 @@ class AnimateSprite(pygame.sprite.Sprite):
             'right': load_animation_images(sprite_name, "right"),
             'left': load_animation_images(sprite_name, "left"),
             'up' : load_animation_images(sprite_name, "up"),
-            'down' : load_animation_images(sprite_name, "down")
+            'down' : load_animation_images(sprite_name, "down"),
+            'downright' : load_animation_images(sprite_name,"downright")
         }
         self.images = self.listeAnimations.get('right')
 
@@ -29,6 +30,7 @@ class AnimateSprite(pygame.sprite.Sprite):
             self.images = self.listeAnimations.get(self.current_orientation)
             self.current_image=0
             self.orientation=self.current_orientation
+
 
         # passer à l'image suivante
         self.current_image += 1
@@ -56,5 +58,4 @@ def load_animation_images(sprite_name, direction):
 
     return images
 
-# definir un dictionnaire qui va contenir les images chargées de chaque sprite
 

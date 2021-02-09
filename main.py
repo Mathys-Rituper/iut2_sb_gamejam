@@ -1,11 +1,9 @@
-import pygame
 from game import Game
 from tile_map import Tile_map
 from setting import *
 from sprite import *
 import pytmx
 # Initialisation de pygame
-from player import Player
 pygame.init()
 
 # Initialisation de la fenêtre
@@ -16,7 +14,10 @@ background = pygame.image.load("assets/default.jpg")
 game = Game(screen)
 pygame.display.flip()
 
-ouvert = True
+main_running = True
+is_a_menu_open = False
+menu_cropfield = game.get_menu_cropfield()
+menu_cropfield.disable()
 
 tile = Tile_map()
 map_image = tile.make_map()
@@ -24,6 +25,7 @@ map_image = tile.make_map()
 #Definitioon d'une clock
 clock = pygame.time.Clock()
 FPS = 60
+
 wall = []
 for tile_object in tile.tmx.objects:
     if tile_object.name.startswith('obstacle'):
@@ -31,47 +33,58 @@ for tile_object in tile.tmx.objects:
 
 game.getWall(wall)
 
-while ouvert:
-    #screen.blit(background, (0, 0))
-    screen.blit(map_image, (0, 0))
-    screen.blit(game.player.image, game.player.rect)
+while main_running:
 
-    if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x <= WIDTH_TILE*NB_TILE_X - game.player.rect.w:
-
-        game.player.move_right()
-    if game.pressed.get(pygame.K_LEFT) and game.player.rect.x >= 0 :
-            game.player.move_left()
-    if game.pressed.get(pygame.K_UP) and game.player.rect.y > 0 :
-
-            game.player.move_up()
-    if game.pressed.get(pygame.K_DOWN) and game.player.rect.y < HEIGHT_TILE * NB_TILE_Y - game.player.rect.h :
-
-            game.player.move_down()
-
-    """" if game.pressed.get(pygame.K_RIGHT) and game.pressed.get(pygame.K_UP):
-         game.player.move_right()
-         game.player.move_up()
-     elif game.pressed.get(pygame.K_RIGHT) and game.pressed.get(pygame.K_DOWN):
-         game.player.move_right()
-         game.player.move_down()
-     elif game.pressed.get(pygame.K_LEFT) and game.pressed.get(pygame.K_DOWN):
-         game.player.move_left()
-         game.player.move_down()
-     elif game.pressed.get(pygame.K_LEFT) and game.pressed.get(pygame.K_UP):
-         game.player.move_left()
-         game.player.move_up()"""
-
-    pygame.display.flip()
-
-    for event in pygame.event.get():
+    events = pygame.event.get()
+    for event in events:
         if event.type == pygame.QUIT:
-            ouvert = False
+            main_running = False
 
         elif event.type == pygame.KEYDOWN:
             game.pressed[event.key] = True
 
         elif event.type == pygame.KEYUP:
             game.pressed[event.key] = False
+
+    if not is_a_menu_open:
+
+        screen.blit(map_image, (0, 0))
+        screen.blit(game.player.image, game.player.rect)
+        for projectile in game.player.all_projectiles:
+            projectile.move()
+
+        game.player.all_projectiles.draw(screen)
+
+        if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x <= WIDTH_TILE*NB_TILE_X - game.player.rect.w:
+
+            game.player.move_right()
+        if game.pressed.get(pygame.K_LEFT) and game.player.rect.x >= 0 :
+                game.player.move_left()
+        if game.pressed.get(pygame.K_UP) and game.player.rect.y > 0 :
+                game.player.move_up()
+        if game.pressed.get(pygame.K_DOWN) and game.player.rect.y < HEIGHT_TILE * NB_TILE_Y - game.player.rect.h :
+                game.player.move_down()
+        if game.pressed.get(pygame.K_SPACE):
+            game.player.launch_projectile()
+        elif game.pressed.get(pygame.K_SPACE):
+            menu_cropfield.enable()
+            is_a_menu_open = True
+
+
+    elif menu_cropfield.is_enabled():  # Si le menu du champ est ouvert
+        menu_cropfield.render()
+        menu_cropfield.update(events)
+        menu_cropfield.draw(screen)
+        if game.pressed.get(pygame.K_ESCAPE):
+            menu_cropfield.disable()
+            is_a_menu_open = False
+    else:
+        is_a_menu_open = False  # Si tous les menus sont fermés, alors on est plus dans un menu
+
+
+    pygame.display.flip()
+
+
 
     clock.tick(FPS)
 pygame.quit()
