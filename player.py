@@ -27,9 +27,6 @@ class Player(animation.AnimateSprite):
         ###SPRITE
 
         self.rect = self.image.get_rect()
-        self.x = self.rect.x
-        self.y = self.rect.y
-        self.rect.y = 500
         self.rect2 = self.image.get_rect()
 
     def launch_projectile(self):
