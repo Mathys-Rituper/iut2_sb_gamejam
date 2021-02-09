@@ -1,5 +1,6 @@
 import pygame
 import player
+import copy
 from field import cropfield
 
 class Game():
@@ -24,18 +25,18 @@ class Game():
     def collision(self, player, group):
         return pygame.sprite.spritecollide(player, group, False)
 
-    def essaieDeplacement(self, sprite , derection, vitesse, group):
-        copy = sprite
-        print("position sprite" ,sprite.y)
-        if derection == 1:
-            copy.x = sprite.x - vitesse
-        else:
-            #copy.rect.y = sprite.rect.y + vitesse
-            copy.rect.h = sprite.rect.h + vitesse
-           # copy.rect.y = copy.y
-            print("postion copye " ,copy.rect.y)
-            print("??", copy.y)
-        return self.collision(copy, group)
+
+
+
+
+    def essaieDeplacement(self, sprite , x, y, group):
+        c = copy.copy(sprite)
+        c.rect = copy.deepcopy(sprite.rect)
+        c.rect.x = c.rect.x + x
+        c.rect.y = c.rect.y + y
+        print("origine x " ,sprite.rect.x)
+        print("coy x ", c.rect.x)
+        return self.collision(c, group)
 
     def getWall(self, groups):
         self.wall = groups

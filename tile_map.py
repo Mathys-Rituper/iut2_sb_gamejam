@@ -6,7 +6,7 @@ from setting import  *
 
 class Tile_map():
     def __init__(self):
-        self.tmx = load_pygame('assets/Map.tmx', pixelalpha=True)
+        self.tmx = load_pygame('assets/tilemap/Map.tmx', pixelalpha=True)
         self.ti = self.tmx.get_tile_image_by_gid
         self.wall = []
         #for tile_object in self.tmx.objects:

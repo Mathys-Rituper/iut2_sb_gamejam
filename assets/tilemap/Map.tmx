@@ -5,7 +5,7 @@
  <tileset firstgid="513" source="thatched-roof.tsx"/>
  <tileset firstgid="769" source="fenetres.tsx"/>
  <tileset firstgid="1025" source="terrain-map-v7.tsx"/>
- <tileset firstgid="16769" source="../../../../Desktop/IUT/S3/GameJam/Assets DL/decorations-medieval.tsx"/>
+ <tileset firstgid="16769" source="decorations-medieval.tsx"/>
  <tileset firstgid="17793" source="plantes.tsx"/>
  <layer id="4" name="sol" width="32" height="28">
   <data encoding="csv">

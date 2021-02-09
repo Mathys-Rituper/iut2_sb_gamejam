@@ -1,4 +1,5 @@
 import pygame
+import game
 import animation
 from projectile import Projectile
 
@@ -34,25 +35,44 @@ class Player(animation.AnimateSprite):
     def launch_projectile(self):
         self.all_projectiles.add(Projectile(self))
 
+    @property
+    def getRect(self):
+        return self.rect
+
+    def incPos(self, dx, dy):
+        self.rect.x += dx
+        self.rect.y += dy
+
+
+
+
+
+
     def move_right(self):
         self.current_orientation = "right"
-        if not self.game.collision(self, self.game.wall):
+        if not self.game.essaieDeplacement(self, 5, 0, self.game.wall):
             self.rect.x += self.velocity
         self.update()
 
+
     def move_left(self):
         self.current_orientation = "left"
-        self.rect.x -= self.velocity
+        if not self.game.essaieDeplacement(self, -5, 0, self.game.wall):
+            self.rect.x -= self.velocity
         self.update()
+
 
     def move_up(self):
         self.current_orientation = "up"
-        self.rect.y -= self.velocity
+        if not self.game.essaieDeplacement(self, 0, -5, self.game.wall):
+            self.rect.y -= self.velocity
         self.update()
+
 
     def move_down(self):
         self.current_orientation = "down"
-        self.rect.y += self.velocity
+        if not self.game.essaieDeplacement(self, 0, 5, self.game.wall):
+            self.rect.y += self.velocity
         self.update()
 
     def has_no_vegs(self):
