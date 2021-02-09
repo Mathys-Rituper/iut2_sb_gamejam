@@ -22,6 +22,8 @@ class AnimateSprite(pygame.sprite.Sprite):
         self.images = self.listeAnimations.get('right')
 
 
+
+
     def animate(self):
         if(self.orientation!=self.current_orientation):
             self.images = self.listeAnimations.get(self.current_orientation)
@@ -40,6 +42,7 @@ class AnimateSprite(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (50,50))
 
 
+
 # definir une fonction pour charger les images d'un sprite
 def load_animation_images(sprite_name, direction):
     # charger les images de ce sprite dans le dossier correspondant
@@ -47,7 +50,7 @@ def load_animation_images(sprite_name, direction):
 
     path = f"assets/{sprite_name}/{sprite_name}{direction}"
 
-    for num in range(1,5):
+    for num in range(1,4):
         image_path = path + str(num) +'.png'
         images.append(pygame.image.load(image_path))
 
