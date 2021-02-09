@@ -26,9 +26,7 @@ clock = pygame.time.Clock()
 FPS = 60
 wall = []
 for tile_object in tile.tmx.objects:
-    if tile_object.name == 'maison':
-       wall.append(Obstacle(tile, tile_object.x, tile_object.y, tile_object.width, tile_object.height))
-    if tile_object.name == 'rocher':
+    if tile_object.name.startswith('obstacle'):
        wall.append(Obstacle(tile, tile_object.x, tile_object.y, tile_object.width, tile_object.height))
 
 game.getWall(wall)

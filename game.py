@@ -17,6 +17,9 @@ class Game():
     def collision(self, player, group):
         return pygame.sprite.spritecollide(player, group, False)
 
+    def collision(self, player, group):
+        return pygame.sprite.spritecollide(player, group, False)
+
     def essaieDeplacement(self, sprite , derection, vitesse, group):
         copy = sprite
         print("position sprite" ,sprite.y)
