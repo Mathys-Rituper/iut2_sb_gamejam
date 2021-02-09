@@ -40,7 +40,7 @@ for tile_object in tile.tmx.objects:
 def render_field():
     assert len(game.field.spots) == len(spots)
     for i in range(len(game.field.spots)):
-        map_image.blit(game.field.spots[i].image,(spots[i].x, spots[i].y))
+        world_image.blit(game.field.spots[i].image,(spots[i].x, spots[i].y))
 
 
 game.getWall(wall)
@@ -61,8 +61,8 @@ while main_running:
 
     if not is_a_menu_open:
 
-        render_field()
         world_image.blit(map_image, (0,0))
+        render_field()
 
         for projectile in game.player.all_projectiles:
             projectile.move()
