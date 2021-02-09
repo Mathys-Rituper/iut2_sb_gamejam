@@ -25,10 +25,8 @@ class Cropfield():
 
             #Menu d'inteaction conditionnel selon l'état
             if spot.is_empty():
-                menu.add_button("Plant a crop", self.get_plant_interaction_menu(spot) id="blabla")
-                widget_blabla = menu.get_widget("blabla")
-                widget_blabla.set_selection_effect(widget_blabla.set_attribute(widget_blabla.))
-                widget_blabla.set_selection_effect(widget_blabla.set_attribute(widget_blabla.))
+                menu.add_button("Plant a crop", self.get_plant_interaction_menu(spot) ,id="blabla")
+
 
 
             # Si ce n'est pas encore mur

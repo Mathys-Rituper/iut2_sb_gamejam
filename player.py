@@ -1,5 +1,6 @@
 import pygame
 import animation
+from projectile import Projectile
 
 class Player(animation.AnimateSprite):
     def __init__(self, game):
@@ -14,6 +15,7 @@ class Player(animation.AnimateSprite):
         self.resistance = 0         #pourcentage de degats reduits
         self.elapse = 0
         self.game = game
+        self.all_projectiles = pygame.sprite.Group()
         ###INVENTORY
         self.veg_inv = {"P": {"name": "Potato", "amount": 1},
                         "W": {"name": "Watermelon", "amount": 0},
@@ -29,7 +31,8 @@ class Player(animation.AnimateSprite):
         self.rect.y = 500
         self.rect2 = self.image.get_rect()
 
-
+    def launch_projectile(self):
+        self.all_projectiles.add(Projectile(self))
 
     def move_right(self):
         self.current_orientation = "right"

@@ -52,6 +52,10 @@ while main_running:
 
         screen.blit(map_image, (0, 0))
         screen.blit(game.player.image, game.player.rect)
+        for projectile in game.player.all_projectiles:
+            projectile.move()
+
+        game.player.all_projectiles.draw(screen)
 
         if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x <= WIDTH_TILE*NB_TILE_X - game.player.rect.w:
 
@@ -62,6 +66,8 @@ while main_running:
                 game.player.move_up()
         if game.pressed.get(pygame.K_DOWN) and game.player.rect.y < HEIGHT_TILE * NB_TILE_Y - game.player.rect.h :
                 game.player.move_down()
+        if game.pressed.get(pygame.K_SPACE):
+            game.player.launch_projectile()
         elif game.pressed.get(pygame.K_SPACE):
             menu_cropfield.enable()
             is_a_menu_open = True
