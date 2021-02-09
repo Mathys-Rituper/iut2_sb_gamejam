@@ -28,10 +28,19 @@ pygame.display.flip()
 clock = pygame.time.Clock()
 FPS = 60
 
+spots = []
 wall = []
 for tile_object in tile.tmx.objects:
     if tile_object.name.startswith('obstacle'):
        wall.append(Obstacle(tile, tile_object.x, tile_object.y, tile_object.width, tile_object.height))
+    if tile_object.name.startswith('spot'):
+          spots.append(tile_object)
+
+def render_field():
+    assert len(game.field.spots) == len(spots)
+    for i in range(len(game.field.spots)):
+        map_image.blit(game.field.spots[i].image,(spots[i].x, spots[i].y))
+
 
 game.getWall(wall)
 
@@ -51,6 +60,7 @@ while main_running:
     if not is_a_menu_open:
 
         screen.blit(map_image, (0, 0), game.camera)
+        render_field()
         screen.blit(game.player.image, ( (1080-game.player.rect.w)/2 , (768-game.player.rect.h)/2) )
         for projectile in game.player.all_projectiles:
             projectile.move()
