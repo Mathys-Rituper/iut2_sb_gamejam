@@ -33,25 +33,21 @@ class Player(animation.AnimateSprite):
 
     def move_right(self):
         self.current_orientation = "right"
-        if not self.game.collision(self, self.game.wall):
             self.rect.x += self.velocity
         self.update()
 
     def move_left(self):
         self.current_orientation = "left"
-        if not self.game.collision(self, self.game.wall):
          self.rect.x -= self.velocity
         self.update()
 
     def move_up(self):
         self.current_orientation = "up"
-        if not self.game.collision(self, self.game.wall):
            self.rect.y -= self.velocity
         self.update()
 
     def move_down(self):
         self.current_orientation = "down"
-        if not self.game.collision(self, self.game.wall):
            self.rect.y += self.velocity
         self.update()
 
