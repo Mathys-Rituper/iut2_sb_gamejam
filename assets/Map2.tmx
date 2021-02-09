@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="left-up" compressionlevel="0" width="32" height="28" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="10">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="left-up" compressionlevel="0" width="32" height="28" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="13">
  <tileset firstgid="1" source="tilemap/qqqq.tsx"/>
  <tileset firstgid="257" source="tilemap/portes.tsx"/>
  <tileset firstgid="513" source="tilemap/maison.tsx"/>
  <tileset firstgid="769" source="tilemap/fenetre.tsx"/>
  <tileset firstgid="1025" source="tilemap/GameJam.tsx"/>
  <tileset firstgid="16769" source="../../../Desktop/IUT/S3/GameJam/Assets DL/decorations-medieval.tsx"/>
+ <tileset firstgid="17793" source="tilemap/plants.tsx"/>
  <layer id="4" name="sol" width="32" height="28">
   <data encoding="csv">
 1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,1030,
@@ -54,8 +55,8 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,17023,17024,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,18236,18153,18154,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,18169,18170,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -172,7 +173,6 @@
   <object id="3" name="obstacleMaison" x="470.961" y="17.3056" width="178.001" height="205.196"/>
   <object id="4" name="obstacleMaison" x="695.934" y="18.5418" width="182.945" height="205.196"/>
   <object id="5" name="obstaclePuits" x="671.822" y="289.711" width="64.8338" height="94.1671"/>
-  <object id="8" name="obstacleMaison" x="534.667" y="577.333" width="309.333" height="193.333"/>
-  <object id="9" name="obstacleMaison" x="701.333" y="592" width="137.333" height="240"/>
+  <object id="8" name="obstacleMaison" x="533" y="573" width="326" height="195.333"/>
  </objectgroup>
 </map>
