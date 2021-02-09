@@ -11,17 +11,19 @@ screen = pygame.display.set_mode((1080,768)) #1080, 768
 pygame.display.set_caption("Game Jam 2021")
 background = pygame.image.load("assets/default.jpg")
 
-game = Game(screen)
-pygame.display.flip()
+
 
 main_running = True
 is_a_menu_open = False
-menu_cropfield = game.get_menu_cropfield()
-menu_cropfield.disable()
 
 tile = Tile_map()
 map_image = tile.make_map()
 
+game = Game(map_image)
+menu_cropfield = game.get_menu_cropfield()
+menu_cropfield.disable()
+
+pygame.display.flip()
 #Definitioon d'une clock
 clock = pygame.time.Clock()
 FPS = 60
@@ -53,7 +55,10 @@ while main_running:
         for projectile in game.player.all_projectiles:
             projectile.move()
 
-        game.player.all_projectiles.draw(screen)
+        #  map_image.blit(projectile.image, (projectile.rect.x, projectile.rect.y))
+
+
+      #  game.player.all_projectiles.draw(map_image)
 
         if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x <= WIDTH_TILE*NB_TILE_X - game.player.rect.w:
 
