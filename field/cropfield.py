@@ -69,3 +69,13 @@ class Cropfield():
     def clear_spot(self,spot):
         spot.new_culture("N")
         print(spot.crop_type)
+
+    def croissance(self):
+        for spot in self.spots:
+            if spot.get_crop_name() != "No Crop" and spot.maturation<2:
+                spot.maturation+=1
+
+    def recolter(self,spot):
+        crop_type = spot.crop_type
+        reward = spot.recolte()
+        self.game.player.veg_inv[crop_type]["amount"]+=reward
