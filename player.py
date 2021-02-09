@@ -35,13 +35,6 @@ class Player(animation.AnimateSprite):
     def launch_projectile(self):
         self.all_projectiles.add(Projectile(self))
 
-    @property
-    def getRect(self):
-        return self.rect
-
-    def incPos(self, dx, dy):
-        self.rect.x += dx
-        self.rect.y += dy
 
 
 
@@ -52,6 +45,7 @@ class Player(animation.AnimateSprite):
         self.current_orientation = "right"
         if not self.game.essaieDeplacement(self, 5, 0, self.game.wall):
             self.rect.x += self.velocity
+            self.game.bougerCamera(self.velocity , 0)
         self.update()
 
 
@@ -59,6 +53,7 @@ class Player(animation.AnimateSprite):
         self.current_orientation = "left"
         if not self.game.essaieDeplacement(self, -5, 0, self.game.wall):
             self.rect.x -= self.velocity
+            self.game.bougerCamera(-self.velocity , 0)
         self.update()
 
 
@@ -66,6 +61,7 @@ class Player(animation.AnimateSprite):
         self.current_orientation = "up"
         if not self.game.essaieDeplacement(self, 0, -5, self.game.wall):
             self.rect.y -= self.velocity
+            self.game.bougerCamera(0,-self.velocity)
         self.update()
 
 
@@ -73,6 +69,7 @@ class Player(animation.AnimateSprite):
         self.current_orientation = "down"
         if not self.game.essaieDeplacement(self, 0, 5, self.game.wall):
             self.rect.y += self.velocity
+            self.game.bougerCamera(0,self.velocity)
         self.update()
 
     def has_no_vegs(self):

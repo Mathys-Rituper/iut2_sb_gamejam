@@ -7,7 +7,7 @@ import pytmx
 pygame.init()
 
 # Initialisation de la fenêtre
-screen = pygame.display.set_mode((WIDTH_TILE*NB_TILE_X, HEIGHT_TILE*NB_TILE_Y)) #1080, 768
+screen = pygame.display.set_mode((1080,768)) #1080, 768
 pygame.display.set_caption("Game Jam 2021")
 background = pygame.image.load("assets/default.jpg")
 
@@ -48,8 +48,8 @@ while main_running:
 
     if not is_a_menu_open:
 
-        screen.blit(map_image, (0, 0))
-        screen.blit(game.player.image, game.player.rect)
+        screen.blit(map_image, (0, 0), game.camera)
+        screen.blit(game.player.image, ( (1080-game.player.rect.w)/2 , (768-game.player.rect.h)/2) )
         for projectile in game.player.all_projectiles:
             projectile.move()
 
