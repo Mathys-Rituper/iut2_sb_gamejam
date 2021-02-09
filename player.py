@@ -33,22 +33,23 @@ class Player(animation.AnimateSprite):
 
     def move_right(self):
         self.current_orientation = "right"
+        if not self.game.collision(self, self.game.wall):
             self.rect.x += self.velocity
         self.update()
 
     def move_left(self):
         self.current_orientation = "left"
-         self.rect.x -= self.velocity
+        self.rect.x -= self.velocity
         self.update()
 
     def move_up(self):
         self.current_orientation = "up"
-           self.rect.y -= self.velocity
+        self.rect.y -= self.velocity
         self.update()
 
     def move_down(self):
         self.current_orientation = "down"
-           self.rect.y += self.velocity
+        self.rect.y += self.velocity
         self.update()
 
     def has_no_vegs(self):
