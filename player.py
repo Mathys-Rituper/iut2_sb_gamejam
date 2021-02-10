@@ -13,6 +13,7 @@ class Player(animation.AnimateSprite):
         self.max_health = 100
         self.attack_speed = 1       # coefficient multiplicateur vitesse attaque
         self.attack_strength = 1    # coefficient mulitiplicateur degats
+        self.last_attack = pygame.time.get_ticks() #date de la dernière attaque
         self.resistance = 0         #pourcentage de degats reduits
         self.elapse = 0
         self.game = game
@@ -27,11 +28,13 @@ class Player(animation.AnimateSprite):
         ###SPRITE
 
         self.rect = self.image.get_rect()
-        self.rect.x =1192
-        self.rect.y =928
+        self.rect.x =2341
+        self.rect.y =1902
 
     def launch_projectile(self):
-        self.all_projectiles.add(Projectile(self))
+        if (pygame.time.get_ticks()-self.last_attack)/1000<=1:
+            self.all_projectiles.add(Projectile(self))
+            self.last_attack=pygame.time.get_ticks()
 
 
 
