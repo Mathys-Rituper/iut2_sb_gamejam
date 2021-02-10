@@ -32,7 +32,8 @@ class Player(animation.AnimateSprite):
         self.rect.y =1902
 
     def launch_projectile(self):
-        if (pygame.time.get_ticks()-self.last_attack)/1000<=1:
+        print("last ",self.last_attack ,"now ", pygame.time.get_ticks(), (pygame.time.get_ticks()-self.last_attack)/1000 )
+        if (pygame.time.get_ticks()-self.last_attack)/1000>=1: # /1000= secondes
             self.all_projectiles.add(Projectile(self))
             self.last_attack=pygame.time.get_ticks()
 
