@@ -5,23 +5,30 @@ from sprite import *
 import copy
 import pytmx
 import pygame_menu
+import pygame
+import copy
+import threading
 # Initialisation de pygame
+from Monstre import Monstre
+
 pygame.init()
 
 # Initialisation de la fenêtre
 screen = pygame.display.set_mode((1080,768)) #1080, 768
 pygame.display.set_caption("Game Jam 2021")
-background = pygame.image.load("assets/default.jpg")
-
-
+#background = pygame.image.load("assets/default.jpg")
+tile = Tile_map()
+map_image = tile.make_map()
+game = Game(map_image)
 
 main_running = True
 is_a_menu_open = False
+menu_cropfield = game.get_menu_cropfield()
+menu_cropfield.disable()
 
-tile = Tile_map()
-map_image = tile.make_map()
 
-game = Game(map_image)
+
+
 game.menu_cropfield.disable()
 game.menu_npc.disable()
 
@@ -45,7 +52,7 @@ def render_field():
 
 
 game.getWall(wall)
-
+groupM = []
 while main_running:
 
     world_image = pygame.Surface( (WIDTH_TILE*NB_TILE_X, HEIGHT_TILE*NB_TILE_Y) )
@@ -58,13 +65,39 @@ while main_running:
         elif event.type == pygame.KEYDOWN:
             game.pressed[event.key] = True
 
+            if event.key == pygame.K_w:
+                game.addMonstre()
+
+                copyT = copy.copy(game.tab_monstre)
+
         elif event.type == pygame.KEYUP:
             game.pressed[event.key] = False
         if event.type == pygame_menu.events.BACK or event.type == pygame_menu.events.CLOSE:
             game.update_menu_cropfield()
 
 
+
+
     if not is_a_menu_open:
+
+
+        #screen.blit(game.monste.image,game.monste.rect)
+        #game.tab_monstre.draw(screen)
+
+    #mouvement monstre
+        #for m in game.tab_monstre:
+           # m.mouvement(game.player.rect.x, game.player.rect.y)
+        for m in game.tab_monstre:
+            for k in game.tab_monstre:
+                if k != m:
+                    groupM.append(k)
+            m.mouvement(game.player.rect.x, game.player.rect.y, groupM)
+
+            for k in game.tab_monstre:
+                if k != m:
+                    groupM.remove(k)
+
+
 
         world_image.blit(map_image, (0,0))
         render_field()
@@ -73,6 +106,11 @@ while main_running:
             projectile.move()
             world_image.blit(projectile.image, (projectile.rect.x, projectile.rect.y))
             pygame.display.flip()
+
+        for monster in game.tab_monstre:
+            # gestion monstres
+
+            world_image.blit(monster.image,monster.rect)
 
 
         screen.blit(world_image, (0, 0), game.camera)

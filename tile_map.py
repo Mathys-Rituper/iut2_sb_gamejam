@@ -4,6 +4,8 @@ import  pygame
 from setting import  *
 
 
+
+
 class Tile_map():
     def __init__(self):
         self.tmx = load_pygame('assets/tilemap/Map.tmx', pixelalpha=True)

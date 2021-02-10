@@ -4,6 +4,7 @@ import animation
 from projectile import Projectile
 
 class Player(animation.AnimateSprite):
+
     def __init__(self, game):
         super().__init__("player")
 
@@ -28,8 +29,8 @@ class Player(animation.AnimateSprite):
         ###SPRITE
 
         self.rect = self.image.get_rect()
-        self.rect.x =2341
-        self.rect.y =1902
+        self.rect.x  = 2143
+        self.rect.y = 1020
 
     def launch_projectile(self):
         print("last ",self.last_attack ,"now ", pygame.time.get_ticks(), (pygame.time.get_ticks()-self.last_attack)/1000 )
@@ -37,7 +38,13 @@ class Player(animation.AnimateSprite):
             self.all_projectiles.add(Projectile(self))
             self.last_attack=pygame.time.get_ticks()
 
+    @property
+    def getRect(self):
+        return self.rect
 
+    def incPos(self, dx, dy):
+        self.rect.x += dx
+        self.rect.y += dy
 
 
 
@@ -90,3 +97,9 @@ class Player(animation.AnimateSprite):
         if pygame.time.get_ticks() - self.elapse> 100:
             self.animate()
             self.elapse = pygame.time.get_ticks()
+
+    def cooldown(self):
+        if self.cool_down_count >= 10:
+            self.cool_down_count = 0
+        elif self.cool_down_count > 0:
+            self.cool_down_count += 1

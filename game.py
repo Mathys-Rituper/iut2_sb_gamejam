@@ -3,7 +3,9 @@ import pygame_menu
 import player
 import copy
 from field import cropfield
-
+from tile_map import *
+import copy
+from Monstre import Monstre
 class Game():
     def __init__(self, screen):
         self.screen = screen
@@ -14,6 +16,9 @@ class Game():
         self.wall = []
         self.menu_cropfield = self.get_menu_cropfield()
         self.menu_npc = self.get_npc_menu()
+        self.tab_monstre= pygame.sprite.Group()
+
+        #self.monste = Monstre(self)
 
 
     def get_menu_cropfield(self):
@@ -23,8 +28,8 @@ class Game():
     def update_menu(self,events):
         self.field.field_interaction_menu().update(events)
 
-    def collision(self, player, group):
-        return pygame.sprite.spritecollide(player, group, False)
+    #def collision(self, player, group):
+     #   return pygame.sprite.spritecollide(player, group, False)
 
     def collision(self, player, group):
         return pygame.sprite.spritecollide(player, group, False)
@@ -32,6 +37,9 @@ class Game():
     def bougerCamera(self, x, y ):
         self.camera.x += x
         self.camera.y += y
+
+    def collisionMonstre(self, monstre , group):
+        return pygame.sprite.spritecollide(monstre, group, False)
 
 
 
@@ -151,3 +159,8 @@ class Game():
     def disable_menu(self):
         self.update_menu_npc()
         self.menu_npc.disable()
+    def addMonstre(self):
+
+        m = Monstre(self)
+
+        self.tab_monstre.add(m)
