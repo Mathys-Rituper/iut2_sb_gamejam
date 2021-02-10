@@ -19,6 +19,7 @@ class Game():
         self.tab_monstre= pygame.sprite.Group()
 
         #self.monste = Monstre(self)
+        self.projectiles = pygame.sprite.Group()
 
 
     def get_menu_cropfield(self):
@@ -28,8 +29,8 @@ class Game():
     def update_menu(self,events):
         self.field.field_interaction_menu().update(events)
 
-    #def collision(self, player, group):
-     #   return pygame.sprite.spritecollide(player, group, False)
+    def collision(self, player, group):
+        return pygame.sprite.spritecollide(player, group, False)
 
     def collision(self, player, group):
         return pygame.sprite.spritecollide(player, group, False)

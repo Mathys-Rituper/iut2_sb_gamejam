@@ -1,7 +1,9 @@
 import pygame
 import game
 import animation
-from projectile import Projectile
+import weapons.weapons
+from weapons import weapons
+
 
 class Player(animation.AnimateSprite):
 
@@ -18,7 +20,7 @@ class Player(animation.AnimateSprite):
         self.resistance = 0         #pourcentage de degats reduits
         self.elapse = 0
         self.game = game
-        self.all_projectiles = pygame.sprite.Group()
+        self.weapon = weapons.Pompe(self)
         ###INVENTORY
         self.veg_inv = {"P": {"name": "Potato", "amount": 1},
                         "W": {"name": "Watermelon", "amount": 0},
@@ -29,24 +31,18 @@ class Player(animation.AnimateSprite):
         ###SPRITE
 
         self.rect = self.image.get_rect()
-        self.rect.x  = 2143
-        self.rect.y = 1020
+        self.rect.x =2341
+        self.rect.y =1902
 
-    def launch_projectile(self):
+    def attack(self):
+            self.weapon.fire()
+
+    def cd(self):
         print("last ",self.last_attack ,"now ", pygame.time.get_ticks(), (pygame.time.get_ticks()-self.last_attack)/1000 )
-        if (pygame.time.get_ticks()-self.last_attack)/1000>=1: # /1000= secondes
-            self.all_projectiles.add(Projectile(self))
-            self.last_attack=pygame.time.get_ticks()
+        return (pygame.time.get_ticks()-self.last_attack)/1000
 
-    @property
-    def getRect(self):
-        return self.rect
-
-    def incPos(self, dx, dy):
-        self.rect.x += dx
-        self.rect.y += dy
-
-
+    def reset_cd(self):
+        self.last_attack=pygame.time.get_ticks()
 
 
 
@@ -97,9 +93,3 @@ class Player(animation.AnimateSprite):
         if pygame.time.get_ticks() - self.elapse> 100:
             self.animate()
             self.elapse = pygame.time.get_ticks()
-
-    def cooldown(self):
-        if self.cool_down_count >= 10:
-            self.cool_down_count = 0
-        elif self.cool_down_count > 0:
-            self.cool_down_count += 1

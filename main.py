@@ -8,15 +8,22 @@ import pygame_menu
 import pygame
 import copy
 import threading
+
 # Initialisation de pygame
 from Monstre import Monstre
 
 pygame.init()
 
 # Initialisation de la fenêtre
-screen = pygame.display.set_mode((1080,768)) #1080, 768
+screen = pygame.display.set_mode((1080, 768))  # 1080, 768
 pygame.display.set_caption("Game Jam 2021")
-#background = pygame.image.load("assets/default.jpg")
+background = pygame.image.load("assets/default.jpg")
+
+
+
+main_running = True
+is_a_menu_open = False
+
 tile = Tile_map()
 map_image = tile.make_map()
 game = Game(map_image)
@@ -41,21 +48,22 @@ spots = []
 wall = []
 for tile_object in tile.tmx.objects:
     if tile_object.name.startswith('obstacle'):
-       wall.append(Obstacle(tile, tile_object.x, tile_object.y, tile_object.width, tile_object.height))
+        wall.append(Obstacle(tile, tile_object.x, tile_object.y, tile_object.width, tile_object.height))
     if tile_object.name.startswith('spot'):
-          spots.append(tile_object)
+        spots.append(tile_object)
+
 
 def render_field():
     assert len(game.field.spots) == len(spots)
     for i in range(len(game.field.spots)):
-        world_image.blit(game.field.spots[i].image,(spots[i].x, spots[i].y))
+        world_image.blit(game.field.spots[i].image, (spots[i].x, spots[i].y))
 
 
 game.getWall(wall)
 groupM = []
 while main_running:
 
-    world_image = pygame.Surface( (WIDTH_TILE*NB_TILE_X, HEIGHT_TILE*NB_TILE_Y) )
+    world_image = pygame.Surface((WIDTH_TILE * NB_TILE_X, HEIGHT_TILE * NB_TILE_Y))
     events = pygame.event.get()
     for event in events:
         if event.type == pygame.QUIT:
@@ -74,9 +82,6 @@ while main_running:
             game.pressed[event.key] = False
         if event.type == pygame_menu.events.BACK or event.type == pygame_menu.events.CLOSE:
             game.update_menu_cropfield()
-
-
-
 
     if not is_a_menu_open:
 
@@ -102,7 +107,7 @@ while main_running:
         world_image.blit(map_image, (0,0))
         render_field()
 
-        for projectile in game.player.all_projectiles:
+        for projectile in game.projectiles:
             projectile.move()
             world_image.blit(projectile.image, (projectile.rect.x, projectile.rect.y))
             pygame.display.flip()
@@ -115,20 +120,19 @@ while main_running:
 
         screen.blit(world_image, (0, 0), game.camera)
 
-        screen.blit(game.player.image, ( (1080-game.player.rect.w)/2 , (768-game.player.rect.h)/2) )
-      #  game.player.all_projectiles.draw(map_image)
+        screen.blit(game.player.image, ((1080 - game.player.rect.w) / 2, (768 - game.player.rect.h) / 2))
 
-        if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x <= WIDTH_TILE*NB_TILE_X - game.player.rect.w:
 
+        if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x <= WIDTH_TILE * NB_TILE_X - game.player.rect.w:
             game.player.move_right()
-        if game.pressed.get(pygame.K_LEFT) and game.player.rect.x >= 0 :
-                game.player.move_left()
-        if game.pressed.get(pygame.K_UP) and game.player.rect.y > 0 :
-                game.player.move_up()
-        if game.pressed.get(pygame.K_DOWN) and game.player.rect.y < HEIGHT_TILE * NB_TILE_Y - game.player.rect.h :
-                game.player.move_down()
+        if game.pressed.get(pygame.K_LEFT) and game.player.rect.x >= 0:
+            game.player.move_left()
+        if game.pressed.get(pygame.K_UP) and game.player.rect.y > 0:
+            game.player.move_up()
+        if game.pressed.get(pygame.K_DOWN) and game.player.rect.y < HEIGHT_TILE * NB_TILE_Y - game.player.rect.h:
+            game.player.move_down()
         if game.pressed.get(pygame.K_SPACE):
-            game.player.launch_projectile()
+            game.player.attack()
         elif game.pressed.get(pygame.K_a):
             game.update_menu_cropfield()
             game.menu_cropfield.enable()
