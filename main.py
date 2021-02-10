@@ -52,12 +52,14 @@ while main_running:
     for event in events:
         if event.type == pygame.QUIT:
             main_running = False
-
+        elif event.type == pygame.KEYUP and event.key == pygame.K_e:
+            game.field.croissance()
         elif event.type == pygame.KEYDOWN:
             game.pressed[event.key] = True
 
         elif event.type == pygame.KEYUP:
             game.pressed[event.key] = False
+
 
     if not is_a_menu_open:
 

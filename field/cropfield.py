@@ -8,8 +8,9 @@ class Cropfield():
         self.spots = [cropspot.Cropspot() for x in range(nb_spots)]
         self.game = game
         self.planting_crop = "N"
-        self.spots[0].crop_type="W"
-        self.spots[0].maturation=1
+        self.spots[0].crop_type=cropspot.crop_types["W"]
+        self.spots[0].image =pygame.image.load(cropspot.crop_types["W"]["sprite_path"]+"0.png")
+
 
     def field_interaction_menu(self):
         menu = pygame_menu.Menu(768, 1024, "Crop field", pygame_menu.themes.THEME_DARK)
@@ -72,8 +73,11 @@ class Cropfield():
 
     def croissance(self):
         for spot in self.spots:
+            print("spot ",spot.crop_type,spot.maturation)
             if spot.get_crop_name() != "No Crop" and spot.maturation<2:
-                spot.maturation+=1
+                print("augmentation de la maturation")
+                spot.inc_maturation()
+                print("nouvelle maturation : ", spot.maturation)
 
     def recolter(self,spot):
         crop_type = spot.crop_type

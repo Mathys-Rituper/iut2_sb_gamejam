@@ -33,4 +33,13 @@ class Cropspot(pygame.sprite.Sprite):
         return self.crop_type==crop_types["N"]
 
     def get_crop_name(self):
-        return crop_types[self.crop_type]["name"]
+        return self.crop_type['name']
+
+    def set_crop(self,crop):
+        self.crop_type = crop_types[crop]
+        self.image = pygame.image.load(self.crop_type['sprite_path']+str(self.maturation)+".png")
+
+    def inc_maturation(self):
+        if self.maturation<2 and self.get_crop_name() != "No Crop":
+            self.maturation+=1
+        self.image = pygame.image.load(self.crop_type["sprite_path"]+str(self.maturation)+".png")
