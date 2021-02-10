@@ -59,7 +59,6 @@ class Cropfield():
                 if self.game.player.veg_inv[crop]["amount"] > 0:
                     plant_interaction_menu.add_label(cropspot.crop_types[crop]["name"] + "(amount "+str(self.game.player.veg_inv[crop]["amount"])+') ')
                     button = plant_interaction_menu.add_button("Plant", self.plant,spot, crop)
-            print("current user inventory after adding button : ", self.game.player.veg_inv)
 
         plant_interaction_menu.add_button("Return", pygame_menu.events.CLOSE)
         plant_interaction_menu.set_onclose(self.back_to_main)
@@ -70,17 +69,13 @@ class Cropfield():
 
     def clear_spot(self,spot):
         spot.new_culture("N")
-        print(spot.crop_type)
         self.game.update_menu_cropfield()
         self.game.menu_cropfield.disable()
 
     def croissance(self):
         for spot in self.spots:
-            print("spot ",spot.crop_type,spot.maturation)
             if spot.get_crop_name() != "No Crop" and spot.maturation<2:
-                print("augmentation de la maturation")
                 spot.inc_maturation()
-                print("nouvelle maturation : ", spot.maturation)
 
     def recolter(self,spot):
         key = ""

@@ -23,6 +23,7 @@ map_image = tile.make_map()
 
 game = Game(map_image)
 game.menu_cropfield.disable()
+game.menu_npc.disable()
 
 pygame.display.flip()
 #Definitioon d'une clock
@@ -91,18 +92,32 @@ while main_running:
         if game.pressed.get(pygame.K_SPACE):
             game.player.launch_projectile()
         elif game.pressed.get(pygame.K_a):
-            print("nouveau rendu du menu, inventaire :",game.player.veg_inv)
             game.update_menu_cropfield()
             game.menu_cropfield.enable()
             is_a_menu_open = True
+        elif game.pressed.get(pygame.K_e):
+            game.update_menu_npc()
+            print("activation du menu")
+            game.menu_npc.enable()
+            is_a_menu_open = True
+            game.pressed[pygame.K_e] = False
 
 
     elif game.menu_cropfield.is_enabled():  # Si le menu du champ est ouvert
         game.menu_cropfield.update(events)
-        if game.menu_cropfield.is_enabled():
+        if game.menu_cropfield.is_enabled(): #car le dernier event peut avoir désactivé le menu, il ne serait alors plus dessinable
             game.menu_cropfield.draw(screen)
         if game.pressed.get(pygame.K_ESCAPE):
             game.menu_cropfield.disable()
+            is_a_menu_open = False
+
+    elif game.menu_npc.is_enabled(): #Si le menu du NPC Shop est ouvert
+        game.menu_npc.update(events)
+        if game.menu_npc.is_enabled():
+            game.menu_npc.draw(screen)
+            print("affichage du menu")
+        if game.pressed.get(pygame.K_ESCAPE):
+            game.menu_npc.disable()
             is_a_menu_open = False
     else:
         is_a_menu_open = False  # Si tous les menus sont fermés, alors on est plus dans un menu
