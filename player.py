@@ -1,7 +1,9 @@
 import pygame
 import game
 import animation
-from projectile import Projectile
+import weapons.weapons
+from weapons import weapons
+
 
 class Player(animation.AnimateSprite):
     def __init__(self, game):
@@ -17,7 +19,7 @@ class Player(animation.AnimateSprite):
         self.resistance = 0         #pourcentage de degats reduits
         self.elapse = 0
         self.game = game
-        self.all_projectiles = pygame.sprite.Group()
+        self.weapon = weapons.Pompe(self)
         ###INVENTORY
         self.veg_inv = {"P": {"name": "Potato", "amount": 1},
                         "W": {"name": "Watermelon", "amount": 0},
@@ -31,15 +33,15 @@ class Player(animation.AnimateSprite):
         self.rect.x =2341
         self.rect.y =1902
 
-    def launch_projectile(self):
+    def attack(self):
+            self.weapon.fire()
+
+    def cd(self):
         print("last ",self.last_attack ,"now ", pygame.time.get_ticks(), (pygame.time.get_ticks()-self.last_attack)/1000 )
-        if (pygame.time.get_ticks()-self.last_attack)/1000>=1: # /1000= secondes
-            self.all_projectiles.add(Projectile(self))
-            self.last_attack=pygame.time.get_ticks()
+        return (pygame.time.get_ticks()-self.last_attack)/1000
 
-
-
-
+    def reset_cd(self):
+        self.last_attack=pygame.time.get_ticks()
 
 
 

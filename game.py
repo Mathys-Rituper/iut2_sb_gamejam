@@ -12,6 +12,7 @@ class Game():
         self.pressed = {}
         self.wall = []
         self.menu_cropfield = self.get_menu_cropfield()
+        self.projectiles = pygame.sprite.Group()
 
 
     def get_menu_cropfield(self):
