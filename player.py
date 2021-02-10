@@ -27,11 +27,11 @@ class Player(animation.AnimateSprite):
         ###SPRITE
 
         self.rect = self.image.get_rect()
+        self.rect.x =1192
+        self.rect.y =928
 
     def launch_projectile(self):
-        proj = Projectile(self)
-      #  self.game.screen.blit(proj.image, (proj.rect.x, proj.rect.y))
-        self.all_projectiles.add(proj)
+        self.all_projectiles.add(Projectile(self))
 
 
 
