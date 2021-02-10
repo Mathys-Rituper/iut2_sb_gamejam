@@ -4,6 +4,7 @@ from setting import *
 from sprite import *
 import copy
 import pytmx
+import pygame_menu
 # Initialisation de pygame
 pygame.init()
 
@@ -21,8 +22,7 @@ tile = Tile_map()
 map_image = tile.make_map()
 
 game = Game(map_image)
-menu_cropfield = game.get_menu_cropfield()
-menu_cropfield.disable()
+game.menu_cropfield.disable()
 
 pygame.display.flip()
 #Definitioon d'une clock
@@ -59,6 +59,8 @@ while main_running:
 
         elif event.type == pygame.KEYUP:
             game.pressed[event.key] = False
+        if event.type == pygame_menu.events.BACK or event.type == pygame_menu.events.CLOSE:
+            game.update_menu_cropfield()
 
 
     if not is_a_menu_open:
@@ -89,16 +91,18 @@ while main_running:
         if game.pressed.get(pygame.K_SPACE):
             game.player.launch_projectile()
         elif game.pressed.get(pygame.K_a):
-            menu_cropfield.enable()
+            print("nouveau rendu du menu, inventaire :",game.player.veg_inv)
+            game.update_menu_cropfield()
+            game.menu_cropfield.enable()
             is_a_menu_open = True
 
 
-    elif menu_cropfield.is_enabled():  # Si le menu du champ est ouvert
-        menu_cropfield.render()
-        menu_cropfield.update(events)
-        menu_cropfield.draw(screen)
+    elif game.menu_cropfield.is_enabled():  # Si le menu du champ est ouvert
+        game.menu_cropfield.update(events)
+        if game.menu_cropfield.is_enabled():
+            game.menu_cropfield.draw(screen)
         if game.pressed.get(pygame.K_ESCAPE):
-            menu_cropfield.disable()
+            game.menu_cropfield.disable()
             is_a_menu_open = False
     else:
         is_a_menu_open = False  # Si tous les menus sont fermés, alors on est plus dans un menu

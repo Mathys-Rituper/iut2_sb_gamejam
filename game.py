@@ -11,6 +11,7 @@ class Game():
         self.field = cropfield.Cropfield(9,self)
         self.pressed = {}
         self.wall = []
+        self.menu_cropfield = self.get_menu_cropfield()
 
 
     def get_menu_cropfield(self):
@@ -44,4 +45,7 @@ class Game():
 
     def getWall(self, groups):
         self.wall = groups
+
+    def update_menu_cropfield(self):
+        self.menu_cropfield = self.get_menu_cropfield()
 

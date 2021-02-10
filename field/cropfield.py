@@ -36,7 +36,7 @@ class Cropfield():
 
             # sinon (c'est mur)
             else:
-                menu.add_button("Collect", (lambda: spot.recolte(), menu.draw(self.game.screen)))
+                menu.add_button("Collect", self.recolter, spot)
             i+=1
         menu.disable()
         return menu
@@ -44,8 +44,8 @@ class Cropfield():
     def plant(self,spot,crop):
         self.game.player.dec_veg(crop)
         spot.new_culture(crop)
-        print("planting",crop,"on spot",spot)
-
+        self.game.update_menu_cropfield()
+        self.game.menu_cropfield.disable()
 
     def get_plant_interaction_menu(self,spot):
         plant_interaction_menu = pygame_menu.Menu(768, 1024, "Plant a crop", pygame_menu.themes.THEME_DARK)
@@ -58,10 +58,11 @@ class Cropfield():
             for crop in self.game.player.veg_inv.keys():
                 if self.game.player.veg_inv[crop]["amount"] > 0:
                     plant_interaction_menu.add_label(cropspot.crop_types[crop]["name"] + "(amount "+str(self.game.player.veg_inv[crop]["amount"])+') ')
-                    plant_interaction_menu.add_button("Plant", self.plant,spot, crop)
+                    button = plant_interaction_menu.add_button("Plant", self.plant,spot, crop)
             print("current user inventory after adding button : ", self.game.player.veg_inv)
 
-        plant_interaction_menu.add_button("Return", pygame_menu.events.BACK)
+        plant_interaction_menu.add_button("Return", pygame_menu.events.CLOSE)
+        plant_interaction_menu.set_onclose(self.back_to_main)
         return plant_interaction_menu
 
     def set_current_crop(self,name,crop):
@@ -70,6 +71,8 @@ class Cropfield():
     def clear_spot(self,spot):
         spot.new_culture("N")
         print(spot.crop_type)
+        self.game.update_menu_cropfield()
+        self.game.menu_cropfield.disable()
 
     def croissance(self):
         for spot in self.spots:
@@ -80,6 +83,15 @@ class Cropfield():
                 print("nouvelle maturation : ", spot.maturation)
 
     def recolter(self,spot):
-        crop_type = spot.crop_type
+        key = ""
+        for item in cropspot.crop_types.keys():
+            if cropspot.crop_types[item] == spot.crop_type:
+                key = item
         reward = spot.recolte()
-        self.game.player.veg_inv[crop_type]["amount"]+=reward
+        self.game.player.veg_inv[key]["amount"]+=reward
+        self.game.update_menu_cropfield()
+        self.game.menu_cropfield.disable()
+
+    def back_to_main(self):
+        self.game.update_menu_cropfield()
+        self.game.menu_cropfield.enable()
