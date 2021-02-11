@@ -255,7 +255,7 @@ class Game:
         self.disable_menu_shop()
 
     def get_menu_principal(self):
-        menu = pygame_menu.Menu(768, 1024, "Game Name", pygame_menu.themes.THEME_DARK)
+        menu = pygame_menu.Menu(768, 1024, "Potager assiégé", pygame_menu.themes.THEME_DARK)
         menu.add_label("Main menu", "label-top")
         label_top = menu.get_widget("label-top")
         label_top.update_font({"size":label_top.get_font_info()["size"]*1.3})
