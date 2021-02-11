@@ -20,12 +20,8 @@ class Monstre(pygame.sprite.Sprite ):
         self.damage_animation_timer = -1
         self.rect = pygame.Rect(self.image.get_rect().x, self.image.get_rect().y, 30,30)#self.image.get_rect()
 
-        filterNight = pygame.Surface(self.image.get_size()).convert_alpha()
-        filterNight.fill("blue")
-        filterNight.set_alpha(255)
 
         self.backup = copy.copy(self.image)
-        self.backup.blit(filterNight, (0,0), special_flags=pygame.BLEND_RGBA_MULT)
         self.image = copy.copy(self.backup)
 
         self.defineSpawn()

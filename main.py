@@ -176,7 +176,8 @@ def main_game(running):
             if game.pressed.get(pygame.K_DOWN) and game.player.rect.y < HEIGHT_TILE * NB_TILE_Y - game.player.rect.h:
                 game.player.move_down()
             if game.pressed.get(pygame.K_SPACE):
-                game.player.attack()
+                if game.phase=="nuit":
+                    game.player.attack()
             elif game.pressed.get(pygame.K_a):
                 game.update_menu_cropfield()
                 game.menu_cropfield.enable()
