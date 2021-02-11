@@ -406,7 +406,7 @@ class Game:
 
     def Affichage_Nb_Jours(self):
 
-        nb_jour = self.font.render(" Days : 1 / 10", True, (0, 0, 0))
+        nb_jour = self.font.render(" Days : "+str(self.day)+" / 10", True, (0, 0, 0))
         return  nb_jour
 
     def Affichage_Text_Nuit_Monstre(self):

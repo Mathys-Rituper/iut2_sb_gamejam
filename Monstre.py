@@ -185,8 +185,8 @@ class Monstre(pygame.sprite.Sprite ):
 
     def ModifStat(self):
         if self.num == '3':
-            self.vitessex = self.game.player.velocity - 1
-            self.vitessey = self.game.player.velocity - 1
+            self.vitessex = self.game.player.velocity - 2
+            self.vitessey = self.game.player.velocity - 2
             self.subpos = 6
         elif self.num == '4':
             self.hp = 15
