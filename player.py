@@ -22,6 +22,7 @@ class Player(animation.AnimateSprite):
         self.weapon = weapons.Pistolet(self)
         self.damage_animation_timer =-1
 
+
         # INVENTORY
         self.veg_inv = {"P": {"name": "Potato", "amount": 0},
                         "W": {"name": "Watermelon", "amount": 0},
@@ -35,6 +36,8 @@ class Player(animation.AnimateSprite):
         self.rect = self.image.get_rect()
         self.rect.x = 2341
         self.rect.y = 1902
+        self.son = pygame.mixer.Sound('assets/sound/UUU.ogg')
+        self.son.set_volume(1)
 
     def attack(self):
         self.weapon.fire()
@@ -104,6 +107,7 @@ class Player(animation.AnimateSprite):
     def take_damage(self, dmg):
         self.health-=dmg
         self.damage_animation_timer = 0
+        self.Son()
 
     def add_weapon(self, nom_weapon):
         self.weapons[nom_weapon]["owned"] = True
@@ -128,3 +132,6 @@ class Player(animation.AnimateSprite):
             colorImage.fill("red")
             self.image.blit(colorImage, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
             self.damage_animation_timer+=1
+
+    def Son(self):
+        self.son.play()
