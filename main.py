@@ -93,61 +93,62 @@ def main_game(running):
             if event.type == pygame_menu.events.BACK or event.type == pygame_menu.events.CLOSE:
                 game.update_menu_cropfield()
 
+     #
+
+        if game.phase == "nuit":
+            world_image.blit(map_image_night, (0, 0))  # nouveau calque
+        else:
+            world_image.blit(map_image, (0, 0))  # nouveau calque
+
+        # Affichage des crops sur le champ
+        assert len(game.field.spots) == len(game.spots)
+        for i in range(len(game.field.spots)):
+            world_image.blit(game.field.spots[i].image, (game.spots[i].x, game.spots[i].y))
+
+        # Affichage des PNJs
+        if (game.phase == "jour"):
+            world_image.blit(image_npc1, (80 * 32, 47 * 32))
+            world_image.blit(image_npc1, (92 * 32, 54 * 32))
+
+        elif game.phase == "nuit":
+
+            game.monsters_move()
+
+            for projectile in game.projectiles:  # logique des projectiles puis rendering
+                projectile.move()
+                world_image.blit(projectile.image, (projectile.rect.x, projectile.rect.y))
+                pygame.display.flip()
+
+            for monster in game.tab_monstre:  # rendering
+                # gestion monstres
+                monster.update_anim_degats()
+                world_image.blit(monster.image, monster.rect)
+
+        screen.blit(world_image, (0, 0), game.camera)
+        game.player.update_anim_degats()
+        # Habillage écran
+        # Texte
+        screen.blit(game.Affichage_Nb_Jours(), (0, 0))
+        screen.blit(game.Affichage_Text_Nuit_Monstre(), (750, 0))
+        # Inventaire Fraise
+        screen.blit(game.miniF, (10, 100))
+        screen.blit(game.AfficheFraiseTxt(), (50, 110))
+        # Inventaire Pasteque
+        screen.blit(game.miniPs, (10, 150))
+        screen.blit(game.AffichePastequeTxt(), (50, 160))
+        screen.blit(game.player.image, ((1024 - game.player.rect.w) / 2, (768 - game.player.rect.h) / 2))
+        # Inventaire Carotte
+        screen.blit(game.miniC, (10, 200))
+        screen.blit(game.AfficheCarotteTxt(), (50, 210))
+        # Inventaire patate
+                # Inventaire Fraise
+        screen.blit(game.miniPa, (10, 250))
+        screen.blit(game.AffichePommeTTxt(), (50, 260))
+        screen.blit(game.affiche_hp(), (520, 0))
+        screen.blit(game.img_heart, ((490, 1)))
+
+        game.phase_over()
         if not is_a_menu_open:
-
-            if game.phase == "nuit":
-                world_image.blit(map_image_night, (0, 0))  # nouveau calque
-            else:
-                world_image.blit(map_image, (0, 0))  # nouveau calque
-
-            # Affichage des crops sur le champ
-            assert len(game.field.spots) == len(game.spots)
-            for i in range(len(game.field.spots)):
-                world_image.blit(game.field.spots[i].image, (game.spots[i].x, game.spots[i].y))
-
-            # Affichage des PNJs
-            if (game.phase == "jour"):
-                world_image.blit(image_npc1, (80 * 32, 47 * 32))
-                world_image.blit(image_npc1, (92 * 32, 54 * 32))
-
-            elif game.phase == "nuit":
-
-                game.monsters_move()
-
-                for projectile in game.projectiles:  # logique des projectiles puis rendering
-                    projectile.move()
-                    world_image.blit(projectile.image, (projectile.rect.x, projectile.rect.y))
-                    pygame.display.flip()
-
-                for monster in game.tab_monstre:  # rendering
-                    # gestion monstres
-                    monster.update_anim_degats()
-                    world_image.blit(monster.image, monster.rect)
-
-            screen.blit(world_image, (0, 0), game.camera)
-            game.player.update_anim_degats()
-            # Habillage écran
-            # Texte
-            screen.blit(game.Affichage_Nb_Jours(), (0, 0))
-            screen.blit(game.Affichage_Text_Nuit_Monstre(), (750, 0))
-            # Inventaire Fraise
-            screen.blit(game.miniF, (10, 100))
-            screen.blit(game.AfficheFraiseTxt(), (50, 110))
-            # Inventaire Pasteque
-            screen.blit(game.miniPs, (10, 150))
-            screen.blit(game.AffichePastequeTxt(), (50, 160))
-            screen.blit(game.player.image, ((1024 - game.player.rect.w) / 2, (768 - game.player.rect.h) / 2))
-            # Inventaire Carotte
-            screen.blit(game.miniC, (10, 200))
-            screen.blit(game.AfficheCarotteTxt(), (50, 210))
-            # Inventaire patate
-                    # Inventaire Fraise
-            screen.blit(game.miniPa, (10, 250))
-            screen.blit(game.AffichePommeTTxt(), (50, 260))
-            screen.blit(game.affiche_hp(), (520, 0))
-            screen.blit(game.img_heart, ((490, 1)))
-
-            game.phase_over()
             if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x <= WIDTH_TILE * NB_TILE_X - game.player.rect.w:
                 game.player.move_right()
             if game.pressed.get(pygame.K_LEFT) and game.player.rect.x >= 0:
@@ -164,7 +165,7 @@ def main_game(running):
                     game.update_menu_cropfield()
                     game.menu_cropfield.enable()
                     is_a_menu_open = True
-                elif game.collision(game.player,game.pnj1):
+                elif game.collision(game.player,game.pnj2):
                     game.update_menu_npc()
                     game.menu_npc.enable()
                     is_a_menu_open = True
@@ -175,7 +176,7 @@ def main_game(running):
                     is_a_menu_open = True
                     game.pressed[pygame.K_r] = False
 
-        elif game.menu_cropfield.is_enabled():  # Si le menu du champ est ouvert
+        if game.menu_cropfield.is_enabled():  # Si le menu du champ est ouvert
             game.menu_cropfield.update(events)
             if game.menu_cropfield.is_enabled():  # car le dernier event peut avoir désactivé le menu, il ne serait
                 # alors
