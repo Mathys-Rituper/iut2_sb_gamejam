@@ -28,17 +28,19 @@ class Game:
         self.spawn = []
         self.projectiles = pygame.sprite.Group()
 
-        #font
+        #HUD
         self.font = pygame.font.SysFont('Comix Sans MS', 30)
         self.miniF = pygame.image.load('assets/Monstre/monstre1.png')
         self.miniPs = pygame.image.load('assets/Monstre/monstre2.png')
         self.miniC = pygame.image.load('assets/Monstre/monstre3.png')
         self.miniPa = pygame.image.load('assets/Monstre/monstre4.png')
+        self.img_heart = pygame.image.load('assets/heart.png')
 
         self.miniF = pygame.transform.scale(self.miniF,(30,30))
         self.miniPs = pygame.transform.scale(self.miniPs, (30, 30))
         self.miniC = pygame.transform.scale(self.miniC, (30, 30))
         self.miniPa = pygame.transform.scale(self.miniPa, (30, 30))
+        self.img_heart=pygame.transform.scale(self.img_heart,(20,20))
 
 
     def get_menu_cropfield(self):
@@ -353,6 +355,10 @@ class Game:
 
     def AffichePommeTTxt(self):
         txt = self.font.render(str(self.player.veg_inv['P']["amount"]), True, (0, 0, 0))
+        return txt
+
+    def affiche_hp(self):
+        txt = self.font.render(str(self.player.health),True,(0,0,0))
         return txt
 
 

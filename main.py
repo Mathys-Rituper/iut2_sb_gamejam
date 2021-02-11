@@ -140,9 +140,12 @@ def main_game(running):
                  # Inventaire Carotte
             screen.blit(game.miniC, (10, 200))
             screen.blit(game.AfficheCarotteTxt(), (50, 210))
-                    # Inventaire Fraise
+                    # Inventaire patate
             screen.blit(game.miniPa, (10, 250))
             screen.blit(game.AffichePommeTTxt(), (50, 260))
+            screen.blit(game.affiche_hp(),(520,0))
+            screen.blit(game.img_heart,((490,1)))
+
             if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x <= WIDTH_TILE * NB_TILE_X - game.player.rect.w:
                 game.player.move_right()
             if game.pressed.get(pygame.K_LEFT) and game.player.rect.x >= 0:
