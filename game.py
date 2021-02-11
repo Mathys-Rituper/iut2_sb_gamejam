@@ -6,7 +6,7 @@ import pygame_menu
 from tile_map import *
 import copy
 from Monstre import *
-import  random
+import random
 
 
 class Game:
@@ -28,19 +28,21 @@ class Game:
         self.spawn = []
         self.projectiles = pygame.sprite.Group()
         self.day = 1
-        self.phase = "jour"
+        self.phase = "none"
         self.phase_is_over = False
         self.phase_start_time = pygame.time.get_ticks()
+        self.first_phrase = True
 
         self.spots = []
         self.wall = []
+        self.pnj1 = []
+        self.pnj2 = []
+        self.champ = []
 
-        self.groupM = [] #groupe  pour les collisions inter-monstres
-        self.day_duration = 6
+        self.groupM = []  # groupe  pour les collisions inter-monstres
+        self.day_duration = 20
 
-
-
-        #HUD
+        # HUD
         self.font = pygame.font.SysFont('Comix Sans MS', 30)
         self.miniF = pygame.image.load('assets/Monstre/monstre1.png')
         self.miniPs = pygame.image.load('assets/Monstre/monstre2.png')
@@ -48,20 +50,18 @@ class Game:
         self.miniPa = pygame.image.load('assets/Monstre/monstre4.png')
         self.img_heart = pygame.image.load('assets/heart.png')
 
-        self.miniF = pygame.transform.scale(self.miniF,(30,30))
+        self.miniF = pygame.transform.scale(self.miniF, (30, 30))
         self.miniPs = pygame.transform.scale(self.miniPs, (30, 30))
         self.miniC = pygame.transform.scale(self.miniC, (30, 30))
         self.miniPa = pygame.transform.scale(self.miniPa, (30, 30))
-        self.img_heart=pygame.transform.scale(self.img_heart,(20,20))
+        self.img_heart = pygame.transform.scale(self.img_heart, (20, 20))
 
         # Musique
 
-        self.musique_nuit = pygame.mixer.Sound('assets/sound/Nuit.mp3')
-        self.musique_jour = pygame.mixer.Sound('assets/sound/Jour.mp3')
+        self.musique_nuit = pygame.mixer.Sound("assets/sound/Nuit.ogg")
+        self.musique_jour = pygame.mixer.Sound("assets/sound/Jour.ogg")
         self.musique_jour.set_volume(0.1)
         self.musique_nuit.set_volume(0.1)
-        self.musique_jour.play()
-
 
     def get_menu_cropfield(self):
         return self.field.field_interaction_menu()
@@ -71,7 +71,8 @@ class Game:
 
     def collision(self, player, group):
         return pygame.sprite.spritecollide(player, group, False)
-       # return pygame.sprite.spritecollideany(player, group)
+
+    # return pygame.sprite.spritecollideany(player, group)
 
     def bouger_camera(self, x, y):
         self.camera.x += x
@@ -280,7 +281,7 @@ class Game:
         menu = pygame_menu.Menu(768, 1024, "Potager assiégé", pygame_menu.themes.THEME_DARK)
         menu.add_label("Main menu", "label-top")
         label_top = menu.get_widget("label-top")
-        label_top.update_font({"size":label_top.get_font_info()["size"]*1.3})
+        label_top.update_font({"size": label_top.get_font_info()["size"] * 1.3})
         menu.add_button("Play", self.jouer)
         menu.add_button("Rules", self.get_menu_regles())
         menu.add_button("Credits", self.get_menu_credits())
@@ -288,19 +289,24 @@ class Game:
         menu.disable()
         return menu
 
-
     def jouer(self):
         self.menu_principal.disable()
 
     def next_phase(self):
 
+        if self.first_phrase:
+            self.first_phrase = False
+            self.phase = "jour"
+            self.musique_jour.play(-1)
+
         if self.phase_is_over:
 
             if self.phase == "jour":
                 self.phase = "nuit"
-                self.musique_nuit.play(-1)
                 self.musique_jour.stop()
-            else :
+                self.musique_nuit.play(-1)
+
+            else:
                 self.phase = "jour"
                 self.day += 1
                 self.musique_nuit.stop()
@@ -314,7 +320,7 @@ class Game:
             self.phase_is_over = False
 
     def spawn_monstres(self):
-        for i in (0,self.day*3,1):
+        for i in (0, self.day * 3, 1):
             self.tab_monstre.add(Monstre(self))
 
     def monsters_move(self):
@@ -335,16 +341,15 @@ class Game:
                     self.groupM.remove(k)
 
     def phase_over(self):
-        if self.phase =="nuit":
-            if (len(self.tab_monstre)==0) :
-                self.phase_is_over=True
+        if self.phase == "nuit":
+            if (len(self.tab_monstre) == 0):
+                self.phase_is_over = True
 
-        elif  self.phase == "jour" :
-            if ( (pygame.time.get_ticks() - self.phase_start_time ) / 1000 >= self.day_duration ):
-                self.phase_is_over=True
+        elif self.phase == "jour":
+            if ((pygame.time.get_ticks() - self.phase_start_time) / 1000 >= self.day_duration):
+                self.phase_is_over = True
 
-            print((pygame.time.get_ticks() - self.phase_start_time ) / 1000)
-
+            print((pygame.time.get_ticks() - self.phase_start_time) / 1000)
 
     def get_menu_regles(self):
         regles_menu = pygame_menu.Menu(768, 1000, "Rules", pygame_menu.themes.THEME_DARK)
@@ -354,15 +359,11 @@ class Game:
         label_regles = "Defend your village and your cultures against the evil vegetable-monsters during the night. The aim of the game is to go through the 10 night phases with as many remaining vegetables as possible in your inventory. You can improve your stats and weapons, as well as get better yield using the field"
         label_touches = "Keys : Move around with the arrow keys, shoot with space, interact with the field and shops with Shift"
 
-
         regles_menu.add_label(label_regles, max_char=-1, font_size=15)
         regles_menu.add_label(label_touches, max_char=-1, font_size=15)
         regles_menu.add_button("RETURN", pygame_menu.events.BACK)
 
-
         return regles_menu
-
-
 
     def get_menu_credits(self):
         credits_menu = pygame_menu.Menu(768, 1000, "Credits", pygame_menu.themes.THEME_DARK)
@@ -375,14 +376,13 @@ class Game:
         label_credit_decor = "Decor : [LPC] Decorations Medieval by Lanea Zimmerman, Tuomo Untinen, Xenodora, Sharm, Johann C, Johannes Sjölund, Casper Nilsson, Daniel Cook, Rayane Félix, Wolthera van Hövell tot Westerflier,  Zachariah Husiar  & Clint Bellanger"
         label_credit_sound = "Music by Lucas Arsicaud, SFX by Jonathan Charlassier and Mael Veyrat"
 
-        credits_menu.add_label(label_credit_developpers,max_char=-1,font_size=15)
-        credits_menu.add_label(label_credit_crops,max_char=-1,font_size=15)
-        credits_menu.add_label(label_credit_fruits,max_char=-1,font_size=15)
-        credits_menu.add_label(label_credit_decor,max_char=-1,font_size=15)
-        credits_menu.add_label(label_credit_sound,max_char=-1,font_size=15)
+        credits_menu.add_label(label_credit_developpers, max_char=-1, font_size=15)
+        credits_menu.add_label(label_credit_crops, max_char=-1, font_size=15)
+        credits_menu.add_label(label_credit_fruits, max_char=-1, font_size=15)
+        credits_menu.add_label(label_credit_decor, max_char=-1, font_size=15)
+        credits_menu.add_label(label_credit_sound, max_char=-1, font_size=15)
         credits_menu.add_button("RETURN", pygame_menu.events.BACK)
         return credits_menu
-
 
     def jour(self):
         pygame.mixer.music.load('assets/sounds/Arpeggios_Chill_100BPM.mp3')
@@ -392,9 +392,6 @@ class Game:
         # disponibilité pnj
         # relier timer
 
-
-
-
     def nuit(self):
         pass
         # musique nuit
@@ -402,17 +399,16 @@ class Game:
         # disponibilité monstre
         # déclencher jour quand tous les monstres sont tués
 
-    #def textMonstre(self):
+    # def textMonstre(self):
 
     def Affichage_Nb_Jours(self):
 
-        nb_jour = self.font.render(" Days : "+str(self.day)+" / 10", True, (0, 0, 0))
-        return  nb_jour
+        nb_jour = self.font.render(" Days : " + str(self.day) + " / 10", True, (0, 0, 0))
+        return nb_jour
 
     def Affichage_Text_Nuit_Monstre(self):
         text_nb_monstreTT = self.font.render(str(len(self.tab_monstre)) + "  monster(s) remaining", True, (0, 0, 0))
         return text_nb_monstreTT
-
 
     def AfficheFraiseTxt(self):
         txt = self.font.render(str(self.player.veg_inv['S']["amount"]), True, (0, 0, 0))
@@ -426,13 +422,10 @@ class Game:
         txt = self.font.render(str(self.player.veg_inv['C']["amount"]), True, (0, 0, 0))
         return txt
 
-
     def AffichePommeTTxt(self):
         txt = self.font.render(str(self.player.veg_inv['P']["amount"]), True, (0, 0, 0))
         return txt
 
     def affiche_hp(self):
-        txt = self.font.render(str(self.player.health),True,(0,0,0))
+        txt = self.font.render(str(self.player.health), True, (0, 0, 0))
         return txt
-
-

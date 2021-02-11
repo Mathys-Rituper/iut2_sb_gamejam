@@ -14,3 +14,12 @@ class Obstacle(pygame.sprite.Sprite):
         self.y = y
         self.rect.x = x
         self.rect.y = y
+
+class Place:
+    def __init__(self, till, x, y, w, h):
+        self.rect = pygame.Rect(x, y, w, h)
+        self.hit_rect = self.rect
+        self.x = x
+        self.y = y
+        self.rect.x = x
+        self.rect.y = y
