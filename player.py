@@ -93,6 +93,13 @@ class Player(animation.AnimateSprite):
             self.animate()
             self.elapse = pygame.time.get_ticks()
 
+    def reset_position(self):
+        self.rect.x = 2341
+        self.rect.y = 1902
+        self.game.camera.x=self.rect.x + (self.rect.w / 2) - 1024 / 2
+        self.game.camera.y=self.rect.y + (self.rect.h / 2) - 768 / 2
+
+
 
     def take_damage(self, dmg):
         self.health-=dmg
