@@ -26,7 +26,7 @@ transitionScreen.fill("black")
 filterNight.fill("dark blue")
 filterNight.set_alpha(150)
 font = pygame.font.SysFont('Comix Sans MS', 30)
-message_nuit = font.render("Il est se fait tard Zzz, il faut dormir Zzz",True, (255,255,255))
+message_nuit = font.render("Il se fait tard Zzz, il faut dormir Zzz",True, (255,255,255))
 map_image_night = copy.copy(map_image)
 map_image_night.blit(filterNight, (0, 0))
 

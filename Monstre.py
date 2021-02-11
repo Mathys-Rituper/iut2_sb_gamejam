@@ -18,7 +18,7 @@ class Monstre(pygame.sprite.Sprite ):
         self.image = pygame.image.load('assets/Monstre/monstre'+self.num+'.png')
         self.image = pygame.transform.scale(self.image, (50,50))
         self.damage_animation_timer = -1
-        self.rect = pygame.Rect(self.image.get_rect().x, self.image.get_rect().y, 30,30)#self.image.get_rect()
+        self.rect = pygame.Rect(self.image.get_rect().x, self.image.get_rect().y, 39,39)#self.image.get_rect()
 
 
         self.backup = copy.copy(self.image)
