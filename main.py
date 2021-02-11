@@ -1,39 +1,34 @@
 from game import Game
-from tile_map import Tile_map
-from setting import *
 from sprite import *
-import copy
-import pytmx
 import pygame_menu
 import pygame
 import copy
-import threading
+
 
 # Initialisation de pygame
-from Monstre import Monstre
-
 pygame.init()
+main_running = True
+
 
 # Initialisation de la fenêtre
 screen = pygame.display.set_mode((1080, 768))  # 1080, 768
 pygame.display.set_caption("Game Jam 2021")
 
-
-main_running = True
-is_a_menu_open = False
-
-tile = Tile_map()
+# Gestion de la map
+tile = TileMap()
 map_image = tile.make_map()
 game = Game(map_image)
 
-main_running = True
+# Gestion des menus
 is_a_menu_open = False
 game.menu_cropfield.disable()
 game.menu_npc.disable()
 game.menu_shop.disable()
 
+# premier affichage
 pygame.display.flip()
-#Definitioon d'une clock
+
+# Definitioon d'une clock
 clock = pygame.time.Clock()
 FPS = 60
 
@@ -52,7 +47,7 @@ def render_field():
         world_image.blit(game.field.spots[i].image, (spots[i].x, spots[i].y))
 
 
-game.getWall(wall)
+game.get_wall(wall)
 groupM = []
 while main_running:
 
@@ -67,7 +62,7 @@ while main_running:
             game.pressed[event.key] = True
 
             if event.key == pygame.K_w:
-                game.addMonstre()
+                game.add_monstre()
 
                 copyT = copy.copy(game.tab_monstre)
 
@@ -78,13 +73,12 @@ while main_running:
 
     if not is_a_menu_open:
 
+        # screen.blit(game.monste.image,game.monste.rect)
+        # game.tab_monstre.draw(screen)
 
-        #screen.blit(game.monste.image,game.monste.rect)
-        #game.tab_monstre.draw(screen)
-
-    #mouvement monstre
-        #for m in game.tab_monstre:
-           # m.mouvement(game.player.rect.x, game.player.rect.y)
+        # mouvement monstre
+        # for m in game.tab_monstre:
+        # m.mouvement(game.player.rect.x, game.player.rect.y)
         for m in game.tab_monstre:
             for k in game.tab_monstre:
                 if k != m:
@@ -95,9 +89,7 @@ while main_running:
                 if k != m:
                     groupM.remove(k)
 
-
-
-        world_image.blit(map_image, (0,0))
+        world_image.blit(map_image, (0, 0))
         render_field()
 
         for projectile in game.projectiles:
@@ -108,13 +100,11 @@ while main_running:
         for monster in game.tab_monstre:
             # gestion monstres
 
-            world_image.blit(monster.image,monster.rect)
-
+            world_image.blit(monster.image, monster.rect)
 
         screen.blit(world_image, (0, 0), game.camera)
 
         screen.blit(game.player.image, ((1080 - game.player.rect.w) / 2, (768 - game.player.rect.h) / 2))
-
 
         if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x <= WIDTH_TILE * NB_TILE_X - game.player.rect.w:
             game.player.move_right()
@@ -141,16 +131,16 @@ while main_running:
             is_a_menu_open = True
             game.pressed[pygame.K_r] = False
 
-
     elif game.menu_cropfield.is_enabled():  # Si le menu du champ est ouvert
         game.menu_cropfield.update(events)
-        if game.menu_cropfield.is_enabled(): #car le dernier event peut avoir désactivé le menu, il ne serait alors plus dessinable
+        if game.menu_cropfield.is_enabled():  # car le dernier event peut avoir désactivé le menu, il ne serait alors
+            # plus dessinable
             game.menu_cropfield.draw(screen)
         if game.pressed.get(pygame.K_ESCAPE):
             game.menu_cropfield.disable()
             is_a_menu_open = False
 
-    elif game.menu_npc.is_enabled(): #Si le menu du NPC Shop est ouvert
+    elif game.menu_npc.is_enabled():  # Si le menu du NPC Shop est ouvert
         game.menu_npc.update(events)
         if game.menu_npc.is_enabled():
             game.menu_npc.draw(screen)
@@ -167,10 +157,7 @@ while main_running:
     else:
         is_a_menu_open = False  # Si tous les menus sont fermés, alors on est plus dans un menu
 
-
     pygame.display.flip()
-
-
 
     clock.tick(FPS)
 pygame.quit()

@@ -35,8 +35,8 @@ class Monstre(pygame.sprite.Sprite):
 
         if dir ==1 and dx >= 0:
             self.animation = True
-            if not self.game.essaieDeplacement(self, self.vitessex, 0 ,group):
-                if not self.game.essaieDeplacement(self, self.vitessex, 0, self.game.wall)  :
+            if not self.game.essai_deplacement(self, self.vitessex, 0 , group):
+                if not self.game.essai_deplacement(self, self.vitessex, 0, self.game.wall)  :
                     self.rect.x += self.vitessex
                     self.col = False
                 else:
@@ -55,8 +55,8 @@ class Monstre(pygame.sprite.Sprite):
 
         if dir ==1 and dx < 0:
             self.animation = False
-            if not self.game.essaieDeplacement(self, -self.vitessex, 0, group):
-                if not self.game.essaieDeplacement(self, -self.vitessex, 0, self.game.wall):
+            if not self.game.essai_deplacement(self, -self.vitessex, 0, group):
+                if not self.game.essai_deplacement(self, -self.vitessex, 0, self.game.wall):
                     self.rect.x -= self.vitessex
                     self.col = False
                 else :
@@ -72,8 +72,8 @@ class Monstre(pygame.sprite.Sprite):
                     self.rect.y += self.subpos
 
         if dir ==2 and dy >= 0:
-            if not self.game.essaieDeplacement(self, 0,self.vitessex, group):
-                if not self.game.essaieDeplacement(self, 0, self.vitessex, self.game.wall)  :
+            if not self.game.essai_deplacement(self, 0, self.vitessex, group):
+                if not self.game.essai_deplacement(self, 0, self.vitessex, self.game.wall)  :
                     self.rect.y += self.vitessex
                     self.col = False
                 else :
@@ -89,8 +89,8 @@ class Monstre(pygame.sprite.Sprite):
                     self.rect.x += self.subpos
 
         if dir ==2 and dy <= 0:
-            if not self.game.essaieDeplacement(self, 0, -self.vitessex, group):
-                if not self.game.essaieDeplacement(self, 0, -self.vitessex, self.game.wall) :
+            if not self.game.essai_deplacement(self, 0, -self.vitessex, group):
+                if not self.game.essai_deplacement(self, 0, -self.vitessex, self.game.wall) :
                     self.rect.y -= self.vitessex
                     self.col  = False
                 else :
