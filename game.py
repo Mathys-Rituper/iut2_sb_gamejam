@@ -1,11 +1,58 @@
 import pygame
-import pygame_menu
 import player
 from field import cropfield
+import pygame_menu
+
 from tile_map import *
 import copy
 from Monstre import Monstre
 
+    def interaction_menu(self):
+        menu = pygame_menu.Menu(768, 1024, "Menu Principal", pygame_menu.themes.THEME_DARK)
+        menu.add_label("Menu principal du jeu", "label-top")
+        label_top = menu.get_widget("label-top")
+        label_top.update_font({"size":label_top.get_font_info()["size"]*0.66})
+        menu.add_button("Jouer", self.jouer)
+        menu.add_button("Règles", self.regles())
+        menu.add_button("Credits", self.credits())
+
+        menu.disable()
+        return menu
+
+
+    def jouer(self):
+        pass
+
+    def regles(self):
+        regles_menu = pygame_menu.Menu(768, 1024, "Regles", pygame_menu.themes.THEME_DARK)
+        regles_menu.add_label("Regles du jeu", "label-top")
+        label_top = regles_menu.get_widget("label-top")
+        label_top.update_font({"size": label_top.get_font_info()["size"] * 0.66})
+        label_regles = "Vous devez combattre les fruits et légumes la nuit pour récupérer leurs plantes, puis planter ou dépenser les plantes obtenues pour débloquer des améliorations"
+        label_touches = "Touches : Déplacez vous avec les flèches, tirez avec espace, accedez à la gestion du potager avec la touche a"
+
+
+        regles_menu.add_label(label_regles, max_char=-1, font_size=15)
+        regles_menu.add_label(label_touches, max_char=-1, font_size=15)
+
+        return regles_menu
+
+
+    def credits(self):
+        credits_menu = pygame_menu.Menu(768, 1024, "Credits", pygame_menu.themes.THEME_DARK)
+        credits_menu.add_label("Credits", "label-top")
+        label_top = credits_menu.get_widget("label-top")
+        label_top.update_font({"size": label_top.get_font_info()["size"] * 0.66})
+        label_credit_developpers = "Game Developpers : Lucas Arsicaud, Jonathan Charlassier, Mathys Rituper, Mael Veyrat"
+        label_credit_crops = "Fruits and vegetable crops : [LPC] Crops by bluecarrot16, Daniel Eddeland (daneeklu), Joshua Taylor, Richard Kettering (Jetrel)."
+        label_credit_fruits = "Fruits and Vegetables : [Pixel Art Food] by AnarchisedLUTE"
+        label_credit_decor = "Decor : [LPC] Decorations Medieval by Lanea Zimmerman, Tuomo Untinen, Xenodora, Sharm, Johann C, Johannes Sjölund, Casper Nilsson, Daniel Cook, Rayane Félix, Wolthera van Hövell tot Westerflier,  Zachariah Husiar  & Clint Bellanger"
+
+        credits_menu.add_label(label_credit_developpers,max_char=-1,font_size=15)
+        credits_menu.add_label(label_credit_crops,max_char=-1,font_size=15)
+        credits_menu.add_label(label_credit_fruits,max_char=-1,font_size=15)
+        credits_menu.add_label(label_credit_decor,max_char=-1,font_size=15)
+        return credits_menu
 
 class Game:
     def __init__(self, screen):
@@ -17,6 +64,7 @@ class Game:
         self.pressed = {}
         self.wall = []
         self.menu_cropfield = self.get_menu_cropfield()
+        self.menu_main = self.interaction_menu()
         self.menu_npc = self.get_npc_menu()
         self.tab_monstre = pygame.sprite.Group()
         self.menu_shop = self.get_shop_menu()
@@ -236,3 +284,20 @@ class Game:
             self.player.add_weapon(nom_weapon)
             self.player.switch_weapon(nom_weapon)
             self.disable_menu_shop()
+
+    def jour(self):
+        pygame.mixer.music.load('assets/sounds/Arpeggios_Chill_100BPM.mp3')
+        pygame.mixer.music.play(-1)
+        # musique jour
+        # apparence jour
+        # disponibilité pnj
+        # relier timer
+
+
+
+
+    def nuit(self):
+        # musique nuit
+        # apparence nuit
+        # disponibilité monstre
+        # déclencher jour quand tous les monstres sont tués
