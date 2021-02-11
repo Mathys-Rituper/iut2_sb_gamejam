@@ -11,6 +11,7 @@ class Player(animation.AnimateSprite):
 
         # STATISTIQUES INGAME
         self.velocity = 6.5
+        self.velocity_max = 8
         self.health = 100
         self.max_health = 100
         self.attack_speed = 1  # coefficient multiplicateur vitesse attaque
@@ -21,6 +22,7 @@ class Player(animation.AnimateSprite):
         self.game = game
         self.weapon = weapons.Pistolet(self)
         self.damage_animation_timer =-1
+
 
 
         # INVENTORY

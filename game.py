@@ -190,10 +190,11 @@ class Game:
         self.menu_npc = self.get_npc_menu()
 
     def upgrade_speed(self):
-        if self.player.veg_inv["C"]["amount"] > 2:
-            self.player.velocity *= 1.1
-            self.player.veg_inv["C"]["amount"] -= 3
-        self.update_menu_npc()
+        if self.player.velocity < self.player.velocity_max:
+            if self.player.veg_inv["C"]["amount"] > 2:
+                self.player.velocity *= 1.1
+                self.player.veg_inv["C"]["amount"] -= 3
+            self.update_menu_npc()
         self.menu_npc.enable()
 
     def upgrade_hp(self):
@@ -347,7 +348,7 @@ class Game:
         menu.add_button("Rules", self.get_menu_regles())
         menu.add_button("Credits", self.get_menu_credits())
         menu.add_button("High Scores", self.get_menu_highscores())
-
+        self.phase_start_time = 0
         menu.disable()
         return menu
 

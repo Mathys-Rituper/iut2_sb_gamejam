@@ -70,6 +70,7 @@ def menus():
         game.menu_principal.update(events)
         if game.menu_principal.is_enabled():
             game.menu_principal.draw(screen)
+            game.phase_start_time = pygame.time.get_ticks()
         else:
             menus_open = False
         pygame.display.flip()
