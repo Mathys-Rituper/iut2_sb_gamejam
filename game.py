@@ -36,7 +36,7 @@ class Game:
         self.wall = []
 
         self.groupM = [] #groupe  pour les collisions inter-monstres
-        self.day_duration = 45
+        self.day_duration = 6
 
 
 

@@ -24,8 +24,9 @@ game = Game(map_image)
 
 filterNight = pygame.Surface(world_image.get_size()).convert_alpha()
 filterNight.fill("dark blue")
+filterNight.set_alpha(150)
 map_image_night = copy.copy(map_image)
-map_image_night.blit(filterNight, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+map_image_night.blit(filterNight, (0, 0))
 
 
 for tile_object in tile.tmx.objects:

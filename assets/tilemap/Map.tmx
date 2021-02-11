@@ -882,6 +882,6 @@
   <object id="85" name="spawn" x="2530" y="2626" width="32" height="32"/>
   <object id="86" name="spawn" x="739" y="992" width="30" height="31"/>
   <object id="88" name="spawn" x="4676" y="1760" width="31" height="32"/>
-  <object id="90" x="2558.33" y="1488.67" width="34" height="41.3333"/>
+  <object id="90" name="obstaclePnj1" x="2558.33" y="1488.67" width="34" height="41.3333"/>
  </objectgroup>
 </map>
