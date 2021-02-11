@@ -25,8 +25,7 @@ class Game:
         self.menu_principal = self.get_menu_principal()
         self.menu_credits = self.get_menu_credits
         self.get_menu_regles()
-
-        # self.monste = Monstre(self)
+        self.spawn = []
         self.projectiles = pygame.sprite.Group()
 
     def get_menu_cropfield(self):
@@ -37,6 +36,7 @@ class Game:
 
     def collision(self, player, group):
         return pygame.sprite.spritecollide(player, group, False)
+       # return pygame.sprite.spritecollideany(player, group)
 
     def bouger_camera(self, x, y):
         self.camera.x += x
