@@ -337,14 +337,6 @@ class Game:
         text_nb_monstreTT = self.font.render(str(len(self.tab_monstre)) + "  monster(s) remaining", True, (0, 0, 0))
         return text_nb_monstreTT
 
-    def affichageInventaire(self):
-
-        imageFraise = pygame.image.load("assets/Monstre/monstre1.png").convert()
-        imageFraise = pygame.transform.scale(imageFraise,(20,20))
-        txt = self.font.render('mon cul', True,(0,0,0))
-        imageFraise
-        sF = self.miniF + txt
-        return sF
 
     def AfficheFraiseTxt(self):
         txt = self.font.render(str(self.player.veg_inv['S']["amount"]), True, (0, 0, 0))
