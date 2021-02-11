@@ -877,7 +877,7 @@
   <object id="77" name="obstacleBordMap" x="4482.33" y="784.667" width="90.6667" height="97.3333"/>
   <object id="79" name="obstacleBordMap" x="4423.67" y="784.667" width="86.6667" height="64"/>
   <object id="80" name="champ" x="1953.67" y="1622" width="284.667" height="252.667"/>
-  <object id="81" name="pnj" x="2461" y="1476.67" width="244" height="160"/>
+  <object id="81" name="pnj1" x="2461" y="1476.67" width="244" height="160"/>
   <object id="83" name="spawn" x="2463" y="446" width="32" height="36"/>
   <object id="85" name="spawn" x="2530" y="2626" width="32" height="32"/>
   <object id="86" name="spawn" x="739" y="992" width="30" height="31"/>
