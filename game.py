@@ -330,11 +330,11 @@ class Game:
 
     def Affichage_Nb_Jours(self):
 
-        nb_jour = self.font.render(" jours : 1 / 10", True, (0, 0, 0))
+        nb_jour = self.font.render(" Days : 1 / 10", True, (0, 0, 0))
         return  nb_jour
 
     def Affichage_Text_Nuit_Monstre(self):
-        text_nb_monstreTT = self.font.render(str(len(self.tab_monstre)) + "  Monstres vivants", True, (0, 0, 0))
+        text_nb_monstreTT = self.font.render(str(len(self.tab_monstre)) + "  monster(s) remaining", True, (0, 0, 0))
         return text_nb_monstreTT
 
     def affichageInventaire(self):
