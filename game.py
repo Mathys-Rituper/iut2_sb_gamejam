@@ -28,7 +28,6 @@ class Game:
         self.spawn = []
         self.projectiles = pygame.sprite.Group()
         self.day = 1
-        self.day_duration = 10
         self.phase = "none"
         self.phase_is_over = False
         self.phase_start_time = pygame.time.get_ticks()
@@ -59,11 +58,18 @@ class Game:
         self.img_heart = pygame.transform.scale(self.img_heart, (20, 20))
 
         # Musique
-
-        self.musique_nuit = pygame.mixer.Sound("assets/sound/Nuit.ogg")
-        self.musique_jour = pygame.mixer.Sound("assets/sound/Jour.ogg")
+        self.musique_nuit = pygame.mixer.Sound('assets/sound/Nuit.ogg')
+        self.musique_jour = pygame.mixer.Sound('assets/sound/Jour.ogg')
         self.musique_jour.set_volume(0.1)
         self.musique_nuit.set_volume(0.1)
+
+        #Pop monstre
+
+        self.time_between_mob = 3
+        self.time_mob =0
+        self.nb_mob_a_pop =0
+        self.nb_mob_max_par_vague = self.day * 3
+
 
     def get_menu_cropfield(self):
         return self.field.field_interaction_menu()
@@ -353,19 +359,34 @@ class Game:
             else:
                 self.phase = "transition"
                 self.day += 1
+                self.nb_mob_max_par_vague = self.day * 3
                 self.musique_nuit.stop()
                 self.player.reset_position()
                 self.musique_jour.play()
 
             if self.phase == "nuit":
                 self.spawn_monstres()
+                self.time_mob = pygame.time.get_ticks()
+
 
             self.phase_start_time = pygame.time.get_ticks()
             self.phase_is_over = False
 
     def spawn_monstres(self):
-        for i in (0, self.day * 3, 1):
+        self.tab_monstre.add(Monstre(self))
+        self.nb_mob_a_pop = 0
+
+
+    #Spayw de mob tous les x temps
+    def spawn_monstre_supp(self):
+        if ((pygame.time.get_ticks() - self.time_mob) / 1000 >= self.time_between_mob) and self.nb_mob_a_pop < self.nb_mob_max_par_vague:
             self.tab_monstre.add(Monstre(self))
+            self.nb_mob_a_pop += 1
+            self.time_mob = pygame.time.get_ticks()
+
+
+
+
 
     def monsters_move(self):
         # screen.blit(game.monste.image,game.monste.rect)
@@ -389,7 +410,6 @@ class Game:
             if (len(self.tab_monstre) == 0):
                 self.phase_is_over = True
 
-
         elif self.phase == "jour":
             if ((pygame.time.get_ticks() - self.phase_start_time) / 1000 >= self.day_duration):
                 self.phase_is_over = True
@@ -398,6 +418,7 @@ class Game:
         else:
             if ((pygame.time.get_ticks() - self.phase_start_time) / 1000 >= self.transition_duration):
                 self.phase_is_over = True
+            #print((pygame.time.get_ticks() - self.phase_start_time ) / 1000)
 
     def get_menu_regles(self):
         regles_menu = pygame_menu.Menu(768, 1000, "Rules", pygame_menu.themes.THEME_DARK)
@@ -460,8 +481,9 @@ class Game:
         return nb_jour
 
     def Affichage_Text_Nuit_Monstre(self):
-        text_nb_monstreTT = self.font.render(str(len(self.tab_monstre)) + "  monster(s) remaining", True, (0, 0, 0))
-        return text_nb_monstreTT
+        monstre_en_vie = self.font.render("  monster(s) remaining " +str(len(self.tab_monstre)) + " / " + str(self.nb_mob_max_par_vague + 1) , True, (0, 0, 0))
+        return monstre_en_vie
+
 
     def AfficheFraiseTxt(self):
         txt = self.font.render(str(self.player.veg_inv['S']["amount"]), True, (0, 0, 0))

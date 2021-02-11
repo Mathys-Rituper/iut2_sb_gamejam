@@ -173,11 +173,13 @@ class Monstre(pygame.sprite.Sprite ):
     def defineSpawn(self):
         spawn = random.randint(0,3)
         if spawn % 2 ==0 :
-            self.rect.x = self.game.spawn[spawn].x + (50 * random.randint(-2,2))
-            self.rect.y = self.game.spawn[spawn].y
+            self.rect.x = self.game.spawn[spawn].x + (50 * random.randint(-2, 2))
+            self.rect.y = self.game.spawn[spawn].y + 10
         else:
             self.rect.x = self.game.spawn[spawn].x
             self.rect.y = self.game.spawn[spawn].y + (50 * random.randint(-2, 2))
+
+
 
     def ModifStat(self):
         if self.num == '3':

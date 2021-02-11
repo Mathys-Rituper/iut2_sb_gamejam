@@ -27,6 +27,8 @@ filterNight = pygame.Surface(world_image.get_size()).convert_alpha()
 transitionScreen.fill("black")
 filterNight.fill("dark blue")
 filterNight.set_alpha(150)
+font = pygame.font.SysFont('Comix Sans MS', 30)
+message_nuit = font.render("Il est se fait tard Zzz, il faut dormir Zzz",True, (255,255,255))
 map_image_night = copy.copy(map_image)
 map_image_night.blit(filterNight, (0, 0))
 
@@ -95,10 +97,11 @@ def main_game(running):
             if event.type == pygame_menu.events.BACK or event.type == pygame_menu.events.CLOSE:
                 game.update_menu_cropfield()
 
-    #
+     #
 
         if game.phase == "transition":
             screen.blit(transitionScreen, (0,0))
+            screen.blit(message_nuit,(350,400))
         else:
             if game.phase == "nuit":
                 world_image.blit(map_image_night, (0, 0))  # nouveau calque
@@ -116,18 +119,20 @@ def main_game(running):
                 world_image.blit(image_npc1, (92 * 32, 54 * 32))
 
             elif game.phase == "nuit":
+             game.monsters_move()
+             game.spawn_monstre_supp()
 
-                game.monsters_move()
 
-                for projectile in game.projectiles:  # logique des projectiles puis rendering
-                    projectile.move()
-                    world_image.blit(projectile.image, (projectile.rect.x, projectile.rect.y))
-                    pygame.display.flip()
 
-                for monster in game.tab_monstre:  # rendering
-                    # gestion monstres
-                    monster.update_anim_degats()
-                    world_image.blit(monster.image, monster.rect)
+            for projectile in game.projectiles:  # logique des projectiles puis rendering
+                projectile.move()
+                world_image.blit(projectile.image, (projectile.rect.x, projectile.rect.y))
+                pygame.display.flip()
+
+            for monster in game.tab_monstre:  # rendering
+                # gestion monstres
+                monster.update_anim_degats()
+                world_image.blit(monster.image, monster.rect)
 
             screen.blit(world_image, (0, 0), game.camera)
             game.player.update_anim_degats()
@@ -136,7 +141,7 @@ def main_game(running):
             screen.blit(game.Affichage_Nb_Jours(), (0, 0))
             if game.phase=="nuit":
 
-                screen.blit(game.Affichage_Text_Nuit_Monstre(), (750, 0))
+                screen.blit(game.Affichage_Text_Nuit_Monstre(), (730, 0))
             elif game.phase =="jour":
                 screen.blit(game.Affichage_Temps_Restant(), (750, 0))
             # Inventaire Fraise
