@@ -165,7 +165,7 @@ def main_game(running):
                     game.update_menu_cropfield()
                     game.menu_cropfield.enable()
                     is_a_menu_open = True
-                elif game.collision(game.player,game.pnj2):
+                elif game.collision(game.player,game.pnj1):
                     game.update_menu_npc()
                     game.menu_npc.enable()
                     is_a_menu_open = True
