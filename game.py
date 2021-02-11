@@ -54,6 +54,14 @@ class Game:
         self.miniPa = pygame.transform.scale(self.miniPa, (30, 30))
         self.img_heart=pygame.transform.scale(self.img_heart,(20,20))
 
+        # Musique
+
+        self.musique_nuit = pygame.mixer.Sound('assets/sound/Nuit.mp3')
+        self.musique_jour = pygame.mixer.Sound('assets/sound/Jour.mp3')
+        self.musique_jour.set_volume(0.1)
+        self.musique_nuit.set_volume(0.1)
+        self.musique_jour.play()
+
 
     def get_menu_cropfield(self):
         return self.field.field_interaction_menu()
@@ -290,14 +298,18 @@ class Game:
 
             if self.phase == "jour":
                 self.phase = "nuit"
+                self.musique_nuit.play(-1)
+                self.musique_jour.stop()
             else :
                 self.phase = "jour"
                 self.day += 1
-                self.player.reset_position()
+                self.musique_nuit.stop()
+                self.musique_jour.play()
 
             if self.phase == "nuit":
                 self.spawn_monstres()
 
+            self.player.reset_position()
             self.phase_start_time = pygame.time.get_ticks()
             self.phase_is_over = False
 

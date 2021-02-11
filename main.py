@@ -29,6 +29,10 @@ map_image_night = copy.copy(map_image)
 map_image_night.blit(filterNight, (0, 0))
 
 
+
+
+
+
 for tile_object in tile.tmx.objects:
     if tile_object.name.startswith('obstacle'):
         game.wall.append(Obstacle(tile, tile_object.x, tile_object.y, tile_object.width, tile_object.height))
@@ -68,6 +72,8 @@ def menus():
         pygame.display.flip()
 
 
+
+
 def main_game(running):
     is_a_menu_open = False
     while running:
@@ -103,9 +109,6 @@ def main_game(running):
 
 
 
-
-
-
         if not is_a_menu_open:
 
 
@@ -114,6 +117,7 @@ def main_game(running):
                 world_image.blit(map_image_night, (0, 0))  #nouveau calque
             else:
                 world_image.blit(map_image, (0, 0))  #nouveau calque
+
 
 
             # Affichage des crops sur le champ
@@ -156,7 +160,7 @@ def main_game(running):
                  # Inventaire Carotte
             screen.blit(game.miniC, (10, 200))
             screen.blit(game.AfficheCarotteTxt(), (50, 210))
-                    # Inventaire patate
+                    # Inventaire Fraise
             screen.blit(game.miniPa, (10, 250))
             screen.blit(game.AffichePommeTTxt(), (50, 260))
             screen.blit(game.affiche_hp(),(520,0))
@@ -217,6 +221,7 @@ def main_game(running):
         pygame.display.flip()
 
         clock.tick(FPS)
+
     pygame.quit()
 
 
