@@ -547,8 +547,8 @@ class Game:
                 menu_fin.add_label(self.player.veg_inv[vegetable]["name"] + " : "+ str(self.player.veg_inv[vegetable]["amount"]))
                 score += self.player.veg_inv[vegetable]["amount"]
             mid2 = menu_fin.add_label("Your score is : "+ str(score))
-            text_input = menu_fin.add_text_input("Enter your name : ",onreturn=self.set_player_name)
-            enter = menu_fin.add_button("Submit and quit",self.new_highscore,self.player_name,score)
+            text_input = menu_fin.add_text_input("Enter your name : ")
+            enter = menu_fin.add_button("Submit and quit",self.new_highscore,text_input.get_value,score)
         else:
             top = menu_fin.add_label("Game over !")
             mid = menu_fin.add_label("You died before the end of the 10th night. Try again !")
@@ -557,16 +557,13 @@ class Game:
         return menu_fin
 
     def new_highscore(self,name,score):
-        self.highscores[name] = score
+        self.highscores[str(name)] = score
         self.menu_fin.disable()
 
     def close_highscores(self):
         with open("high_scores.json",'w') as json_file:
             json.dump(self.highscores, json_file)
         self.file_highscores.close()
-
-    def set_player_name(self,name):
-        self.player_name = name
 
     def update_menu_fin(self):
         self.menu_fin = self.get_menu_fin()
