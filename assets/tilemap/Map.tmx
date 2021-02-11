@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="left-up" compressionlevel="0" width="164" height="99" tilewidth="32" tileheight="32" infinite="0" nextlayerid="13" nextobjectid="83">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="left-up" compressionlevel="0" width="164" height="99" tilewidth="32" tileheight="32" infinite="0" nextlayerid="13" nextobjectid="85">
  <tileset firstgid="1" source="cottage.tsx"/>
  <tileset firstgid="257" source="portes.tsx"/>
  <tileset firstgid="513" source="thatched-roof.tsx"/>
@@ -877,6 +877,7 @@
   <object id="77" name="obstacleBordMap" x="4482.33" y="784.667" width="90.6667" height="97.3333"/>
   <object id="79" name="obstacleBordMap" x="4423.67" y="784.667" width="86.6667" height="64"/>
   <object id="80" name="champ" x="1953.67" y="1622" width="284.667" height="252.667"/>
-  <object id="81" name="pnj" x="2498.33" y="1540.67" width="206.667" height="96"/>
+  <object id="81" name="pnj" x="2407.66" y="1480.67" width="334.667" height="186.667"/>
+  <object id="83" name="armes" x="2781" y="1707.33" width="386.667" height="204"/>
  </objectgroup>
 </map>
