@@ -5,8 +5,8 @@ import pygame_menu
 
 from tile_map import *
 import copy
-from Monstre import Monstre
-
+from Monstre import *
+import  random
 
 
 class Game:
@@ -27,6 +27,19 @@ class Game:
         self.get_menu_regles()
         self.spawn = []
         self.projectiles = pygame.sprite.Group()
+
+        #font
+        self.font = pygame.font.SysFont('Comix Sans MS', 30)
+        self.miniF = pygame.image.load('assets/Monstre/monstre1.png')
+        self.miniPs = pygame.image.load('assets/Monstre/monstre2.png')
+        self.miniC = pygame.image.load('assets/Monstre/monstre3.png')
+        self.miniPa = pygame.image.load('assets/Monstre/monstre4.png')
+
+        self.miniF = pygame.transform.scale(self.miniF,(30,30))
+        self.miniPs = pygame.transform.scale(self.miniPs, (30, 30))
+        self.miniC = pygame.transform.scale(self.miniC, (30, 30))
+        self.miniPa = pygame.transform.scale(self.miniPa, (30, 30))
+
 
     def get_menu_cropfield(self):
         return self.field.field_interaction_menu()
@@ -163,7 +176,6 @@ class Game:
     def add_monstre(self):
 
         m = Monstre(self)
-
         self.tab_monstre.add(m)
 
     def get_shop_menu(self):
@@ -313,3 +325,42 @@ class Game:
         # apparence nuit
         # disponibilité monstre
         # déclencher jour quand tous les monstres sont tués
+
+    #def textMonstre(self):
+
+    def Affichage_Nb_Jours(self):
+
+        nb_jour = self.font.render(" jours : 1 / 10", True, (0, 0, 0))
+        return  nb_jour
+
+    def Affichage_Text_Nuit_Monstre(self):
+        text_nb_monstreTT = self.font.render(str(len(self.tab_monstre)) + "  Monstres vivants", True, (0, 0, 0))
+        return text_nb_monstreTT
+
+    def affichageInventaire(self):
+
+        imageFraise = pygame.image.load("assets/Monstre/monstre1.png").convert()
+        imageFraise = pygame.transform.scale(imageFraise,(20,20))
+        txt = self.font.render('mon cul', True,(0,0,0))
+        imageFraise
+        sF = self.miniF + txt
+        return sF
+
+    def AfficheFraiseTxt(self):
+        txt = self.font.render(str(self.player.veg_inv['S']["amount"]), True, (0, 0, 0))
+        return txt
+
+    def AffichePastequeTxt(self):
+        txt = self.font.render(str(self.player.veg_inv['W']["amount"]), True, (0, 0, 0))
+        return txt
+
+    def AfficheCarotteTxt(self):
+        txt = self.font.render(str(self.player.veg_inv['C']["amount"]), True, (0, 0, 0))
+        return txt
+
+
+    def AffichePommeTTxt(self):
+        txt = self.font.render(str(self.player.veg_inv['P']["amount"]), True, (0, 0, 0))
+        return txt
+
+

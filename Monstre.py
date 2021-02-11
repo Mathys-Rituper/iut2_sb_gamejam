@@ -1,10 +1,8 @@
-from select import select
-
 import pygame
 import random
 import threading
-class Monstre(pygame.sprite.Sprite):
-    def __init__(self, game):
+class Monstre(pygame.sprite.Sprite ):
+    def __init__(self, game ):
         super().__init__()
         self.hp = 10
         self.dmg = 10
@@ -12,20 +10,25 @@ class Monstre(pygame.sprite.Sprite):
         self.last_attack = pygame.time.get_ticks()
         self.vitessex = 4
         self.vitessey = 4
+        self.game = game
         self.num = str(random.randint(1,4))
-        #self.path = str('assets/Monstre/monstre'+self.num+'.png')
+        self.ModifStat()
         self.image = pygame.image.load('assets/Monstre/monstre'+self.num+'.png')
         self.image = pygame.transform.scale(self.image, (50,50))
         self.damage_animation_timer = -1
-        self.rect = pygame.Rect(self.image.get_rect().x, self.image.get_rect().y, 25,25)#self.image.get_rect()
-        self.game = game
-       # self.i = random.randint(1,3)
-        #self.rect.x = 2143
-        #self.rect.y = 1020
+        self.rect = pygame.Rect(self.image.get_rect().x, self.image.get_rect().y, 30,30)#self.image.get_rect()
+
+
         self.defineSpawn()
         self.check = 0;
         self.col = False
         self.subpos = 0
+
+        #stat qui bouger
+        #PommeT tanky
+        #carrote speed
+        #Fraise normal
+        #Pasteque ?
 
 
 
@@ -171,4 +174,13 @@ class Monstre(pygame.sprite.Sprite):
         else:
             self.rect.x = self.game.spawn[spawn].x
             self.rect.y = self.game.spawn[spawn].y + (50 * random.randint(-2, 2))
+
+    def ModifStat(self):
+        if self.num == '3':
+            self.vitessex = self.game.player.velocity - 1
+            self.vitessey = self.game.player.velocity - 1
+            self.subpos = 6
+        elif self.num == '4':
+            self.hp = 15
+
 

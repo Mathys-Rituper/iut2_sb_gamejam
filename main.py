@@ -6,6 +6,9 @@ import copy
 
 # Initialisation de pygame
 pygame.init()
+#Gestoin font
+pygame.font.init()
+
 main_running = True
 
 # Initialisation de la fenêtre
@@ -123,8 +126,23 @@ def main_game(running):
 
             screen.blit(world_image, (0, 0), game.camera)
             game.player.update_anim_degats()
+            #Habillage écran
+                #Texte
+            screen.blit(game.Affichage_Nb_Jours() ,(0,0))
+            screen.blit(game.Affichage_Text_Nuit_Monstre(),(750,0))
+                #Inventaire Fraise
+            screen.blit(game.miniF,(10,100))
+            screen.blit(game.AfficheFraiseTxt(),(50,110))
+                #Inventaire Pasteque
+            screen.blit(game.miniPs, (10, 150))
+            screen.blit(game.AffichePastequeTxt(), (50, 160))
             screen.blit(game.player.image, ((1024 - game.player.rect.w) / 2, (768 - game.player.rect.h) / 2))
-
+                 # Inventaire Carotte
+            screen.blit(game.miniC, (10, 200))
+            screen.blit(game.AfficheCarotteTxt(), (50, 210))
+                    # Inventaire Fraise
+            screen.blit(game.miniPa, (10, 250))
+            screen.blit(game.AffichePommeTTxt(), (50, 260))
             if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x <= WIDTH_TILE * NB_TILE_X - game.player.rect.w:
                 game.player.move_right()
             if game.pressed.get(pygame.K_LEFT) and game.player.rect.x >= 0:
