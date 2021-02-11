@@ -23,7 +23,7 @@ class Game:
         self.tab_monstre = pygame.sprite.Group()
         self.menu_shop = self.get_shop_menu()
         self.menu_principal = self.get_menu_principal()
-        self.menu_credits = self.get_menu_credits()
+        self.menu_credits = self.get_menu_credits
         self.get_menu_regles()
 
         # self.monste = Monstre(self)
@@ -269,12 +269,15 @@ class Game:
 
         regles_menu.add_label(label_regles, max_char=-1, font_size=15)
         regles_menu.add_label(label_touches, max_char=-1, font_size=15)
+        regles_menu.add_button("RETURN", pygame_menu.events.BACK)
+
 
         return regles_menu
 
 
+
     def get_menu_credits(self):
-        credits_menu = pygame_menu.Menu(768, 1024, "Credits", pygame_menu.themes.THEME_DARK)
+        credits_menu = pygame_menu.Menu(768, 1000, "Credits", pygame_menu.themes.THEME_DARK)
         credits_menu.add_label("Credits", "label-top")
         label_top = credits_menu.get_widget("label-top")
         label_top.update_font({"size": label_top.get_font_info()["size"] * 0.66})
@@ -282,11 +285,14 @@ class Game:
         label_credit_crops = "Fruits and vegetable crops : [LPC] Crops by bluecarrot16, Daniel Eddeland (daneeklu), Joshua Taylor, Richard Kettering (Jetrel)."
         label_credit_fruits = "Fruits and Vegetables : [Pixel Art Food] by AnarchisedLUTE"
         label_credit_decor = "Decor : [LPC] Decorations Medieval by Lanea Zimmerman, Tuomo Untinen, Xenodora, Sharm, Johann C, Johannes Sjölund, Casper Nilsson, Daniel Cook, Rayane Félix, Wolthera van Hövell tot Westerflier,  Zachariah Husiar  & Clint Bellanger"
+        label_credit_sound = "Music by Lucas Arsicaud, SFX by Jonathan Charlassier and Mael Veyrat"
 
         credits_menu.add_label(label_credit_developpers,max_char=-1,font_size=15)
         credits_menu.add_label(label_credit_crops,max_char=-1,font_size=15)
         credits_menu.add_label(label_credit_fruits,max_char=-1,font_size=15)
         credits_menu.add_label(label_credit_decor,max_char=-1,font_size=15)
+        credits_menu.add_label(label_credit_sound,max_char=-1,font_size=15)
+        credits_menu.add_button("RETURN", pygame_menu.events.BACK)
         return credits_menu
 
 
