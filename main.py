@@ -169,7 +169,6 @@ def main_game(running):
                     game.update_menu_npc()
                     game.menu_npc.enable()
                     is_a_menu_open = True
-                    game.pressed[pygame.K_e] = False
                 elif game.collision(game.player, game.pnj2):
                     game.update_menu_shop()
                     game.menu_shop.enable()

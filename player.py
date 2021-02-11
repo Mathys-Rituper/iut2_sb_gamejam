@@ -29,7 +29,7 @@ class Player(animation.AnimateSprite):
                         "S": {"name": "Strawberry", "amount": 10},
                         "N": {"name": "No Crop", "amount": 0}}
         self.weapons = {"pistol": {"owned": True, "item": weapons.Pistolet(self)},
-                        "shotgun": {"owned": False, "item": weapons.Pompe(self)}}  # Rajouter chaque nouvelle arme ici
+                        "shotgun": {"owned": False, "item": weapons.Pompe(self)},"smg":{"owned":False,"item":weapons.Mitrailleuse(self)},"sniper":{"owned":False,"item":weapons.Snipe(self)}}  # Rajouter chaque nouvelle arme ici
 
         # SPRITE
         self.rect = self.image.get_rect()

@@ -202,7 +202,7 @@ class Game:
         self.tab_monstre.add(m)
 
     def get_shop_menu(self):
-        menu_shop = pygame_menu.Menu(300, 1024, "Weapons", rows=4, columns=2, theme=pygame_menu.themes.THEME_DARK)
+        menu_shop = pygame_menu.Menu(550, 1024, "Weapons", rows=6, columns=2, theme=pygame_menu.themes.THEME_DARK)
 
         # COL 1
 
@@ -230,6 +230,34 @@ class Game:
         button_pompe.set_padding(8)
         button_pompe.set_max_width(450)
 
+        #SMG
+        # Pompe
+        if self.player.weapons["smg"]["owned"]:
+            button_smg = menu_shop.add_button("SMG (owned)", self.change_player_weapon, "smg")
+        else:
+            button_smg = menu_shop.add_button("SMG (10 strawberries, 10 watermelons)", self.buy_weapon, "smg",
+                                                0, 0, 10, 10)
+            if self.player.veg_inv["S"]["amount"] < 10 and self.player.veg_inv["W"]["amount"] < 10:
+                button_smg.is_selectable = False
+        button_smg.set_background_color((75, 75, 75), )
+        button_smg.update_font({"color": (255, 255, 255)})
+        button_smg.set_padding(8)
+        button_smg.set_max_width(450)
+
+        #Sniper
+        # Pompe
+        if self.player.weapons["sniper"]["owned"]:
+            button_sniper = menu_shop.add_button("Sniper Rifle (owned)", self.change_player_weapon, "sniper")
+        else:
+            button_sniper = menu_shop.add_button("Sniper Rifle (10 strawberries, 10 watermelons)", self.buy_weapon, "sniper",
+                                                0, 0, 10, 10)
+            if self.player.veg_inv["S"]["amount"] < 10 and self.player.veg_inv["W"]["amount"] < 10:
+                button_sniper.is_selectable = False
+        button_sniper.set_background_color((75, 75, 75), )
+        button_sniper.update_font({"color": (255, 255, 255)})
+        button_sniper.set_padding(8)
+        button_sniper.set_max_width(450)
+
         # Return
         button_return = menu_shop.add_button("Return", self.disable_menu_shop)
         button_return.set_background_color((75, 75, 75), )
@@ -242,6 +270,14 @@ class Game:
         # head
         head2 = menu_shop.add_label("Current inventory :")
         head2.update_font({"size": head2.get_font_info()["size"] * 1.25})
+
+        #potatoes
+        label_potatoes = menu_shop.add_label("Potatoes : " + str(self.player.veg_inv['P']["amount"]))
+        label_potatoes.set_padding(8.8)
+
+        #carrots
+        label_carrots = menu_shop.add_label("Carrots : " + str(self.player.veg_inv['C']["amount"]))
+        label_carrots.set_padding(8.8)
 
         # strawberries
         label_strawberries = menu_shop.add_label("Strawberries : " + str(self.player.veg_inv['S']["amount"]))
@@ -308,6 +344,7 @@ class Game:
 
             else:
                 self.phase = "jour"
+                self.field.croissance()
                 self.day += 1
                 self.musique_nuit.stop()
                 self.player.reset_position()
