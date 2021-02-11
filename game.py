@@ -2,6 +2,7 @@ import pygame
 import player
 from field import cropfield
 import pygame_menu
+import json
 
 from tile_map import *
 import copy
@@ -30,6 +31,9 @@ class Game:
         self.phase_start_time = pygame.time.get_ticks()
         self.first_phrase = True
         self.transition_duration = 3
+        self.file_highscores = open("high_scores.json","r")
+        self.highscores = json.load(self.file_highscores)
+        self.player_name = ""
 
         self.spots = []
         self.wall = []
@@ -332,6 +336,7 @@ class Game:
         menu.add_button("Play", self.jouer)
         menu.add_button("Rules", self.get_menu_regles())
         menu.add_button("Credits", self.get_menu_credits())
+        menu.add_button("High Scores", self.get_menu_highscores())
 
         menu.disable()
         return menu
@@ -456,6 +461,16 @@ class Game:
         credits_menu.add_button("RETURN", pygame_menu.events.BACK)
         return credits_menu
 
+    def get_menu_highscores(self):
+        menu_highscores = pygame_menu.Menu(768,1024,"High Scores")
+        menu_highscores.add_label("High scores :")
+        if not self.highscores:
+            menu_highscores.add_label("No highscores registered yet. Be the first !")
+        for key in self.highscores.keys():
+            menu_highscores.add_label(key + " : " + str(self.highscores[key]))
+        menu_highscores.add_button("BACK",pygame_menu.events.BACK)
+        return menu_highscores
+
     def jour(self):
         pygame.mixer.music.load('assets/sounds/Arpeggios_Chill_100BPM.mp3')
         pygame.mixer.music.play(-1)
@@ -519,15 +534,24 @@ class Game:
                 menu_fin.add_label(self.player.veg_inv[vegetable]["name"] + " : "+ str(self.player.veg_inv[vegetable]["amount"]))
                 score += self.player.veg_inv[vegetable]["amount"]
             mid2 = menu_fin.add_label("Your score is : "+ str(score))
-            text_input = menu_fin.add_text_input("Enter your name :")
+            text_input = menu_fin.add_text_input("Enter your name :",onchange=self.set_player_name)
+            enter = menu_fin.add_button("Submit and quit",self.new_highscore,self.player_name,score)
         else:
             top = menu_fin.add_label("Game over !")
             mid = menu_fin.add_label("You died before the end of the 10th night. Try again !")
-
-        quit = menu_fin.add_button("Quit",pygame_menu.events.PYGAME_QUIT)
+            quit = menu_fin.add_button("Quit",pygame_menu.events.PYGAME_QUIT)
 
         return menu_fin
 
-    def play_again(self):
+    def new_higscore(self,name,score):
+        new_score = {name : score}
+        self.highscores.append(new_score)
         self.menu_fin.disable()
-        pass
+
+    def close_highscores(self):
+        with open("high_scores.json",'w') as json_file:
+            json.dump(self.highscores, json_file)
+        self.file_highscores.close()
+
+    def set_player_name(self,name):
+        self.player_name = name

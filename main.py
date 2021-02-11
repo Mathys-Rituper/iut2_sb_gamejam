@@ -82,6 +82,7 @@ def menus_fin():
         for event in events:
             if event.type == pygame.QUIT:
                 menus_open = False
+                game.close_highscores()
                 pygame.quit()
         game.menu_fin.update(events)
         if game.menu_fin.is_enabled():
@@ -246,4 +247,5 @@ forcequit = False
 main_game(main_running,forcequit)
 if forcequit:
     menus_fin()
+game.close_highscores()
 pygame.quit()

@@ -9,8 +9,6 @@ class Cropfield:
         self.spots = [cropspot.Cropspot() for x in range(nb_spots)]
         self.game = game
         self.planting_crop = "N"
-        self.spots[0].crop_type = cropspot.crop_types["W"]
-        self.spots[0].image = pygame.image.load(cropspot.crop_types["W"]["sprite_path"] + "0.png")
 
     def field_interaction_menu(self):
         menu = pygame_menu.Menu(768, 1024, "Crop field", theme=pygame_menu.themes.THEME_DARK)

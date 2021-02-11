@@ -23,10 +23,10 @@ class Player(animation.AnimateSprite):
         self.damage_animation_timer =-1
 
         # INVENTORY
-        self.veg_inv = {"P": {"name": "Potato", "amount": 1},
-                        "W": {"name": "Watermelon", "amount": 10},
+        self.veg_inv = {"P": {"name": "Potato", "amount": 0},
+                        "W": {"name": "Watermelon", "amount": 0},
                         "C": {"name": "carrot", "amount": 5},
-                        "S": {"name": "Strawberry", "amount": 10},
+                        "S": {"name": "Strawberry", "amount": 0},
                         "N": {"name": "No Crop", "amount": 0}}
         self.weapons = {"pistol": {"owned": True, "item": weapons.Pistolet(self)},
                         "shotgun": {"owned": False, "item": weapons.Pompe(self)},"smg":{"owned":False,"item":weapons.Mitrailleuse(self)},"sniper":{"owned":False,"item":weapons.Snipe(self)}}  # Rajouter chaque nouvelle arme ici
