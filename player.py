@@ -20,6 +20,7 @@ class Player(animation.AnimateSprite):
         self.elapse = 0
         self.game = game
         self.weapon = weapons.Pistolet(self)
+        self.damage_animation_timer =-1
 
         # INVENTORY
         self.veg_inv = {"P": {"name": "Potato", "amount": 1},
@@ -39,8 +40,6 @@ class Player(animation.AnimateSprite):
         self.weapon.fire()
 
     def cd(self):
-        print("last ", self.last_attack, "now ", pygame.time.get_ticks(),
-              (pygame.time.get_ticks() - self.last_attack) / 1000)
         return (pygame.time.get_ticks() - self.last_attack) / 1000
 
     def reset_cd(self):
@@ -86,6 +85,7 @@ class Player(animation.AnimateSprite):
 
     def inc_veg(self, crop):
         self.veg_inv[crop]["amount"] += 1
+        print(self.veg_inv)
 
     def update(self):
 
@@ -93,9 +93,32 @@ class Player(animation.AnimateSprite):
             self.animate()
             self.elapse = pygame.time.get_ticks()
 
+
+    def take_damage(self, dmg):
+        self.health-=dmg
+        self.damage_animation_timer = 0
+        print(self.health)
+
     def add_weapon(self, nom_weapon):
         self.weapons[nom_weapon]["owned"] = True
 
     def switch_weapon(self, nom_weapon):
         if self.weapons[nom_weapon]["owned"]:
             self.weapon = self.weapons[nom_weapon]["item"]
+
+    def update_anim_degats(self):
+        colorImage = pygame.Surface(self.image.get_size()).convert_alpha()
+
+        if 0<=self.damage_animation_timer<2:
+            colorImage.fill("black")
+            self.image.blit(colorImage, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+            self.damage_animation_timer+=1
+
+        elif self.damage_animation_timer >= 15:
+            colorImage.fill("white")
+            self.image.blit(colorImage, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+            self.damage_animation_timer=-1
+        elif self.damage_animation_timer != -1:
+            colorImage.fill("red")
+            self.image.blit(colorImage, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+            self.damage_animation_timer+=1

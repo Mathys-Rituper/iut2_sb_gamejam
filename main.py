@@ -117,7 +117,7 @@ def main_game(running):
                 world_image.blit(monster.image, monster.rect)
 
             screen.blit(world_image, (0, 0), game.camera)
-
+            game.player.update_anim_degats()
             screen.blit(game.player.image, ((1024 - game.player.rect.w) / 2, (768 - game.player.rect.h) / 2))
 
             if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x <= WIDTH_TILE * NB_TILE_X - game.player.rect.w:

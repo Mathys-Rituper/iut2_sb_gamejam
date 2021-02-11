@@ -3,10 +3,9 @@ import pygame
 
 class Projectile(pygame.sprite.Sprite):
 
-    def __init__(self, game, x, y, dx, dy, damage, ttl):
+    def __init__(self, game, x, y, dx, dy, damage, ttl, pen):
         super().__init__()
         self.game = game
-
         self.image = pygame.image.load('assets/bullet.png')
         self.image = pygame.transform.scale(self.image, (8, 8))
 
@@ -14,7 +13,7 @@ class Projectile(pygame.sprite.Sprite):
         self.velocity = 2
         self.dx = dx
         self.dy = dy
-        self.penetration = 1
+        self.penetration = pen # en pixels
         self.penned = 0
 
         self.ttl = ttl
@@ -44,4 +43,7 @@ class Projectile(pygame.sprite.Sprite):
                 self.penned += 1
 
                 if self.penned >= self.penetration:
+                    self.kill()
+        for ob in self.game.wall:
+            if ob.rect.contains(self.rect):
                     self.kill()

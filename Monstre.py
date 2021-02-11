@@ -6,7 +6,10 @@ import threading
 class Monstre(pygame.sprite.Sprite):
     def __init__(self, game):
         super().__init__()
-        self.hp = 1
+        self.hp = 10
+        self.dmg = 10
+        self.cd = 1
+        self.last_attack = pygame.time.get_ticks()
         self.vitessex = 2
         self.vitessey = 2
         self.num = str(random.randint(1,4))
@@ -105,7 +108,9 @@ class Monstre(pygame.sprite.Sprite):
                             self.subpos = 2
 
                     self.rect.x += self.subpos
-
+        if self.rect.colliderect(self.game.player.rect)& ((pygame.time.get_ticks() - self.last_attack) / 1000>self.cd):
+            self.game.player.take_damage(self.dmg)
+            self.last_attack = pygame.time.get_ticks()
 
 
     def max(self, a , b):
@@ -132,7 +137,17 @@ class Monstre(pygame.sprite.Sprite):
         self.vitessey = 0
 
     def battu(self):
-        self.game.player.inc_veg("P")
+        if self.num == "1":
+            crop="S"
+        elif self.num == "2":
+            crop="W"
+        elif self.num == "3":
+            crop="C"
+        elif self.num == "4":
+            crop="P"
+        nb=random.randint(0,3)
+        for i in range (0,nb,1):
+           self.game.player.inc_veg(crop)
 
     def prendre_degat(self, dmg):
         self.hp-=dmg

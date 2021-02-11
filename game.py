@@ -13,8 +13,8 @@ class Game:
     def __init__(self, screen):
         self.screen = screen
         self.player = player.Player(self)
-        self.camera = pygame.Rect(self.player.rect.x + (self.player.rect.w / 2) - 1080 / 2,
-                                  self.player.rect.y + (self.player.rect.h / 2) - 768 / 2, 1080, 768)
+        self.camera = pygame.Rect(self.player.rect.x + (self.player.rect.w / 2) - 1024 / 2,
+                                  self.player.rect.y + (self.player.rect.h / 2) - 768 / 2, 1024, 768)
         self.field = cropfield.Cropfield(9, self)
         self.pressed = {}
         self.wall = []
