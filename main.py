@@ -11,13 +11,23 @@ main_running = True
 
 
 # Initialisation de la fenêtre
-screen = pygame.display.set_mode((1080, 768))  # 1080, 768
+screen = pygame.display.set_mode((1024, 768))  # 1080, 768
 pygame.display.set_caption("Game Jam 2021")
 
 # Gestion de la map
 tile = TileMap()
 map_image = tile.make_map()
 game = Game(map_image)
+spots = []
+wall = []
+for tile_object in tile.tmx.objects:
+    if tile_object.name.startswith('obstacle'):
+        wall.append(Obstacle(tile, tile_object.x, tile_object.y, tile_object.width, tile_object.height))
+    if tile_object.name.startswith('spot'):
+        spots.append(tile_object)
+game.get_wall(wall)
+groupM = []
+
 
 # Gestion des menus
 is_a_menu_open = False
@@ -32,14 +42,6 @@ pygame.display.flip()
 clock = pygame.time.Clock()
 FPS = 60
 
-spots = []
-wall = []
-for tile_object in tile.tmx.objects:
-    if tile_object.name.startswith('obstacle'):
-        wall.append(Obstacle(tile, tile_object.x, tile_object.y, tile_object.width, tile_object.height))
-    if tile_object.name.startswith('spot'):
-        spots.append(tile_object)
-
 
 def render_field():
     assert len(game.field.spots) == len(spots)
@@ -47,8 +49,7 @@ def render_field():
         world_image.blit(game.field.spots[i].image, (spots[i].x, spots[i].y))
 
 
-game.get_wall(wall)
-groupM = []
+main_running = True
 while main_running:
 
     world_image = pygame.Surface((WIDTH_TILE * NB_TILE_X, HEIGHT_TILE * NB_TILE_Y))
