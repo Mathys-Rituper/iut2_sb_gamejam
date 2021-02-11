@@ -40,7 +40,8 @@ class Player(animation.AnimateSprite):
         self.weapon.fire()
 
     def cd(self):
-        return (pygame.time.get_ticks() - self.last_attack) / 1000
+        return ((pygame.time.get_ticks() - self.last_attack) / 1000)
+
 
     def reset_cd(self):
         self.last_attack = pygame.time.get_ticks()
@@ -85,7 +86,6 @@ class Player(animation.AnimateSprite):
 
     def inc_veg(self, crop):
         self.veg_inv[crop]["amount"] += 1
-        print(self.veg_inv)
 
     def update(self):
 
@@ -97,7 +97,6 @@ class Player(animation.AnimateSprite):
     def take_damage(self, dmg):
         self.health-=dmg
         self.damage_animation_timer = 0
-        print(self.health)
 
     def add_weapon(self, nom_weapon):
         self.weapons[nom_weapon]["owned"] = True

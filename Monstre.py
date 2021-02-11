@@ -45,7 +45,6 @@ class Monstre(pygame.sprite.Sprite):
                 else:
                     if not self.col:
                         i = random.randint(1,2)
-                        print("i 1er", i)
                         self.col = True
 
                         if i  == 1:#dy > 0:
@@ -64,7 +63,6 @@ class Monstre(pygame.sprite.Sprite):
                     if not self.col:
                         i = random.randint(1, 2)
                         self.col = True
-                        print("i 2em" , i)
                         if i == 1:  # dy > 0:
                             self.subpos = -self.vitessey
                         else:
@@ -81,7 +79,6 @@ class Monstre(pygame.sprite.Sprite):
                     if not self.col:
                         i = random.randint(1, 2)
                         self.col = True
-                        print("i 2em", i)
                         if i == 1:  # dy > 0:
                             self.subpos = self.vitessex
                         else:
@@ -98,7 +95,6 @@ class Monstre(pygame.sprite.Sprite):
                     if not self.col:
                         i = random.randint(1, 2)
                         self.col = True
-                        print("i 2em", i)
                         if i == 1:  # dy > 0:
                             self.subpos = -self.vitessey
                         else:
