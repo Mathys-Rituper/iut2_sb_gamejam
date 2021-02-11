@@ -130,7 +130,7 @@ class Game:
 
     def upgrade_speed(self):
         if self.player.veg_inv["C"]["amount"] > 2:
-            self.player.velocity *= 1.2
+            self.player.velocity *= 1.1
             self.player.veg_inv["C"]["amount"] -= 3
         self.update_menu_npc()
         self.menu_npc.enable()
@@ -144,14 +144,14 @@ class Game:
 
     def upgrade_atk_speed(self):
         if self.player.veg_inv["W"]["amount"] > 2:
-            self.player.attack_speed += 0.3
+            self.player.attack_speed += 0.2
             self.player.veg_inv["W"]["amount"] -= 3
         self.update_menu_npc()
         self.menu_npc.enable()
 
     def upgrade_damage(self):
         if self.player.veg_inv["S"]["amount"] > 2:
-            self.player.attack_strength *= 1.2
+            self.player.attack_strength *= 1.3
             self.player.veg_inv["S"]["amount"] -= 3
         self.update_menu_npc()
         self.menu_npc.enable()

@@ -10,7 +10,7 @@ class Player(animation.AnimateSprite):
         super().__init__("player")
 
         # STATISTIQUES INGAME
-        self.velocity = 5
+        self.velocity = 6.5
         self.health = 100
         self.max_health = 100
         self.attack_speed = 1  # coefficient multiplicateur vitesse attaque
