@@ -74,25 +74,26 @@ def menus():
             menus_open = False
         pygame.display.flip()
 
-def menus_fin():
-    game.menu_fin.enable()
-    menus_open = True
-    while menus_open:
-        events = pygame.event.get()
-        for event in events:
-            if event.type == pygame.QUIT:
+def menus_fin(force_quit):
+    if not force_quit:
+        game.menu_fin.enable()
+        menus_open = True
+        while menus_open:
+            events = pygame.event.get()
+            for event in events:
+                if event.type == pygame.QUIT:
+                    menus_open = False
+                    game.close_highscores()
+                    pygame.quit()
+            game.menu_fin.update(events)
+            if game.menu_fin.is_enabled():
+                game.menu_fin.draw(screen)
+            else:
                 menus_open = False
-                game.close_highscores()
-                pygame.quit()
-        game.menu_fin.update(events)
-        if game.menu_fin.is_enabled():
-            game.menu_fin.draw(screen)
-        else:
-            menus_open = False
-        pygame.display.flip()
+            pygame.display.flip()
 
 
-def main_game(running,forcequit):
+def main_game(running,force_quit):
     is_a_menu_open = False
     while running:
 
@@ -104,8 +105,8 @@ def main_game(running,forcequit):
 
         for event in events:
             if event.type == pygame.QUIT:
-                running = False
-                forcequit = True
+                pygame.quit()
+                return True
             elif event.type == pygame.KEYDOWN:
                 game.pressed[event.key] = True
             elif event.type == pygame.KEYUP:
@@ -234,18 +235,21 @@ def main_game(running,forcequit):
         else:
             is_a_menu_open = False  # Si tous les menus sont fermés, alors on est plus dans un menu
 
+        if game.day > 10 or game.player.health < 0:
+            running = False
+
         pygame.display.flip()
 
         clock.tick(FPS)
-
+    return False
 
 
 menus()  # Commence par ouvrir les menus
 game.phase = "jour"
 main_running = True  # Jeu principal
 forcequit = False
-main_game(main_running,forcequit)
-if forcequit:
-    menus_fin()
+forcequit =main_game(main_running, forcequit)
+menus_fin(forcequit)
 game.close_highscores()
-pygame.quit()
+if not forcequit:
+    pygame.quit()
