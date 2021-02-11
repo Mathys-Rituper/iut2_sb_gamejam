@@ -114,7 +114,7 @@ class Player(animation.AnimateSprite):
             self.image.blit(colorImage, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
             self.damage_animation_timer+=1
 
-        elif self.damage_animation_timer >= 15:
+        elif self.damage_animation_timer >= 10:
             colorImage.fill("white")
             self.image.blit(colorImage, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
             self.damage_animation_timer=-1

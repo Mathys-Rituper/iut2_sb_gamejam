@@ -16,6 +16,7 @@ class Monstre(pygame.sprite.Sprite):
         #self.path = str('assets/Monstre/monstre'+self.num+'.png')
         self.image = pygame.image.load('assets/Monstre/monstre'+self.num+'.png')
         self.image = pygame.transform.scale(self.image, (50,50))
+        self.damage_animation_timer = -1
         self.rect = self.image.get_rect()
         self.game = game
         self.i = random.randint(1,3)
@@ -151,7 +152,20 @@ class Monstre(pygame.sprite.Sprite):
 
     def prendre_degat(self, dmg):
         self.hp-=dmg
+        self.damage_animation_timer=0
         if self.hp<=0:
             self.battu()
             self.kill()
 
+    def update_anim_degats(self):
+        colorImage = pygame.Surface(self.image.get_size()).convert_alpha()
+
+        if self.damage_animation_timer >= 6:
+            colorImage.fill("white")
+            self.image.blit(colorImage, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+            self.damage_animation_timer = -1
+
+        elif self.damage_animation_timer!=-1:
+            colorImage.fill("red")
+            self.image.blit(colorImage, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+            self.damage_animation_timer+=1

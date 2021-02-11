@@ -113,7 +113,7 @@ def main_game(running):
 
             for monster in game.tab_monstre:
                 # gestion monstres
-
+                monster.update_anim_degats()
                 world_image.blit(monster.image, monster.rect)
 
             screen.blit(world_image, (0, 0), game.camera)
