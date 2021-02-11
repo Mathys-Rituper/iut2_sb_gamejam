@@ -1,3 +1,5 @@
+import copy
+
 import pygame
 import random
 import threading
@@ -18,6 +20,13 @@ class Monstre(pygame.sprite.Sprite ):
         self.damage_animation_timer = -1
         self.rect = pygame.Rect(self.image.get_rect().x, self.image.get_rect().y, 30,30)#self.image.get_rect()
 
+        filterNight = pygame.Surface(self.image.get_size()).convert_alpha()
+        filterNight.fill("blue")
+        filterNight.set_alpha(255)
+
+        self.backup = copy.copy(self.image)
+        self.backup.blit(filterNight, (0,0), special_flags=pygame.BLEND_RGBA_MULT)
+        self.image = copy.copy(self.backup)
 
         self.defineSpawn()
         self.check = 0;
@@ -157,8 +166,7 @@ class Monstre(pygame.sprite.Sprite ):
         colorImage = pygame.Surface(self.image.get_size()).convert_alpha()
 
         if self.damage_animation_timer >= 6:
-            colorImage.fill("white")
-            self.image.blit(colorImage, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+            self.image.blit(self.backup, (0, 0))
             self.damage_animation_timer = -1
 
         elif self.damage_animation_timer!=-1:

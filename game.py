@@ -293,11 +293,11 @@ class Game:
             else :
                 self.phase = "jour"
                 self.day += 1
+                self.player.reset_position()
 
             if self.phase == "nuit":
                 self.spawn_monstres()
 
-            self.player.reset_position()
             self.phase_start_time = pygame.time.get_ticks()
             self.phase_is_over = False
 
