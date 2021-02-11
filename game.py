@@ -42,7 +42,7 @@ class Game:
         self.champ = []
 
         self.groupM = []  # groupe  pour les collisions inter-monstres
-        self.day_duration = 20
+        self.day_duration = 60
 
         # HUD
         self.font = pygame.font.SysFont('Comix Sans MS', 30)
@@ -364,6 +364,7 @@ class Game:
         if self.phase_is_over:
 
             if self.phase == "jour":
+                self.player.health = self.player.max_health
                 self.phase = "nuit"
                 self.musique_jour.stop()
                 self.musique_nuit.play(-1)
@@ -372,6 +373,7 @@ class Game:
 
                 self.phase = "jour"
                 self.field.croissance()
+                self.player.health = self.player.max_health
                 self.transition_timer=0
 
             else:
@@ -500,7 +502,7 @@ class Game:
 
     def Affichage_Temps_Restant(self):
 
-        tl = self.font.render(" Temps restant : " + str(int(self.day_duration-(pygame.time.get_ticks() - self.phase_start_time) / 1000 )) + " s", True, (0, 0, 0))
+        tl = self.font.render(" Time remaining : " + str(int(self.day_duration-(pygame.time.get_ticks() - self.phase_start_time) / 1000 )) + " s", True, (0, 0, 0))
         return tl
 
     def Affichage_Nb_Jours(self):
