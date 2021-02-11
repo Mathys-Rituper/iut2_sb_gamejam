@@ -21,10 +21,7 @@ class Game:
         self.menu_cropfield = self.get_menu_cropfield()
         self.menu_npc = self.get_npc_menu()
         self.tab_monstre = pygame.sprite.Group()
-        self.menu_shop = self.get_shop_menu()
-        self.menu_principal = self.get_menu_principal()
-        self.menu_credits = self.get_menu_credits
-        self.get_menu_regles()
+
         self.spawn = []
         self.projectiles = pygame.sprite.Group()
         self.day = 1
@@ -70,6 +67,12 @@ class Game:
         self.nb_mob_a_pop =0
         self.nb_mob_max_par_vague = self.day * 3
 
+
+        # Menus
+
+        self.menu_shop = self.get_shop_menu()
+        self.menu_principal = self.get_menu_principal()
+        self.menu_fin = self.get_menu_fin()
 
     def get_menu_cropfield(self):
         return self.field.field_interaction_menu()
@@ -504,3 +507,27 @@ class Game:
     def affiche_hp(self):
         txt = self.font.render(str(self.player.health), True, (0, 0, 0))
         return txt
+
+    def get_menu_fin(self):
+
+        menu_fin = pygame_menu.Menu(768,1024,"End of the game !",theme=pygame_menu.themes.THEME_DARK)
+        if self.day == 11:
+            top = menu_fin.add_label("Congratulations !")
+            mid = menu_fin.add_label("Your score is :")
+            score  = 0
+            for vegetable in self.player.veg_inv.keys():
+                menu_fin.add_label(self.player.veg_inv[vegetable]["name"] + " : "+ str(self.player.veg_inv[vegetable]["amount"]))
+                score += self.player.veg_inv[vegetable]["amount"]
+            mid2 = menu_fin.add_label("Your score is : "+ str(score))
+            text_input = menu_fin.add_text_input("Enter your name :")
+        else:
+            top = menu_fin.add_label("Game over !")
+            mid = menu_fin.add_label("You died before the end of the 10th night. Try again !")
+
+        quit = menu_fin.add_button("Quit",pygame_menu.events.PYGAME_QUIT)
+
+        return menu_fin
+
+    def play_again(self):
+        self.menu_fin.disable()
+        pass

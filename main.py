@@ -9,8 +9,6 @@ pygame.init()
 #Gestoin font
 pygame.font.init()
 
-main_running = True
-
 # Initialisation de la fenêtre
 screen = pygame.display.set_mode((1024, 768))  # 1080, 768
 pygame.display.set_caption("Game Jam 2021")
@@ -76,8 +74,24 @@ def menus():
             menus_open = False
         pygame.display.flip()
 
+def menus_fin():
+    game.menu_fin.enable()
+    menus_open = True
+    while menus_open:
+        events = pygame.event.get()
+        for event in events:
+            if event.type == pygame.QUIT:
+                menus_open = False
+                pygame.quit()
+        game.menu_fin.update(events)
+        if game.menu_fin.is_enabled():
+            game.menu_fin.draw(screen)
+        else:
+            menus_open = False
+        pygame.display.flip()
 
-def main_game(running):
+
+def main_game(running,forcequit):
     is_a_menu_open = False
     while running:
 
@@ -90,6 +104,7 @@ def main_game(running):
         for event in events:
             if event.type == pygame.QUIT:
                 running = False
+                forcequit = True
             elif event.type == pygame.KEYDOWN:
                 game.pressed[event.key] = True
             elif event.type == pygame.KEYUP:
@@ -179,7 +194,7 @@ def main_game(running):
                         game.update_menu_cropfield()
                         game.menu_cropfield.enable()
                         is_a_menu_open = True
-                    elif game.collision(game.player,game.pnj2):
+                    elif game.collision(game.player,game.pnj1):
                         game.update_menu_npc()
                         game.menu_npc.enable()
                         is_a_menu_open = True
@@ -222,10 +237,13 @@ def main_game(running):
 
         clock.tick(FPS)
 
-    pygame.quit()
 
 
 menus()  # Commence par ouvrir les menus
 game.phase = "jour"
-main_running = True  # Ouvrir le jeu en lançant le menu principal
-main_game(main_running)
+main_running = True  # Jeu principal
+forcequit = False
+main_game(main_running,forcequit)
+if forcequit:
+    menus_fin()
+pygame.quit()
