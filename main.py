@@ -19,11 +19,16 @@ map_image = tile.make_map()
 game = Game(map_image)
 spots = []
 wall = []
+
+
+
 for tile_object in tile.tmx.objects:
     if tile_object.name.startswith('obstacle'):
         wall.append(Obstacle(tile, tile_object.x, tile_object.y, tile_object.width, tile_object.height))
     if tile_object.name.startswith('spot'):
         spots.append(tile_object)
+    if tile_object.name.startswith('spawn'):
+        game.spawn.append(tile_object)
 game.get_wall(wall)
 groupM = []
 

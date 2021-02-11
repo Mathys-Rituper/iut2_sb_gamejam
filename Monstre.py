@@ -10,20 +10,20 @@ class Monstre(pygame.sprite.Sprite):
         self.dmg = 10
         self.cd = 1
         self.last_attack = pygame.time.get_ticks()
-        self.vitessex = 2
-        self.vitessey = 2
+        self.vitessex = 4
+        self.vitessey = 4
         self.num = str(random.randint(1,4))
         #self.path = str('assets/Monstre/monstre'+self.num+'.png')
         self.image = pygame.image.load('assets/Monstre/monstre'+self.num+'.png')
         self.image = pygame.transform.scale(self.image, (50,50))
         self.damage_animation_timer = -1
-        self.rect = self.image.get_rect()
+        self.rect = pygame.Rect(self.image.get_rect().x, self.image.get_rect().y, 25,25)#self.image.get_rect()
         self.game = game
-        self.i = random.randint(1,3)
-        self.rect.x = 2143
-        self.rect.y = 1020
+       # self.i = random.randint(1,3)
+        #self.rect.x = 2143
+        #self.rect.y = 1020
+        self.defineSpawn()
         self.check = 0;
-        self.animation = True
         self.col = False
         self.subpos = 0
 
@@ -36,7 +36,6 @@ class Monstre(pygame.sprite.Sprite):
         dy = posy - self.rect.y
         # for all item in groupe teste collision
         dir = self.max(dx, dy)
-        #self.animationG()
 
         if dir ==1 and dx >= 0:
             self.animation = True
@@ -47,19 +46,16 @@ class Monstre(pygame.sprite.Sprite):
                 else:
                     if not self.col:
                         i = random.randint(1,2)
-                        print("i 1er", i)
                         self.col = True
-                        self.vitessex = 2
-                        self.vitessey = 2
+
                         if i  == 1:#dy > 0:
-                            self.subpos = -2
+                            self.subpos = -self.vitessey
                         else:
                              #self.rect.y -= self.vitessey
-                             self.subpos = 2
+                             self.subpos = self.vitessey
                     self.rect.y += self.subpos
 
         if dir ==1 and dx < 0:
-            self.animation = False
             if not self.game.essai_deplacement(self, -self.vitessex, 0, group):
                 if not self.game.essai_deplacement(self, -self.vitessex, 0, self.game.wall):
                     self.rect.x -= self.vitessex
@@ -68,11 +64,10 @@ class Monstre(pygame.sprite.Sprite):
                     if not self.col:
                         i = random.randint(1, 2)
                         self.col = True
-                        print("i 2em" , i)
                         if i == 1:  # dy > 0:
-                            self.subpos = -2
+                            self.subpos = -self.vitessey
                         else:
-                            self.subpos = 2
+                            self.subpos = self.vitessey
 
                     self.rect.y += self.subpos
 
@@ -85,11 +80,10 @@ class Monstre(pygame.sprite.Sprite):
                     if not self.col:
                         i = random.randint(1, 2)
                         self.col = True
-                        print("i 2em", i)
                         if i == 1:  # dy > 0:
-                            self.subpos = -2
+                            self.subpos = self.vitessex
                         else:
-                            self.subpos = 2
+                            self.subpos = self.vitessey
 
                     self.rect.x += self.subpos
 
@@ -102,11 +96,10 @@ class Monstre(pygame.sprite.Sprite):
                     if not self.col:
                         i = random.randint(1, 2)
                         self.col = True
-                        print("i 2em", i)
                         if i == 1:  # dy > 0:
-                            self.subpos = -2
+                            self.subpos = -self.vitessey
                         else:
-                            self.subpos = 2
+                            self.subpos = self.vitessey
 
                     self.rect.x += self.subpos
         if self.rect.colliderect(self.game.player.rect)& ((pygame.time.get_ticks() - self.last_attack) / 1000>self.cd):
@@ -169,3 +162,13 @@ class Monstre(pygame.sprite.Sprite):
             colorImage.fill("red")
             self.image.blit(colorImage, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
             self.damage_animation_timer+=1
+
+    def defineSpawn(self):
+        spawn = random.randint(0,3)
+        if spawn % 2 ==0 :
+            self.rect.x = self.game.spawn[spawn].x + (50 * random.randint(-2,2))
+            self.rect.y = self.game.spawn[spawn].y
+        else:
+            self.rect.x = self.game.spawn[spawn].x
+            self.rect.y = self.game.spawn[spawn].y + (50 * random.randint(-2, 2))
+

@@ -25,8 +25,7 @@ class Game:
         self.menu_principal = self.get_menu_principal()
         self.menu_credits = self.get_menu_credits
         self.get_menu_regles()
-
-        # self.monste = Monstre(self)
+        self.spawn = []
         self.projectiles = pygame.sprite.Group()
 
     def get_menu_cropfield(self):
@@ -37,6 +36,7 @@ class Game:
 
     def collision(self, player, group):
         return pygame.sprite.spritecollide(player, group, False)
+       # return pygame.sprite.spritecollideany(player, group)
 
     def bouger_camera(self, x, y):
         self.camera.x += x
@@ -65,7 +65,7 @@ class Game:
         speed = npc_menu.add_button(
             "Increase speed (cost : 3 carrots, current speed :" + '%.2f' % (self.player.velocity) + ")",
             self.upgrade_speed)
-        if self.player.veg_inv["C"]["amount"] < 1:
+        if self.player.veg_inv["C"]["amount"] < 3:
             speed.is_selectable = False
         speed.set_background_color((75, 75, 75))
         speed.update_font({"color": (255, 255, 255)})
@@ -75,7 +75,7 @@ class Game:
         max_health = npc_menu.add_button(
             "Increase max HP (cost : 3 potatos, current max HP :" + str(self.player.max_health) + ")",
             self.upgrade_hp)
-        if self.player.veg_inv["P"]["amount"] < 1:
+        if self.player.veg_inv["P"]["amount"] < 3:
             max_health.is_selectable = False
         max_health.set_background_color((75, 75, 75), )
         max_health.update_font({"color": (255, 255, 255)})
@@ -85,7 +85,7 @@ class Game:
         damage = npc_menu.add_button(
             "Increase damage (cost : 3 strawberries, current damage :" + '%.2f' % (self.player.attack_strength) + ")",
             self.upgrade_damage)
-        if self.player.veg_inv["S"]["amount"] < 1:
+        if self.player.veg_inv["S"]["amount"] < 3:
             damage.is_selectable = False
         damage.set_background_color((75, 75, 75), )
         damage.update_font({"color": (255, 255, 255)})
@@ -96,7 +96,7 @@ class Game:
             "Increase attack speed (cost : 3 watermelons, current attack speed :" + '%.2f' % (
                 self.player.attack_speed) + ")",
             self.upgrade_atk_speed)
-        if self.player.veg_inv["W"]["amount"] < 1:
+        if self.player.veg_inv["W"]["amount"] < 3:
             attack_speed.is_selectable = False
         attack_speed.set_background_color((75, 75, 75), )
         attack_speed.update_font({"color": (255, 255, 255)})
@@ -129,30 +129,30 @@ class Game:
         self.menu_npc = self.get_npc_menu()
 
     def upgrade_speed(self):
-        if self.player.veg_inv["C"]["amount"] > 0:
+        if self.player.veg_inv["C"]["amount"] > 2:
             self.player.velocity *= 1.1
-            self.player.veg_inv["C"]["amount"] -= 1
+            self.player.veg_inv["C"]["amount"] -= 3
         self.update_menu_npc()
         self.menu_npc.enable()
 
     def upgrade_hp(self):
-        if self.player.veg_inv["P"]["amount"] > 0:
+        if self.player.veg_inv["P"]["amount"] > 2:
             self.player.max_health += 20
-            self.player.veg_inv["P"]["amount"] -= 1
+            self.player.veg_inv["P"]["amount"] -= 3
         self.update_menu_npc()
         self.menu_npc.enable()
 
     def upgrade_atk_speed(self):
-        if self.player.veg_inv["W"]["amount"] > 0:
-            self.player.attack_speed += 0.1
-            self.player.veg_inv["W"]["amount"] -= 1
+        if self.player.veg_inv["W"]["amount"] > 2:
+            self.player.attack_speed += 0.3
+            self.player.veg_inv["W"]["amount"] -= 3
         self.update_menu_npc()
         self.menu_npc.enable()
 
     def upgrade_damage(self):
-        if self.player.veg_inv["S"]["amount"] > 0:
+        if self.player.veg_inv["S"]["amount"] > 2:
             self.player.attack_strength *= 1.1
-            self.player.veg_inv["S"]["amount"] -= 1
+            self.player.veg_inv["S"]["amount"] -= 3
         self.update_menu_npc()
         self.menu_npc.enable()
 
@@ -240,7 +240,7 @@ class Game:
             self.player.veg_inv["W"]["amount"] -= watermelon
             self.player.add_weapon(nom_weapon)
             self.player.switch_weapon(nom_weapon)
-            self.disable_menu_shop()
+        self.disable_menu_shop()
 
     def get_menu_principal(self):
         menu = pygame_menu.Menu(768, 1024, "Game Name", pygame_menu.themes.THEME_DARK)
