@@ -120,9 +120,11 @@ def main_game(running):
             assert len(game.field.spots) == len(game.spots)
             for i in range(len(game.field.spots)):
                 world_image.blit(game.field.spots[i].image, (game.spots[i].x, game.spots[i].y))
+
             #Affichage des PNJs
             if( game.phase=="jour"):
                world_image.blit(image_npc1, (80*32 , 47*32))
+               world_image.blit(image_npc1, (92*32 , 54*32))
 
             elif game.phase=="nuit":
 
