@@ -240,6 +240,7 @@ def main_game(running,force_quit):
             is_a_menu_open = False  # Si tous les menus sont fermés, alors on est plus dans un menu
 
         if game.day > 10 or game.player.health < 0:
+            game.update_menu_fin()
             running = False
 
         pygame.display.flip()

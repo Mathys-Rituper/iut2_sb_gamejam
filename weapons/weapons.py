@@ -72,7 +72,7 @@ class Mitrailleuse(pygame.sprite.Sprite):
                 y = self.player.rect.center[1]
                 dy = self.vitesse_projectile + random.randint(1, 3)
                 dx = ((random.random() - 0.5) * 2)
-            self.player.game.projectiles.add(Projectile(self.player.game, x, y, dx, dy, self.damage, self.ttl, 1))
+            self.player.game.projectiles.add(Projectile(self.player.game, x, y, dx, dy, self.damage, self.ttl, 0))
             self.player.reset_cd()
 class Snipe(pygame.sprite.Sprite):
 

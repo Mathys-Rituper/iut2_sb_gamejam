@@ -28,7 +28,7 @@ class Player(animation.AnimateSprite):
         # INVENTORY
         self.veg_inv = {"P": {"name": "Potato", "amount": 0},
                         "W": {"name": "Watermelon", "amount": 0},
-                        "C": {"name": "carrot", "amount": 5},
+                        "C": {"name": "carrot", "amount": 0},
                         "S": {"name": "Strawberry", "amount": 0},
                         "N": {"name": "No Crop", "amount": 0}}
         self.weapons = {"pistol": {"owned": True, "item": weapons.Pistolet(self)},

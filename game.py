@@ -539,15 +539,15 @@ class Game:
     def get_menu_fin(self):
 
         menu_fin = pygame_menu.Menu(768,1024,"End of the game !",theme=pygame_menu.themes.THEME_DARK)
-        if self.day == 11:
+        if self.day > 10 :
             top = menu_fin.add_label("Congratulations !")
             mid = menu_fin.add_label("Your score is :")
-            score  = 0
+            score = 0
             for vegetable in self.player.veg_inv.keys():
                 menu_fin.add_label(self.player.veg_inv[vegetable]["name"] + " : "+ str(self.player.veg_inv[vegetable]["amount"]))
                 score += self.player.veg_inv[vegetable]["amount"]
             mid2 = menu_fin.add_label("Your score is : "+ str(score))
-            text_input = menu_fin.add_text_input("Enter your name :",onchange=self.set_player_name)
+            text_input = menu_fin.add_text_input("Enter your name :",onreturn=self.set_player_name)
             enter = menu_fin.add_button("Submit and quit",self.new_highscore,self.player_name,score)
         else:
             top = menu_fin.add_label("Game over !")
@@ -556,9 +556,8 @@ class Game:
 
         return menu_fin
 
-    def new_higscore(self,name,score):
-        new_score = {name : score}
-        self.highscores.append(new_score)
+    def new_highscore(self,name,score):
+        self.highscores[name] = score
         self.menu_fin.disable()
 
     def close_highscores(self):
@@ -568,3 +567,6 @@ class Game:
 
     def set_player_name(self,name):
         self.player_name = name
+
+    def update_menu_fin(self):
+        self.menu_fin = self.get_menu_fin()
