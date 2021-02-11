@@ -19,23 +19,25 @@ world_image = pygame.Surface((WIDTH_TILE * NB_TILE_X, HEIGHT_TILE * NB_TILE_Y))
 # Gestion de la map
 tile = TileMap()
 map_image = tile.make_map()
+image_npc1= pygame.image.load("assets/npc-oldman1.png")
 game = Game(map_image)
-spots = []
-wall = []
 
+filterNight = pygame.Surface(world_image.get_size()).convert_alpha()
+filterNight.fill("dark blue")
+map_image_night = copy.copy(map_image)
+map_image_night.blit(filterNight, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
 
 
 for tile_object in tile.tmx.objects:
     if tile_object.name.startswith('obstacle'):
-        wall.append(Obstacle(tile, tile_object.x, tile_object.y, tile_object.width, tile_object.height))
+        game.wall.append(Obstacle(tile, tile_object.x, tile_object.y, tile_object.width, tile_object.height))
     if tile_object.name.startswith('spot'):
-        spots.append(tile_object)
+        game.spots.append(tile_object)
     if tile_object.name.startswith('spawn'):
         game.spawn.append(tile_object)
-game.get_wall(wall)
-groupM = []
+game.get_wall(game.wall)
 
-# Gestion des menus
+# Gestion des menus-
 game.menu_cropfield.disable()
 game.menu_npc.disable()
 game.menu_shop.disable()
@@ -69,9 +71,21 @@ def main_game(running):
     is_a_menu_open = False
     while running:
 
+
+
+        game.next_phase()
+
         world_image = pygame.Surface((WIDTH_TILE * NB_TILE_X, HEIGHT_TILE * NB_TILE_Y))
+
+
         events = pygame.event.get()
-        for event in events:
+
+
+
+
+
+
+        for event in events: # si on quitte le jeu
             if event.type == pygame.QUIT:
                 running = False
             elif event.type == pygame.KEYUP and event.key == pygame.K_e:
@@ -79,50 +93,49 @@ def main_game(running):
             elif event.type == pygame.KEYDOWN:
                 game.pressed[event.key] = True
 
-                if event.key == pygame.K_w:
-                    game.add_monstre()
 
-                    copyT = copy.copy(game.tab_monstre)
 
             elif event.type == pygame.KEYUP:
                 game.pressed[event.key] = False
             if event.type == pygame_menu.events.BACK or event.type == pygame_menu.events.CLOSE:
                 game.update_menu_cropfield()
 
+
+
+
+
+
         if not is_a_menu_open:
 
-            # screen.blit(game.monste.image,game.monste.rect)
-            # game.tab_monstre.draw(screen)
 
-            # mouvement monstre
-            # for m in game.tab_monstre:
-            # m.mouvement(game.player.rect.x, game.player.rect.y)
-            for m in game.tab_monstre:
-                for k in game.tab_monstre:
-                    if k != m:
-                        groupM.append(k)
-                m.mouvement(game.player.rect.x, game.player.rect.y, groupM)
 
-                for k in game.tab_monstre:
-                    if k != m:
-                        groupM.remove(k)
+            if game.phase=="nuit":
+                world_image.blit(map_image_night, (0, 0))  #nouveau calque
+            else:
+                world_image.blit(map_image, (0, 0))  #nouveau calque
 
-            world_image.blit(map_image, (0, 0))
 
             # Affichage des crops sur le champ
-            assert len(game.field.spots) == len(spots)
+            assert len(game.field.spots) == len(game.spots)
             for i in range(len(game.field.spots)):
-                world_image.blit(game.field.spots[i].image, (spots[i].x, spots[i].y))
+                world_image.blit(game.field.spots[i].image, (game.spots[i].x, game.spots[i].y))
+            #Affichage des PNJs
+            if( game.phase=="jour"):
+               world_image.blit(image_npc1, (80*32 , 47*32))
 
-            for projectile in game.projectiles:
-                projectile.move()
-                world_image.blit(projectile.image, (projectile.rect.x, projectile.rect.y))
-                pygame.display.flip()
+            elif game.phase=="nuit":
 
-            for monster in game.tab_monstre:
-                # gestion monstres
-                monster.update_anim_degats()
-                world_image.blit(monster.image, monster.rect)
+                game.monsters_move()
+
+                for projectile in game.projectiles:     #logique des projectiles puis rendering
+                    projectile.move()
+                    world_image.blit(projectile.image, (projectile.rect.x, projectile.rect.y))
+                    pygame.display.flip()
+
+                for monster in game.tab_monstre:        # rendering
+                    # gestion monstres
+                    monster.update_anim_degats()
+                    world_image.blit(monster.image, monster.rect)
 
             screen.blit(world_image, (0, 0), game.camera)
             game.player.update_anim_degats()
@@ -146,6 +159,7 @@ def main_game(running):
             screen.blit(game.affiche_hp(),(520,0))
             screen.blit(game.img_heart,((490,1)))
 
+            game.phase_over()
             if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x <= WIDTH_TILE * NB_TILE_X - game.player.rect.w:
                 game.player.move_right()
             if game.pressed.get(pygame.K_LEFT) and game.player.rect.x >= 0:

@@ -27,6 +27,18 @@ class Game:
         self.get_menu_regles()
         self.spawn = []
         self.projectiles = pygame.sprite.Group()
+        self.day = 1
+        self.phase = "jour"
+        self.phase_is_over = False
+        self.phase_start_time = pygame.time.get_ticks()
+
+        self.spots = []
+        self.wall = []
+
+        self.groupM = [] #groupe  pour les collisions inter-monstres
+        self.day_duration = 45
+
+
 
         #HUD
         self.font = pygame.font.SysFont('Comix Sans MS', 30)
@@ -271,6 +283,56 @@ class Game:
 
     def jouer(self):
         self.menu_principal.disable()
+
+    def next_phase(self):
+
+        if self.phase_is_over:
+
+            if self.phase == "jour":
+                self.phase = "nuit"
+            else :
+                self.phase = "jour"
+                self.day += 1
+
+            if self.phase == "nuit":
+                self.spawn_monstres()
+
+            self.player.reset_position()
+            self.phase_start_time = pygame.time.get_ticks()
+            self.phase_is_over = False
+
+    def spawn_monstres(self):
+        for i in (0,self.day*3,1):
+            self.tab_monstre.add(Monstre(self))
+
+    def monsters_move(self):
+        # screen.blit(game.monste.image,game.monste.rect)
+        # game.tab_monstre.draw(screen)
+
+        # mouvement monstre
+        # for m in game.tab_monstre:
+        # m.mouvement(game.player.rect.x, game.player.rect.y)
+        for m in self.tab_monstre:
+            for k in self.tab_monstre:
+                if k != m:
+                    self.groupM.append(k)
+            m.mouvement(self.player.rect.x, self.player.rect.y, self.groupM)
+
+            for k in self.tab_monstre:
+                if k != m:
+                    self.groupM.remove(k)
+
+    def phase_over(self):
+        if self.phase =="nuit":
+            if (len(self.tab_monstre)==0) :
+                self.phase_is_over=True
+
+        elif  self.phase == "jour" :
+            if ( (pygame.time.get_ticks() - self.phase_start_time ) / 1000 >= self.day_duration ):
+                self.phase_is_over=True
+
+            print((pygame.time.get_ticks() - self.phase_start_time ) / 1000)
+
 
     def get_menu_regles(self):
         regles_menu = pygame_menu.Menu(768, 1000, "Rules", pygame_menu.themes.THEME_DARK)
