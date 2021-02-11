@@ -118,7 +118,7 @@ def main_game(running):
                 world_image.blit(game.field.spots[i].image, (game.spots[i].x, game.spots[i].y))
             #Affichage des PNJs
             if( game.phase=="jour"):
-               world_image.blit(image_npc1, (80*32 , 48*32))
+               world_image.blit(image_npc1, (80*32 , 47*32))
 
             elif game.phase=="nuit":
 
