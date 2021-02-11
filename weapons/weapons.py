@@ -36,7 +36,7 @@ class Pistolet(pygame.sprite.Sprite):
                 y = self.player.rect.center[1]
                 dy = self.vitesse_projectile + random.randint(1, 3)
                 dx = ((random.random() - 0.5) * 2)
-            self.player.game.projectiles.add(Projectile(self.player.game, x, y, dx, dy, self.damage, self.ttl, 30))
+            self.player.game.projectiles.add(Projectile(self.player.game, x, y, dx, dy, self.damage*self.player.attack_strength, self.ttl, 30))
             self.player.reset_cd()
 
 class Mitrailleuse(pygame.sprite.Sprite):
@@ -72,7 +72,7 @@ class Mitrailleuse(pygame.sprite.Sprite):
                 y = self.player.rect.center[1]
                 dy = self.vitesse_projectile + random.randint(1, 3)
                 dx = ((random.random() - 0.5) * 2)
-            self.player.game.projectiles.add(Projectile(self.player.game, x, y, dx, dy, self.damage, self.ttl, 0))
+            self.player.game.projectiles.add(Projectile(self.player.game, x, y, dx, dy, self.damage*self.player.attack_strength, self.ttl, 0))
             self.player.reset_cd()
 class Snipe(pygame.sprite.Sprite):
 
@@ -108,7 +108,7 @@ class Snipe(pygame.sprite.Sprite):
                 y = self.player.rect.center[1]
                 dy = self.vitesse_projectile
                 dx = 0
-            self.player.game.projectiles.add(Projectile(self.player.game, x, y, dx, dy, self.damage, self.ttl, 1000))
+            self.player.game.projectiles.add(Projectile(self.player.game, x, y, dx, dy, self.damage*self.player.attack_strength, self.ttl, 1000))
             self.player.reset_cd()
 
 class Pompe(pygame.sprite.Sprite):
@@ -134,7 +134,7 @@ class Pompe(pygame.sprite.Sprite):
                         y = centre[1] + ((i + random.randint(-3, 3)) * 3)
                         dx = self.vitesse_projectile + random.randint(3, 5)
                         dy = (i + random.randint(-3, 3)) * self.spread_factor
-                        self.player.game.projectiles.add(Projectile(self.player.game, x, y, dx, dy, self.damage, self.ttl, 1))
+                        self.player.game.projectiles.add(Projectile(self.player.game, x, y, dx, dy, self.damage*self.player.attack_strength, self.ttl, 1))
 
             elif direction == "left":
                 centre = [self.player.rect.center[0] ,
@@ -145,7 +145,7 @@ class Pompe(pygame.sprite.Sprite):
                         y = centre[1] + ((i + random.randint(-3, 3)) * 3)
                         dx = -self.vitesse_projectile + random.randint(-5,-3)
                         dy = (i + random.randint(-3, 3)) * self.spread_factor
-                        self.player.game.projectiles.add(Projectile(self.player.game, x, y, dx, dy, self.damage, self.ttl, 1))
+                        self.player.game.projectiles.add(Projectile(self.player.game, x, y, dx, dy, self.damage*self.player.attack_strength, self.ttl, 1))
 
             elif direction == "up":
 
@@ -158,7 +158,7 @@ class Pompe(pygame.sprite.Sprite):
                         dy = - self.vitesse_projectile + random.randint(-5, -3)
                         dx = (i + random.randint(-3, 3)) * self.spread_factor
 
-                        self.player.game.projectiles.add(Projectile(self.player.game, x, y, dx, dy, self.damage, self.ttl, 1))
+                        self.player.game.projectiles.add(Projectile(self.player.game, x, y, dx, dy, self.damage*self.player.attack_strength, self.ttl, 1))
 
             else:
 
@@ -171,6 +171,6 @@ class Pompe(pygame.sprite.Sprite):
                         dy = self.vitesse_projectile + random.randint(3, 5)
                         dx = (i + random.randint(-3, 3)) * self.spread_factor
 
-                        self.player.game.projectiles.add(Projectile(self.player.game, x, y, dx, dy, self.damage, self.ttl, 1))
+                        self.player.game.projectiles.add(Projectile(self.player.game, x, y, dx, dy, self.damage*self.player.attack_strength, self.ttl, 1))
 
             self.player.reset_cd()
