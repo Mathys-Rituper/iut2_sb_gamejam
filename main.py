@@ -160,7 +160,7 @@ def main_game(running):
             if game.pressed.get(pygame.K_SPACE):
                 if game.phase=="nuit":
                     game.player.attack()
-            if game.pressed.get(pygame.K_RSHIFT):
+            if game.pressed.get(pygame.K_RSHIFT) and game.phase =="jour":
                 if game.collision(game.player,game.champ):
                     game.update_menu_cropfield()
                     game.menu_cropfield.enable()
