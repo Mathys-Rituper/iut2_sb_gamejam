@@ -61,6 +61,16 @@ class Game:
         # Musique
         self.musique_nuit = pygame.mixer.Sound('assets/sound/Nuit.ogg')
         self.musique_jour = pygame.mixer.Sound('assets/sound/Jour.ogg')
+        self.ouch1 = pygame.mixer.Sound('assets/sound/ouch1.ogg')
+        self.ouch1.set_volume(0.3)
+        self.ouch2 = pygame.mixer.Sound('assets/sound/ouch2.ogg')
+        self.ouch2.set_volume(0.5)
+        self.ouch3 = pygame.mixer.Sound('assets/sound/ouch3.ogg')
+        self.ouch3.set_volume(0.3)
+        self.ouch4 = pygame.mixer.Sound('assets/sound/ouch4.ogg')
+        self.ouch3.set_volume(0.5)
+        self.ouch5 = pygame.mixer.Sound('assets/sound/ouch5.ogg')
+        self.ouch3.set_volume(0.5)
         self.musique_jour.set_volume(0.1)
         self.musique_nuit.set_volume(0.1)
 

@@ -150,6 +150,17 @@ class Monstre(pygame.sprite.Sprite ):
         nb=random.randint(0,3)
         for i in range (0,nb,1):
            self.game.player.inc_veg(crop)
+        nb = random.randint(1,5)
+        if nb==1:
+            self.game.ouch1.play()
+        elif nb==2:
+            self.game.ouch2.play()
+        elif nb==3:
+            self.game.ouch3.play()
+        elif nb==4:
+            self.game.ouch4.play()
+        else:
+            self.game.ouch5.play()
 
     def prendre_degat(self, dmg):
         self.hp-=dmg
