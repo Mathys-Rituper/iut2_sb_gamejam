@@ -28,10 +28,12 @@ class Game:
         self.spawn = []
         self.projectiles = pygame.sprite.Group()
         self.day = 1
+        self.day_duration = 10
         self.phase = "none"
         self.phase_is_over = False
         self.phase_start_time = pygame.time.get_ticks()
         self.first_phrase = True
+        self.transition_duration = 3
 
         self.spots = []
         self.wall = []
@@ -342,9 +344,14 @@ class Game:
                 self.musique_jour.stop()
                 self.musique_nuit.play(-1)
 
-            else:
+            elif self.phase == "transition":
+
                 self.phase = "jour"
                 self.field.croissance()
+                self.transition_timer=0
+
+            else:
+                self.phase = "transition"
                 self.day += 1
                 self.musique_nuit.stop()
                 self.player.reset_position()
@@ -382,11 +389,15 @@ class Game:
             if (len(self.tab_monstre) == 0):
                 self.phase_is_over = True
 
+
         elif self.phase == "jour":
             if ((pygame.time.get_ticks() - self.phase_start_time) / 1000 >= self.day_duration):
                 self.phase_is_over = True
 
-            print((pygame.time.get_ticks() - self.phase_start_time) / 1000)
+
+        else:
+            if ((pygame.time.get_ticks() - self.phase_start_time) / 1000 >= self.transition_duration):
+                self.phase_is_over = True
 
     def get_menu_regles(self):
         regles_menu = pygame_menu.Menu(768, 1000, "Rules", pygame_menu.themes.THEME_DARK)
@@ -437,6 +448,11 @@ class Game:
         # déclencher jour quand tous les monstres sont tués
 
     # def textMonstre(self):
+
+    def Affichage_Temps_Restant(self):
+
+        tl = self.font.render(" Temps restant : " + str(int(self.day_duration-(pygame.time.get_ticks() - self.phase_start_time) / 1000 )) + " s", True, (0, 0, 0))
+        return tl
 
     def Affichage_Nb_Jours(self):
 
