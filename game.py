@@ -17,6 +17,7 @@ class Game():
         self.menu_cropfield = self.get_menu_cropfield()
         self.menu_npc = self.get_npc_menu()
         self.tab_monstre= pygame.sprite.Group()
+        self.menu_shop = self.get_shop_menu()
 
         #self.monste = Monstre(self)
         self.projectiles = pygame.sprite.Group()
@@ -61,7 +62,7 @@ class Game():
 
 
     def get_npc_menu(self):
-        npc_menu = pygame_menu.Menu(400,1024,"Shop",columns=2,rows=6)
+        npc_menu = pygame_menu.Menu(400,1024,"Shop",columns=2,rows=6,theme=pygame_menu.themes.THEME_DARK)
         head1 = npc_menu.add_label("Improve your stats !")
         #COL 1
         speed = npc_menu.add_button("Increase speed (cost : 3 carrots, current speed :" +'%.2f'%(self.player.velocity)+")",self.upgrade_speed)
@@ -103,7 +104,7 @@ class Game():
         attack_speed.set_padding(8)
         attack_speed.set_max_width(450)
 
-        npc_menu.add_button("RETURN", self.disable_menu)
+        npc_menu.add_button("RETURN", self.disable_menu_npc)
 
         #COL 2
         head2 = npc_menu.add_label("Invest your veggies to become stronger.")
@@ -120,8 +121,8 @@ class Game():
         for widget in npc_menu.get_widgets():
             widget.update_font({"size":widget.get_font_info()["size"]*0.66})
 
-        head1.update_font({"size":widget.get_font_info()["size"]*1.25})
-        head2.update_font({"size":widget.get_font_info()["size"]*1.25})
+        head1.update_font({"size":head1.get_font_info()["size"]*1.25})
+        head2.update_font({"size":head2.get_font_info()["size"]*1.25})
 
 
         return npc_menu
@@ -157,7 +158,7 @@ class Game():
         self.update_menu_npc()
         self.menu_npc.enable()
 
-    def disable_menu(self):
+    def disable_menu_npc(self):
         self.update_menu_npc()
         self.menu_npc.disable()
     def addMonstre(self):
@@ -165,3 +166,81 @@ class Game():
         m = Monstre(self)
 
         self.tab_monstre.add(m)
+
+    def get_shop_menu(self):
+        menu_shop = pygame_menu.Menu(300,1024,"Weapons",rows=4,columns=2,theme=pygame_menu.themes.THEME_DARK)
+
+        ############COL 1
+
+        #header
+        head1 = menu_shop.add_label("Buy and switch weapons !")
+        head1.update_font({"size":head1.get_font_info()["size"]*1.25})
+
+        #pistol
+        button_pistol = menu_shop.add_button("Pistol (owned)",self.player.switch_weapon,"pistol")
+        button_pistol.set_background_color((75, 75, 75), )
+        button_pistol.update_font({"color": (255, 255, 255)})
+        button_pistol.set_padding(8)
+        button_pistol.set_max_width(450)
+
+
+        #Pompe
+        if self.player.weapons["shotgun"]["owned"]:
+            button_pompe = menu_shop.add_button("Shotgun (owned)",self.player.switch_weapon,"shotgun")
+        else:
+            button_pompe = menu_shop.add_button("Shotgun (10 strawberries, 10 watermelons)",self.buy_weapon,"shotgun",0,0,10,10)
+            if self.player.veg_inv["S"]["amount"] <10 and self.player.veg_inv["W"]["amount"]<10:
+                button_pompe.is_selectable=False
+        button_pompe.set_background_color((75, 75, 75), )
+        button_pompe.update_font({"color": (255, 255, 255)})
+        button_pompe.set_padding(8)
+        button_pompe.set_max_width(450)
+
+        #Return
+        button_return = menu_shop.add_button("Return",self.disable_menu_shop)
+        button_return.set_background_color((75, 75, 75), )
+        button_return.update_font({"color": (255, 255, 255)})
+        button_return.set_padding(8)
+        button_return.set_max_width(450)
+
+        ############COL 2
+
+        #head
+        head2 = menu_shop.add_label("Current inventory :")
+        head2.update_font({"size":head2.get_font_info()["size"]*1.25})
+
+        #strawberries
+        label_strawberries = menu_shop.add_label("Strawberries : "+ str(self.player.veg_inv['S']["amount"]))
+        label_strawberries.set_padding(8.8)
+
+
+        #waterlemons
+        label_watermelons = menu_shop.add_label("Watermelons : "+ str(self.player.veg_inv['S']["amount"]))
+        label_watermelons.set_padding(8.8)
+
+        #empty to finish grid
+        label_empty = menu_shop.add_label("")
+
+        return menu_shop
+
+
+    def update_menu_shop(self):
+        self.menu_shop = self.get_shop_menu()
+        self.disable_menu_shop()
+
+    def change_player_weapon(self,nom_weapon):
+        self.player.switch_weapon(nom_weapon)
+        self.disable_menu_shop()
+
+    def disable_menu_shop(self):
+        self.update_menu_shop()
+        self.menu_shop.disable()
+
+    def buy_weapon(self, nom_weapon, carrot, potato, strawberry, watermelon):
+        if self.player.veg_inv["C"]["amount"]>=carrot and self.player.veg_inv["P"]["amount"]>=potato and self.player.veg_inv["S"]["amount"]>=strawberry and self.player.veg_inv["W"]["amount"]>=watermelon:
+            self.player.veg_inv["P"]["amount"]-=potato
+            self.player.veg_inv["S"]["amount"]-=strawberry
+            self.player.veg_inv["W"]["amount"]-=watermelon
+            self.player.add_weapon(nom_weapon)
+            self.player.switch_weapon(nom_weapon)
+            self.disable_menu_shop()

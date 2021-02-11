@@ -102,4 +102,3 @@ class Pompe(pygame.sprite.Sprite):
 
             self.player.reset_cd()
 
-

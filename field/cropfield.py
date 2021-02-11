@@ -13,7 +13,7 @@ class Cropfield():
 
 
     def field_interaction_menu(self):
-        menu = pygame_menu.Menu(768, 1024, "Crop field", pygame_menu.themes.THEME_DARK)
+        menu = pygame_menu.Menu(768, 1024, "Crop field", theme=pygame_menu.themes.THEME_DARK)
         menu.add_label("Use the field to multiply your vegetables ! Growth time : 2 nights.","label-top")
         label_top = menu.get_widget("label-top")
         label_top.update_font({"size":label_top.get_font_info()["size"]*0.66})
@@ -48,7 +48,7 @@ class Cropfield():
         self.game.menu_cropfield.disable()
 
     def get_plant_interaction_menu(self,spot):
-        plant_interaction_menu = pygame_menu.Menu(768, 1024, "Plant a crop", pygame_menu.themes.THEME_DARK)
+        plant_interaction_menu = pygame_menu.Menu(768, 1024, "Plant a crop", theme=pygame_menu.themes.THEME_DARK)
         # Si le joueur n'a rien à planter
         if self.game.player.has_no_vegs():  # Si on ne peut rien planter
             plant_interaction_menu.add_label("You don't have anything to plant.")

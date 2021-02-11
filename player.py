@@ -20,12 +20,12 @@ class Player(animation.AnimateSprite):
         self.resistance = 0         #pourcentage de degats reduits
         self.elapse = 0
         self.game = game
-        self.weapon = weapons.Pompe(self)
+        self.weapon = weapons.Pistolet(self)
         ###INVENTORY
         self.veg_inv = {"P": {"name": "Potato", "amount": 1},
-                        "W": {"name": "Watermelon", "amount": 0},
+                        "W": {"name": "Watermelon", "amount": 10},
                         "C": {"name": "carrot", "amount": 5},
-                        "S": {"name": "Strawberry", "amount": 0},
+                        "S": {"name": "Strawberry", "amount": 10},
                         "N": {"name": "No Crop", "amount": 0}}
 
         ###SPRITE
@@ -33,6 +33,8 @@ class Player(animation.AnimateSprite):
         self.rect = self.image.get_rect()
         self.rect.x =2341
         self.rect.y =1902
+
+        self.weapons = {"pistol":{"owned" : True, "item" : weapons.Pistolet(self)},"shotgun":{"owned" : False,"item" : weapons.Pompe(self)}} #Rajouter chaque nouvelle arme ici
 
     def attack(self):
             self.weapon.fire()
@@ -93,3 +95,11 @@ class Player(animation.AnimateSprite):
         if pygame.time.get_ticks() - self.elapse> 100:
             self.animate()
             self.elapse = pygame.time.get_ticks()
+
+
+    def add_weapon(self,nom_weapon):
+        self.weapons[nom_weapon]["owned"] = True
+
+    def switch_weapon(self,nom_weapon):
+        if self.weapons[nom_weapon]["owned"]:
+            self.weapon = self.weapons[nom_weapon]["item"]

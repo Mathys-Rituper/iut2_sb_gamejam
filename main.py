@@ -17,8 +17,6 @@ pygame.init()
 # Initialisation de la fenêtre
 screen = pygame.display.set_mode((1080, 768))  # 1080, 768
 pygame.display.set_caption("Game Jam 2021")
-background = pygame.image.load("assets/default.jpg")
-
 
 
 main_running = True
@@ -30,14 +28,9 @@ game = Game(map_image)
 
 main_running = True
 is_a_menu_open = False
-menu_cropfield = game.get_menu_cropfield()
-menu_cropfield.disable()
-
-
-
-
 game.menu_cropfield.disable()
 game.menu_npc.disable()
+game.menu_shop.disable()
 
 pygame.display.flip()
 #Definitioon d'une clock
@@ -139,10 +132,14 @@ while main_running:
             is_a_menu_open = True
         elif game.pressed.get(pygame.K_e):
             game.update_menu_npc()
-            print("activation du menu")
             game.menu_npc.enable()
             is_a_menu_open = True
             game.pressed[pygame.K_e] = False
+        elif game.pressed.get(pygame.K_r):
+            game.update_menu_shop()
+            game.menu_shop.enable()
+            is_a_menu_open = True
+            game.pressed[pygame.K_r] = False
 
 
     elif game.menu_cropfield.is_enabled():  # Si le menu du champ est ouvert
@@ -157,9 +154,15 @@ while main_running:
         game.menu_npc.update(events)
         if game.menu_npc.is_enabled():
             game.menu_npc.draw(screen)
-            print("affichage du menu")
         if game.pressed.get(pygame.K_ESCAPE):
             game.menu_npc.disable()
+            is_a_menu_open = False
+    elif game.menu_shop.is_enabled():
+        game.menu_shop.update(events)
+        if game.menu_shop.is_enabled():
+            game.menu_shop.draw(screen)
+        if game.pressed.get(pygame.K_ESCAPE):
+            game.menu_shop.disable()
             is_a_menu_open = False
     else:
         is_a_menu_open = False  # Si tous les menus sont fermés, alors on est plus dans un menu
