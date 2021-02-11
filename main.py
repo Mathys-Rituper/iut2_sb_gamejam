@@ -189,6 +189,9 @@ def main_game(running,force_quit):
                     game.player.move_up()
                 if game.pressed.get(pygame.K_DOWN) and game.player.rect.y < HEIGHT_TILE * NB_TILE_Y - game.player.rect.h:
                     game.player.move_down()
+                if game.pressed.get(pygame.K_t):
+                    if game.phase=="jour":
+                        game.phase_is_over=True
                 if game.pressed.get(pygame.K_SPACE):
                     if game.phase=="nuit":
                         game.player.attack()
