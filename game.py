@@ -447,7 +447,7 @@ class Game:
         label_top = regles_menu.get_widget("label-top")
         label_top.update_font({"size": label_top.get_font_info()["size"] * 0.66})
         label_regles = "Defend your village and your cultures against the evil vegetable-monsters during the night. The aim of the game is to go through the 10 night phases with as many remaining vegetables as possible in your inventory. You can improve your stats and weapons, as well as get better yield using the field"
-        label_touches = "Keys : Move around with the arrow keys, shoot with space, interact with the field and shops with Shift"
+        label_touches = "Keys : Move around with the arrow keys, shoot with space, interact with the field and shops with Right Shift and skip daytime with T"
 
         regles_menu.add_label(label_regles, max_char=-1, font_size=15)
         regles_menu.add_label(label_touches, max_char=-1, font_size=15)
