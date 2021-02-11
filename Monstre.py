@@ -6,6 +6,7 @@ import threading
 class Monstre(pygame.sprite.Sprite):
     def __init__(self, game):
         super().__init__()
+        self.hp = 1
         self.vitessex = 2
         self.vitessey = 2
         self.num = str(random.randint(1,4))
@@ -130,6 +131,12 @@ class Monstre(pygame.sprite.Sprite):
         self.vitessex = 0;
         self.vitessey = 0
 
+    def battu(self):
+        self.game.player.inc_veg("P")
 
-
+    def prendre_degat(self, dmg):
+        self.hp-=dmg
+        if self.hp<=0:
+            self.battu()
+            self.kill()
 

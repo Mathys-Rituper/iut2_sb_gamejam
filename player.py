@@ -84,6 +84,9 @@ class Player(animation.AnimateSprite):
     def dec_veg(self, crop):
         self.veg_inv[crop]["amount"] -= 1
 
+    def inc_veg(self, crop):
+        self.veg_inv[crop]["amount"] += 1
+
     def update(self):
 
         if pygame.time.get_ticks() - self.elapse > 100:
