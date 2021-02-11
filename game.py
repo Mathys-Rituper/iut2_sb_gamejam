@@ -547,7 +547,7 @@ class Game:
                 menu_fin.add_label(self.player.veg_inv[vegetable]["name"] + " : "+ str(self.player.veg_inv[vegetable]["amount"]))
                 score += self.player.veg_inv[vegetable]["amount"]
             mid2 = menu_fin.add_label("Your score is : "+ str(score))
-            text_input = menu_fin.add_text_input("Enter your name :",onreturn=self.set_player_name)
+            text_input = menu_fin.add_text_input("Enter your name : ",onreturn=self.set_player_name)
             enter = menu_fin.add_button("Submit and quit",self.new_highscore,self.player_name,score)
         else:
             top = menu_fin.add_label("Game over !")
