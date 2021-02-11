@@ -177,7 +177,7 @@ class Game():
         head1.update_font({"size":head1.get_font_info()["size"]*1.25})
 
         #pistol
-        button_pistol = menu_shop.add_button("Pistol (owned)",self.player.switch_weapon,"pistol")
+        button_pistol = menu_shop.add_button("Pistol (owned)",self.change_player_weapon,"pistol")
         button_pistol.set_background_color((75, 75, 75), )
         button_pistol.update_font({"color": (255, 255, 255)})
         button_pistol.set_padding(8)
@@ -186,7 +186,7 @@ class Game():
 
         #Pompe
         if self.player.weapons["shotgun"]["owned"]:
-            button_pompe = menu_shop.add_button("Shotgun (owned)",self.player.switch_weapon,"shotgun")
+            button_pompe = menu_shop.add_button("Shotgun (owned)",self.change_player_weapon,"shotgun")
         else:
             button_pompe = menu_shop.add_button("Shotgun (10 strawberries, 10 watermelons)",self.buy_weapon,"shotgun",0,0,10,10)
             if self.player.veg_inv["S"]["amount"] <10 and self.player.veg_inv["W"]["amount"]<10:
@@ -226,7 +226,6 @@ class Game():
 
     def update_menu_shop(self):
         self.menu_shop = self.get_shop_menu()
-        self.disable_menu_shop()
 
     def change_player_weapon(self,nom_weapon):
         self.player.switch_weapon(nom_weapon)
