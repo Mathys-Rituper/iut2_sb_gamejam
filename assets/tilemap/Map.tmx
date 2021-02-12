@@ -838,7 +838,7 @@
   <object id="2" name="obstacleMaison" x="3048.55" y="1954.54" width="146.57" height="165.292"/>
   <object id="4" name="obstacleMaison" x="2385.58" y="1340.94" width="381.52" height="165.877" rotation="0.203295"/>
   <object id="5" name="obstaclePuits" x="2221.49" y="1517.04" width="36.1671" height="56.1671"/>
-  <object id="8" name="obstacleMaison" x="2279.66" y="1644.33" width="277.334" height="148"/>
+  <object id="8" name="obstacleMaison" x="2279.66" y="1639.33" width="277.334" height="153"/>
   <object id="13" name="spot1" x="2016.33" y="1664.79" width="31.875" height="31.75"/>
   <object id="16" name="spot2" x="2079.83" y="1663.48" width="31.8182" height="31.8182"/>
   <object id="19" name="spot3" x="2144.83" y="1663.17" width="32.1818" height="32"/>
