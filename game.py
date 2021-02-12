@@ -33,7 +33,7 @@ class Game:
         self.transition_duration = 3
         self.file_highscores = open("high_scores.json","r")
         self.highscores = json.load(self.file_highscores)
-        self.player_name = ""
+        self.player_name = "gamejam"
 
         self.spots = []
         self.wall = []
@@ -549,7 +549,7 @@ class Game:
                 score += self.player.veg_inv[vegetable]["amount"]
             mid2 = menu_fin.add_label("Your score is : "+ str(score))
             text_input = menu_fin.add_text_input("Enter your name : ")
-            enter = menu_fin.add_button("Submit and quit",self.new_highscore,text_input.get_value(),score)
+            enter = menu_fin.add_button("Submit and quit",self.new_highscore,"gamejam",score)
         else:
             top = menu_fin.add_label("Game over !")
             mid = menu_fin.add_label("You died before the end of the 10th night. Try again !")
@@ -558,7 +558,7 @@ class Game:
         return menu_fin
 
     def new_highscore(self,name,score):
-        self.highscores[str(name)] = score
+        self.highscores[name] = score
         self.menu_fin.disable()
 
     def close_highscores(self):
