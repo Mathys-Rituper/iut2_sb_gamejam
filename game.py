@@ -340,10 +340,11 @@ class Game:
         self.disable_menu_shop()
 
     def get_menu_principal(self):
-        menu = pygame_menu.Menu(768, 1024, "Potager assiégé", pygame_menu.themes.THEME_DARK)
-        menu.add_label("Main menu", "label-top")
+        menu = pygame_menu.Menu(768, 1024, "Potager assiégé", theme=pygame_menu.themes.THEME_GREEN)
+        menu.add_label("Potager assiégé - Main menu", "label-top")
         label_top = menu.get_widget("label-top")
-        label_top.update_font({"size": label_top.get_font_info()["size"] * 1.3})
+        label_top.update_font({"size": label_top.get_font_info()["size"] * 1.5,"color":(0,0,0)})
+        label_top.set_padding(30)
         menu.add_button("Play", self.jouer)
         menu.add_button("Rules", self.get_menu_regles())
         menu.add_button("Credits", self.get_menu_credits())
@@ -548,7 +549,7 @@ class Game:
                 score += self.player.veg_inv[vegetable]["amount"]
             mid2 = menu_fin.add_label("Your score is : "+ str(score))
             text_input = menu_fin.add_text_input("Enter your name : ")
-            enter = menu_fin.add_button("Submit and quit",self.new_highscore,text_input.get_value,score)
+            enter = menu_fin.add_button("Submit and quit",self.new_highscore,text_input.get_value(),score)
         else:
             top = menu_fin.add_label("Game over !")
             mid = menu_fin.add_label("You died before the end of the 10th night. Try again !")

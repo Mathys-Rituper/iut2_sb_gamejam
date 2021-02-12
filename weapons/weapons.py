@@ -120,7 +120,7 @@ class Pompe(pygame.sprite.Sprite):
         self.vitesse_projectile = 12
         self.damage = 2
         self.spread_factor = .25
-        self.ttl = 18
+        self.ttl = 15
 
     def fire(self):
         if (self.player.cd()/self.player.attack_speed) > self.cooldown:
@@ -134,7 +134,7 @@ class Pompe(pygame.sprite.Sprite):
                         y = centre[1] + ((i + random.randint(-3, 3)) * 3)
                         dx = self.vitesse_projectile + random.randint(3, 5)
                         dy = (i + random.randint(-3, 3)) * self.spread_factor
-                        self.player.game.projectiles.add(Projectile(self.player.game, x, y, dx, dy, self.damage*self.player.attack_strength, self.ttl, 1))
+                        self.player.game.projectiles.add(Projectile(self.player.game, x, y, dx, dy, self.damage*self.player.attack_strength, self.ttl, 0))
 
             elif direction == "left":
                 centre = [self.player.rect.center[0] ,
@@ -145,7 +145,7 @@ class Pompe(pygame.sprite.Sprite):
                         y = centre[1] + ((i + random.randint(-3, 3)) * 3)
                         dx = -self.vitesse_projectile + random.randint(-5,-3)
                         dy = (i + random.randint(-3, 3)) * self.spread_factor
-                        self.player.game.projectiles.add(Projectile(self.player.game, x, y, dx, dy, self.damage*self.player.attack_strength, self.ttl, 1))
+                        self.player.game.projectiles.add(Projectile(self.player.game, x, y, dx, dy, self.damage*self.player.attack_strength, self.ttl, 0))
 
             elif direction == "up":
 
